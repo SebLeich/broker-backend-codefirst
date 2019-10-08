@@ -126,15 +126,31 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\KeyValueStoreServiceController.cs" />
     <Compile Include="Core\AuthContext.cs" />
+    <Compile Include="Core\BrokerContext.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Helper.cs" />
     <Compile Include="Core\RefreshToken.cs" />
     <Compile Include="Core\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Core\SimpleRefreshTokenProvider.cs" />
+    <Compile Include="Models\Certificate.cs" />
+    <Compile Include="Models\ChargingModel.cs" />
+    <Compile Include="Models\CloudServiceCategory.cs" />
+    <Compile Include="Models\CloudServiceModel.cs" />
+    <Compile Include="Models\DataLocation.cs" />
+    <Compile Include="Models\KeyValueStoreService.cs" />
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\Provider.cs" />
+    <Compile Include="Models\ProviderPayment.cs" />
+    <Compile Include="Models\Service.cs" />
+    <Compile Include="Models\ServiceCertificate.cs" />
+    <Compile Include="Models\ServiceChargingModel.cs" />
+    <Compile Include="Models\ServiceDataLocation.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuthentificationRepository.cs" />
+    <Compile Include="Repositories\KeyValueStoreServiceRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models
 {
@@ -10,6 +9,10 @@ namespace backend.Models
     /// </summary>
     public class Payment
     {
+        [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string PaymentType { get; set; }
 
+        public virtual ICollection<ProviderPayment> ProviderPayments { get; set; }
     }
 }

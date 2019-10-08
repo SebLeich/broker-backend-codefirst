@@ -8,16 +8,16 @@ using System.Web;
 namespace backend.Models
 {
     /// <summary>
-    /// the class contains the service charging model
+    /// the class contains the service data location model
     /// </summary>
-    public class ServiceChargingModel
+    public class ServiceDataLocation
     {
         [Key, Column(Order = 0)]
         public int ServiceId { get; set; }
         [Key, Column(Order = 1)]
-        public int ChargingModelId { get; set; }
+        public int DataLocationId { get; set; }
 
         public Service Service { get; set; }
-        public ChargingModel ChargingModel { get; set; }
+        public DataLocation DataLocation { get; set; }
     }
 }

@@ -24,17 +24,21 @@ namespace backend.Core
         /// </summary>
         public DbSet<ChargingModel> ChargingModel { get; set; }
         /// <summary>
-        /// the cloud service model relation
-        /// </summary>
-        public DbSet<CloudServiceModel> CloudServiceModel { get; set; }
-        /// <summary>
         /// the cloud service category relation
         /// </summary>
         public DbSet<CloudServiceCategory> CloudServiceCategory { get; set; }
         /// <summary>
-        /// the data location
+        /// the cloud service model relation
+        /// </summary>
+        public DbSet<CloudServiceModel> CloudServiceModel { get; set; }
+        /// <summary>
+        /// the data location relation
         /// </summary>
         public DbSet<DataLocation> DataLocation { get; set; }
+        /// <summary>
+        /// the key value store service relation
+        /// </summary>
+        public DbSet<KeyValueStoreService> KeyValueStoreService { get; set; }
         /// <summary>
         /// the payment relation
         /// </summary>
@@ -52,13 +56,13 @@ namespace backend.Core
         /// </summary>
         public DbSet<Service> Service { get; set; }
         /// <summary>
-        /// the service charging model relation
-        /// </summary>
-        public DbSet<ServiceChargingModel> ServiceChargingModel { get; set; }
-        /// <summary>
         /// the service certificate relation
         /// </summary>
         public DbSet<ServiceCertificate> ServiceCertificate { get; set; }
+        /// <summary>
+        /// the service charging model relation
+        /// </summary>
+        public DbSet<ServiceChargingModel> ServiceChargingModel { get; set; }
         /// <summary>
         /// the service data location relation
         /// </summary>
