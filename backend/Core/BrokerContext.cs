@@ -20,6 +20,10 @@ namespace backend.Core
         /// </summary>
         public DbSet<Certificate> Certificate { get; set; }
         /// <summary>
+        /// the charging model relation
+        /// </summary>
+        public DbSet<ChargingModel> ChargingModel { get; set; }
+        /// <summary>
         /// the cloud service model relation
         /// </summary>
         public DbSet<CloudServiceModel> CloudServiceModel { get; set; }
@@ -51,5 +55,13 @@ namespace backend.Core
         /// the service charging model relation
         /// </summary>
         public DbSet<ServiceChargingModel> ServiceChargingModel { get; set; }
+        /// <summary>
+        /// the service certificate relation
+        /// </summary>
+        public DbSet<ServiceCertificate> ServiceCertificate { get; set; }
+        /// <summary>
+        /// the service data location relation
+        /// </summary>
+        public DbSet<ServiceDataLocation> ServiceDataLocation { get; set; }
     }
 }
