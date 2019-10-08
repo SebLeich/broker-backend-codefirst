@@ -1,11 +1,7 @@
 ﻿using backend.Core;
 using backend.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Web;
-using System.Web.Http;
 
 namespace backend.Repositories
 {
@@ -14,24 +10,36 @@ namespace backend.Repositories
     /// </summary>
     public class KeyValueStoreServiceRepository
     {
+        private BrokerContext _Ctx;
+
+        public KeyValueStoreServiceRepository()
+        {
+            _Ctx = new BrokerContext();
+        }
+
         /// <summary>
         /// the method returns all key value store services from the database
         /// </summary>
         /// <returns>list of services</returns>
         public List<KeyValueStoreService> GetKeyValueStoreServices()
         {
-            using(var db = new BrokerContext())
-            {
-                return db.KeyValueStoreService.ToList();
-            }
+            return _Ctx.KeyValueStoreService.ToList();
+        }
+        /// <summary>
+        /// the method returns a key value store service from the database by id
+        /// </summary>
+        /// <returns>list of services</returns>
+        public KeyValueStoreService GetKeyValueStoreService(int id)
+        {
+            return _Ctx.KeyValueStoreService.Find(id);
         }
         /// <summary>
         /// the method posts a new key value store services from the database
         /// </summary>
         /// <returns>list of services</returns>
-        public KeyValueStoreService PostKeyValueStoreServices(KeyValueStoreService Service)
+        public KeyValueStoreService PostKeyValueStoreService(KeyValueStoreService Service)
         {
-            using (var db = new BrokerContext())
+            using (BrokerContext db = new BrokerContext())
             {
                 db.KeyValueStoreService.Add(Service);
                 db.SaveChanges();
@@ -42,13 +50,26 @@ namespace backend.Repositories
         /// the method puts a new key value store services from the database
         /// </summary>
         /// <returns>list of services</returns>
-        public KeyValueStoreService PutKeyValueStoreServices(KeyValueStoreService Service)
+        public KeyValueStoreService PutKeyValueStoreService(KeyValueStoreService Service)
         {
-            using (var db = new BrokerContext())
+            using (BrokerContext db = new BrokerContext())
             {
                 db.Entry(Service).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return Service;
+            }
+        }
+        /// <summary>
+        /// the method deletes a key value store service from the database by id
+        /// </summary>
+        /// <returns>list of services</returns>
+        public bool DeleteKeyValueStoreService(int id)
+        {
+            using (BrokerContext db = new BrokerContext())
+            {
+                KeyValueStoreService Service = db.KeyValueStoreService.Find(id);
+                db.KeyValueStoreService.Remove(Service);
+                return 1 == db.SaveChanges();
             }
         }
     }
