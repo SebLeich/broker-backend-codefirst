@@ -28,15 +28,15 @@ namespace backend.Repositories
         /// <summary>
         /// the method returns a key value store service from the database by id
         /// </summary>
-        /// <returns>list of services</returns>
+        /// <returns> a specific key value store service</returns>
         public KeyValueStoreService GetKeyValueStoreService(int id)
         {
             return _Ctx.KeyValueStoreService.Find(id);
         }
         /// <summary>
-        /// the method posts a new key value store services from the database
+        /// the method posts a new key value store service to the database
         /// </summary>
-        /// <returns>list of services</returns>
+        /// <returns>the posted key value store service</returns>
         public KeyValueStoreService PostKeyValueStoreService(KeyValueStoreService Service)
         {
             using (BrokerContext db = new BrokerContext())

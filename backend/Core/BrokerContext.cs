@@ -52,6 +52,10 @@ namespace backend.Core
         /// </summary>
         public DbSet<ProviderPayment> ProviderPayment { get; set; }
         /// <summary>
+        /// the relational database relation
+        /// </summary>
+        public DbSet<RelationalDatabaseService> RelationalDatabaseService { get; set; }
+        /// <summary>
         /// the service relation
         /// </summary>
         public DbSet<Service> Service { get; set; }
