@@ -16,6 +16,10 @@ namespace backend.Core
 
         }
         /// <summary>
+        /// the block storage service relation
+        /// </summary>
+        public DbSet<BlockStorageService> BlockStorageService { get; set; }
+        /// <summary>
         /// the certificate relation
         /// </summary>
         public DbSet<Certificate> Certificate { get; set; }
@@ -36,9 +40,21 @@ namespace backend.Core
         /// </summary>
         public DbSet<DataLocation> DataLocation { get; set; }
         /// <summary>
+        /// the direct attached storage service relation
+        /// </summary>
+        public DbSet<DirectAttachedStorageService> DirectAttachedStorageService { get; set; }
+        /// <summary>
         /// the key value store service relation
         /// </summary>
         public DbSet<KeyValueStoreService> KeyValueStoreService { get; set; }
+        /// <summary>
+        /// the online drive storage service relation
+        /// </summary>
+        public DbSet<ObjectStorageService> ObjectStorageService { get; set; }
+        /// <summary>
+        /// the object storage service relation
+        /// </summary>
+        public DbSet<OnlineDriveStorageService> OnlineDriveStorageService { get; set; }
         /// <summary>
         /// the payment relation
         /// </summary>
