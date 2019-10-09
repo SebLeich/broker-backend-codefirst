@@ -126,7 +126,12 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BlockStorageServiceController.cs" />
+    <Compile Include="Controllers\DirectAttachedStorageServiceController.cs" />
     <Compile Include="Controllers\KeyValueStoreServiceController.cs" />
+    <Compile Include="Controllers\ObjectStorageServiceController.cs" />
+    <Compile Include="Controllers\OnlineDriveStorageServiceController.cs" />
+    <Compile Include="Controllers\RelationalDatabaseServiceController.cs" />
     <Compile Include="Core\AuthContext.cs" />
     <Compile Include="Core\BrokerContext.cs" />
     <Compile Include="Core\Client.cs" />
