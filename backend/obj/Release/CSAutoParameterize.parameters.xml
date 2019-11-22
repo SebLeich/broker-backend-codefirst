@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="AuthContext-Web.config Connection String" description="AuthContext Die in der Datei &amp;quot;web.config&amp;quot; festgelegte Verbindungszeichenfolge, die von der Anwendung für den Zugriff auf die Datenbank verwendet wird." defaultValue="data source=.\SQLEXPRESS; initial catalog=brokerdata; persist security info=True; Integrated Security=SSPI; App=EntityFramework" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\lione\\Documents\\Repository\\broker-backend\\backend\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='AuthContext']/@connectionString" />
+  </parameter>
+  <parameter name="BrokerContext-Web.config Connection String" description="BrokerContext Die in der Datei &amp;quot;web.config&amp;quot; festgelegte Verbindungszeichenfolge, die von der Anwendung für den Zugriff auf die Datenbank verwendet wird." defaultValue="data source=.\SQLEXPRESS; initial catalog=brokerdata; persist security info=True; Integrated Security=SSPI; App=EntityFramework" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\lione\\Documents\\Repository\\broker-backend\\backend\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='BrokerContext']/@connectionString" />
+  </parameter>
+</parameters>

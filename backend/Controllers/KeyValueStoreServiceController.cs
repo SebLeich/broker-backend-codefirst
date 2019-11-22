@@ -51,7 +51,7 @@ namespace backend.Controllers
         /// <returns>service</returns>
         [Route("")]
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         public IHttpActionResult PostKeyValueStoreServices([FromBody] KeyValueStoreService Service)
         {
             return Ok(_Repo.PostKeyValueStoreService(Service));
@@ -63,7 +63,7 @@ namespace backend.Controllers
         /// <returns>service</returns>
         [Route("")]
         [HttpPut]
-        [AllowAnonymous]
+        [Authorize]
         public IHttpActionResult PutKeyValueStoreServices([FromBody] KeyValueStoreService Service)
         {
             return Ok(_Repo.PutKeyValueStoreService(Service));
@@ -75,7 +75,7 @@ namespace backend.Controllers
         /// <returns>boolean</returns>
         [Route("{id}")]
         [HttpDelete]
-        [AllowAnonymous]
+        [Authorize]
         public IHttpActionResult DeleteKeyValueStoreServices(int id)
         {
             return Ok(_Repo.DeleteKeyValueStoreService(id));

@@ -127,6 +127,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BlockStorageServiceController.cs" />
+    <Compile Include="Controllers\CloudServiceCategoryController.cs" />
     <Compile Include="Controllers\DirectAttachedStorageServiceController.cs" />
     <Compile Include="Controllers\KeyValueStoreServiceController.cs" />
     <Compile Include="Controllers\ObjectStorageServiceController.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuthentificationRepository.cs" />
     <Compile Include="Repositories\BlockStorageServiceRepository.cs" />
+    <Compile Include="Repositories\CloudServiceCategoryRepository.cs" />
     <Compile Include="Repositories\DirectAttachedStorageServiceRepository.cs" />
     <Compile Include="Repositories\KeyValueStoreServiceRepository.cs" />
     <Compile Include="Repositories\ObjectStorageServiceRepository.cs" />
@@ -171,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,10 +1,5 @@
 ﻿using backend.Models;
 using backend.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace backend.Controllers
@@ -56,7 +51,7 @@ namespace backend.Controllers
         /// <returns>service</returns>
         [Route("")]
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         public IHttpActionResult PostOnlineDriveStorageServices([FromBody] OnlineDriveStorageService Service)
         {
             return Ok(_Repo.PostOnlineDriveStorageService(Service));
@@ -68,7 +63,7 @@ namespace backend.Controllers
         /// <returns>service</returns>
         [Route("")]
         [HttpPut]
-        [AllowAnonymous]
+        [Authorize]
         public IHttpActionResult PutOnlineDriveStorageServices([FromBody] OnlineDriveStorageService Service)
         {
             return Ok(_Repo.PutOnlineDriveStorageService(Service));
@@ -80,7 +75,7 @@ namespace backend.Controllers
         /// <returns>boolean</returns>
         [Route("{id}")]
         [HttpDelete]
-        [AllowAnonymous]
+        [Authorize]
         public IHttpActionResult DeleteOnlineDriveStorageServices(int id)
         {
             return Ok(_Repo.DeleteOnlineDriveStorageService(id));

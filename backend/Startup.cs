@@ -42,6 +42,7 @@ namespace backend
                 Provider = new SimpleAuthorizationServerProvider(),
                 RefreshTokenProvider = new SimpleRefreshTokenProvider()
             };
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }

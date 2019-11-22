@@ -16,13 +16,6 @@ namespace backend.Core
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-
-            var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
-
-            if (allowedOrigin == null) allowedOrigin = "*";
-
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
-
             using (AuthentificationRepository _repo = new AuthentificationRepository())
             {
                 IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
