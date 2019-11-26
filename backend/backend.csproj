@@ -133,13 +133,13 @@
     <Compile Include="Controllers\ObjectStorageServiceController.cs" />
     <Compile Include="Controllers\OnlineDriveStorageServiceController.cs" />
     <Compile Include="Controllers\RelationalDatabaseServiceController.cs" />
-    <Compile Include="Core\AuthContext.cs" />
     <Compile Include="Core\BrokerContext.cs" />
     <Compile Include="Core\Client.cs" />
     <Compile Include="Core\Helper.cs" />
     <Compile Include="Core\RefreshToken.cs" />
     <Compile Include="Core\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Core\SimpleRefreshTokenProvider.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BlockStorageService.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\ChargingModel.cs" />
@@ -154,6 +154,9 @@
     <Compile Include="Models\Provider.cs" />
     <Compile Include="Models\ProviderPayment.cs" />
     <Compile Include="Models\RelationalDatabaseService.cs" />
+    <Compile Include="Models\RoleModel.cs" />
+    <Compile Include="Models\RoleRuleLink.cs" />
+    <Compile Include="Models\Rule.cs" />
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\ServiceCertificate.cs" />
     <Compile Include="Models\ServiceChargingModel.cs" />
@@ -169,6 +172,7 @@
     <Compile Include="Repositories\ObjectStorageServiceRepository.cs" />
     <Compile Include="Repositories\OnlineDriveStorageServiceRepository.cs" />
     <Compile Include="Repositories\RelationalDatabaseServiceRepository.cs" />
+    <Compile Include="Repositories\RoleRightRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@ using backend.Repositories;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Security;
 
 namespace backend.Controllers
 {
@@ -16,6 +17,10 @@ namespace backend.Controllers
         /// the repository provides methods for account management
         /// </summary>
         private AuthentificationRepository _Repo;
+        /// <summary>
+        /// the repository provides methods for role security validation
+        /// </summary>
+        private RoleRightRepository _SecRepo;
 
         /// <summary>
         /// the constructor creates a new instance of a controller
@@ -23,6 +28,52 @@ namespace backend.Controllers
         public AccountController()
         {
             _Repo = new AuthentificationRepository();
+            _SecRepo = new RoleRightRepository();
+        }
+
+        /// <summary>
+        /// the endpoint returns all rights of an user
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns>HTTP Status Code</returns>
+        [Authorize]
+        [Route("current-rights")]
+        [HttpGet]
+        public IHttpActionResult GetCurrentRights()
+        {
+            return Ok(_Repo.GetCurrentRights(User.Identity.Name));
+        }
+
+        /// <summary>
+        /// the endpoint registeres a new role in the backend
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns>HTTP Status Code</returns>
+        [Authorize]
+        [Route("role/register")]
+        [HttpPost]
+        public async Task<IHttpActionResult> Register(RoleModel roleModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if(!_SecRepo.IsAllowed(User.Identity.Name, "register-roles"))
+            {
+                return Unauthorized();
+            }
+
+            IdentityResult result = await _Repo.RegisterRole(roleModel);
+
+            IHttpActionResult errorResult = GetErrorResult(result);
+
+            if (errorResult != null)
+            {
+                return errorResult;
+            }
+
+            return Ok();
         }
 
         /// <summary>
@@ -30,7 +81,7 @@ namespace backend.Controllers
         /// </summary>
         /// <param name="userModel"></param>
         /// <returns>HTTP Status Code</returns>
-        [Authorize]
+        [AllowAnonymous]
         [Route("register")]
         [HttpPost]
         public async Task<IHttpActionResult> Register(UserModel userModel)

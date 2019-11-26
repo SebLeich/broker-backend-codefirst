@@ -1,4 +1,5 @@
-﻿using backend.Repositories;
+﻿using backend.Models;
+using backend.Repositories;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
@@ -18,7 +19,7 @@ namespace backend.Core
         {
             using (AuthentificationRepository _repo = new AuthentificationRepository())
             {
-                IdentityUser user = await _repo.FindUser(context.UserName, context.Password);
+                ApplicationUser user = await _repo.FindUser(context.UserName, context.Password);
 
                 if (user == null)
                 {

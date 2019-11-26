@@ -15,13 +15,17 @@ namespace backend.Controllers
         /// the repository provides methods to manipulate block storage service services
         /// </summary>
         private BlockStorageServiceRepository _Repo;
+        private RoleRightRepository _SecRepo;
+
         /// <summary>
         /// the constructor creates a new instance of the controller
         /// </summary>
         public BlockStorageServiceController()
         {
             _Repo = new BlockStorageServiceRepository();
+            _SecRepo = new RoleRightRepository();
         }
+
         /// <summary>
         /// the endpoint returns all services of the database
         /// </summary>
@@ -33,6 +37,7 @@ namespace backend.Controllers
         {
             return Ok(_Repo.GetBlockStorageServices());
         }
+
         /// <summary>
         /// the method returns a service with the given id from the database
         /// </summary>
@@ -45,6 +50,7 @@ namespace backend.Controllers
         {
             return Ok(_Repo.GetBlockStorageService(id));
         }
+
         /// <summary>
         /// the endpoint creates a new service within the database
         /// </summary>
@@ -57,6 +63,7 @@ namespace backend.Controllers
         {
             return Ok(_Repo.PostBlockStorageService(Service));
         }
+
         /// <summary>
         /// the endpoint overwrites a service in the database with the given object
         /// </summary>

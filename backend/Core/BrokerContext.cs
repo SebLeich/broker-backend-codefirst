@@ -1,12 +1,32 @@
 ﻿using backend.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 
 namespace backend.Core
 {
+    public class ApplicationUser : IdentityUser<Guid, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim> {
+        public ApplicationUser()
+        {
+            Id = Guid.NewGuid();
+        }
+    }
+    public class ApplicationUserRole : IdentityUserRole<Guid> { }
+    public class ApplicationUserClaim : IdentityUserClaim<Guid> { }
+    public class ApplicationUserLogin : IdentityUserLogin<Guid> { }
+    public class ApplicationRole : IdentityRole<Guid, ApplicationUserRole> {
+        public virtual ICollection<Rule> Rules { get; set; } = new HashSet<Rule>();
+        public ApplicationRole()
+        {
+            Id = Guid.NewGuid();
+        }
+    }
+
     /// <summary>
     /// the context contains the database's model
     /// </summary>
-    public class BrokerContext : DbContext
+    public class BrokerContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
         /// <summary>
         /// the constructor creates a new instance of a broker context
@@ -15,6 +35,14 @@ namespace backend.Core
         {
 
         }
+        /// <summary>
+        /// all clients registered for access
+        /// </summary>
+        public DbSet<Client> Clients { get; set; }
+        /// <summary>
+        /// all refresh tokens stored
+        /// </summary>
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         /// <summary>
         /// the block storage service relation
         /// </summary>
@@ -87,5 +115,16 @@ namespace backend.Core
         /// the service data location relation
         /// </summary>
         public DbSet<ServiceDataLocation> ServiceDataLocation { get; set; }
+        /// <summary>
+        /// the rule relation
+        /// </summary>
+        public DbSet<Rule> Rule { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ApplicationRole>().ToTable("Roles");
+            modelBuilder.Entity<ApplicationUser>().ToTable("Users");
+        }
     }
 }

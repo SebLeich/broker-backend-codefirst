@@ -17,20 +17,56 @@ namespace backend.Repositories
         /// <summary>
         /// the data context providing database connection
         /// </summary>
-        private AuthContext _ctx;
+        private BrokerContext _ctx;
 
         /// <summary>
         /// the user manager providing identity user control
         /// </summary>
-        private UserManager<IdentityUser> _userManager;
+        private UserManager<ApplicationUser, Guid> _userManager;
+
+        /// <summary>
+        /// the role manager providing identity role control
+        /// </summary>
+        private RoleManager<ApplicationRole, Guid> _roleManager;
 
         /// <summary>
         /// the constructor for creating new instances
         /// </summary>
         public AuthentificationRepository()
         {
-            _ctx = new AuthContext();
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
+            _ctx = new BrokerContext();
+            _userManager = new UserManager<ApplicationUser, Guid>(new UserStore<ApplicationUser, ApplicationRole, Guid, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>(_ctx));
+            _roleManager = new RoleManager<ApplicationRole, Guid>(new RoleStore<ApplicationRole, Guid, ApplicationUserRole>(_ctx));
+        }
+
+        /// <summary>
+        /// the method returns all rights for the current user
+        /// </summary>
+        /// <param name="username">current user name</param>
+        /// <returns>list of rights</returns>
+        public List<RoleRuleLink> GetCurrentRights(string username)
+        {
+            ApplicationUser User = _ctx.Users.FirstOrDefault(x => x.UserName == username);
+            if (User == null) return null;
+            List<Guid> RoleIDs = User.Roles.Select(x => x.RoleId).ToList();
+            List<RoleRuleLink> Links = new List<RoleRuleLink>();
+            foreach (Guid Id in RoleIDs)
+            {
+                ApplicationRole Role = _ctx.Roles.Find(Id);
+                if (Role == null) continue;
+                List<Rule> Rules = _ctx.Rule.Where(x => x.Roles.Any(e => e.Id == Id)).ToList();
+                Links.Add(new RoleRuleLink()
+                {
+                    IsAllowed = Rules.Count > 0,
+                    Rules = Rules,
+                    RoleId = Role.Id,
+                    Role = new RoleModel()
+                    {
+                        RoleName = Role.Name
+                    }
+                });
+            }
+            return Links;
         }
 
         /// <summary>
@@ -40,12 +76,31 @@ namespace backend.Repositories
         /// <returns>identity result</returns>
         public async Task<IdentityResult> RegisterUser(UserModel userModel)
         {
-            IdentityUser user = new IdentityUser
+            ApplicationUser user = new ApplicationUser
             {
                 UserName = userModel.UserName
             };
 
             var result = await _userManager.CreateAsync(user, userModel.Password);
+
+            _userManager.AddToRole(user.Id, "User");
+
+            return result;
+        }
+
+        /// <summary>
+        /// the method enables user's to register new roles
+        /// </summary>
+        /// <param name="userModel">user model</param>
+        /// <returns>identity result</returns>
+        public async Task<IdentityResult> RegisterRole(RoleModel roleModel)
+        {
+            ApplicationRole role = new ApplicationRole
+            {
+                Name = roleModel.RoleName
+            };
+
+            var result = await _roleManager.CreateAsync(role);
 
             return result;
         }
@@ -56,11 +111,17 @@ namespace backend.Repositories
         /// <param name="userName">username</param>
         /// <param name="password">password</param>
         /// <returns>user</returns>
-        public async Task<IdentityUser> FindUser(string userName, string password)
+        public async Task<ApplicationUser> FindUser(string userName, string password)
         {
-            IdentityUser user = await _userManager.FindAsync(userName, password);
+            ApplicationUser user = await _userManager.FindAsync(userName, password);
 
             return user;
+        }
+
+        public RoleRuleLink AllowRole(RoleRuleLink link)
+        {
+            
+            return link;
         }
 
         /// <summary>
@@ -70,6 +131,7 @@ namespace backend.Repositories
         {
             _ctx.Dispose();
             _userManager.Dispose();
+            _roleManager.Dispose();
         }
 
         /// <summary>
