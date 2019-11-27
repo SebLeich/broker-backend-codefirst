@@ -13,6 +13,8 @@ namespace backend.Models
 
         public string RuleCode { get; set; }
 
+        public string RuleTitle { get; set; }
+
         public string RuleDesc { get; set; }
 
         [JsonIgnore]

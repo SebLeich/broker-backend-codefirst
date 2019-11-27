@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using backend.Repositories;
+using System.Net;
 using System.Web.Http;
 
 namespace backend.Controllers
@@ -61,6 +62,9 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult PostBlockStorageServices([FromBody] BlockStorageService Service)
         {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services")) {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
             return Ok(_Repo.PostBlockStorageService(Service));
         }
 
@@ -74,6 +78,10 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult PutBlockStorageServices([FromBody] BlockStorageService Service)
         {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-services"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
             return Ok(_Repo.PutBlockStorageService(Service));
         }
         /// <summary>
@@ -86,6 +94,10 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult DeleteBlockStorageServices(int id)
         {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "delete-services"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
             return Ok(_Repo.DeleteBlockStorageService(id));
         }
     }

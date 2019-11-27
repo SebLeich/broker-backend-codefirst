@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using backend.Repositories;
+using System.Net;
 using System.Web.Http;
 
 namespace backend.Controllers
@@ -14,12 +15,15 @@ namespace backend.Controllers
         /// the repository provides methods to manipulate key value storage services
         /// </summary>
         private KeyValueStoreServiceRepository _Repo;
+        private RoleRightRepository _SecRepo;
+
         /// <summary>
         /// the constructor creates a new instance of the controller
         /// </summary>
         public KeyValueStoreServiceController()
         {
             _Repo = new KeyValueStoreServiceRepository();
+            _SecRepo = new RoleRightRepository();
         }
         /// <summary>
         /// the endpoint returns all services of the database
@@ -54,6 +58,10 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult PostKeyValueStoreServices([FromBody] KeyValueStoreService Service)
         {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
             return Ok(_Repo.PostKeyValueStoreService(Service));
         }
         /// <summary>
@@ -66,6 +74,10 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult PutKeyValueStoreServices([FromBody] KeyValueStoreService Service)
         {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-services"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
             return Ok(_Repo.PutKeyValueStoreService(Service));
         }
         /// <summary>
@@ -78,6 +90,10 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult DeleteKeyValueStoreServices(int id)
         {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "delete-services"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
             return Ok(_Repo.DeleteKeyValueStoreService(id));
         }
     }

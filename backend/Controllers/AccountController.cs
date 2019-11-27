@@ -3,7 +3,6 @@ using backend.Repositories;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Security;
 
 namespace backend.Controllers
 {

@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using backend.Repositories;
+using System.Net;
 using System.Web.Http;
 
 namespace backend.Controllers
@@ -14,12 +15,14 @@ namespace backend.Controllers
         /// the repository provides methods to manipulate direct attached storage services
         /// </summary>
         private DirectAttachedStorageServiceRepository _Repo;
+        private RoleRightRepository _SecRepo;
         /// <summary>
         /// the constructor creates a new instance of the controller
         /// </summary>
         public DirectAttachedStorageServiceController()
         {
             _Repo = new DirectAttachedStorageServiceRepository();
+            _SecRepo = new RoleRightRepository();
         }
         /// <summary>
         /// the endpoint returns all services of the database
@@ -54,6 +57,10 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult PostDirectAttachedStorageServices([FromBody] DirectAttachedStorageService Service)
         {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
             return Ok(_Repo.PostDirectAttachedStorageService(Service));
         }
         /// <summary>
@@ -66,6 +73,10 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult PutDirectAttachedStorageServices([FromBody] DirectAttachedStorageService Service)
         {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-services"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
             return Ok(_Repo.PutDirectAttachedStorageService(Service));
         }
         /// <summary>
@@ -78,6 +89,10 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult DeleteDirectAttachedStorageServices(int id)
         {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "delete-services"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
             return Ok(_Repo.DeleteDirectAttachedStorageService(id));
         }
     }

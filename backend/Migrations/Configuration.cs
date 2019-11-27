@@ -52,18 +52,35 @@ namespace backend.Migrations
             var createServicesRule = new Rule()
             {
                 RuleCode = "create-services",
+                RuleTitle = "Services anlegen",
                 RuleDesc = "Dürfen Nutzer der Rollengruppe neue Services in der Datenbank anlegen?"
             };
             context.Rule.AddOrUpdate(x => x.RuleCode, createServicesRule);
+            var editServicesRule = new Rule()
+            {
+                RuleCode = "edit-services",
+                RuleTitle = "Services bearbeiten",
+                RuleDesc = "Dürfen Nutzer der Rollengruppe Services in der Datenbank verändern?"
+            };
+            context.Rule.AddOrUpdate(x => x.RuleCode, editServicesRule);
+            var deleteServicesRule = new Rule()
+            {
+                RuleCode = "delete-services",
+                RuleTitle = "Services löschen",
+                RuleDesc = "Dürfen Nutzer der Rollengruppe Services aus der Datenbank löschen?"
+            };
+            context.Rule.AddOrUpdate(x => x.RuleCode, deleteServicesRule);
             var editSecurityGuidelines = new Rule()
             {
                 RuleCode = "edit-security-guidelines",
+                RuleTitle = "Rollenberechtigungen bearbeiten",
                 RuleDesc = "Dürfen Nutzer der Rollengruppe Rollenberechtigungen bearbeiten?"
             };
             context.Rule.AddOrUpdate(x => x.RuleCode, editSecurityGuidelines);
             var registerRoles = new Rule()
             {
                 RuleCode = "register-roles",
+                RuleTitle = "Rollen anlegen",
                 RuleDesc = "Dürfen Nutzer der Rollengruppe Rollen hinzufügen?"
             };
             context.Rule.AddOrUpdate(x => x.RuleCode, registerRoles);
@@ -74,8 +91,10 @@ namespace backend.Migrations
             uMgr.AddToRole<ApplicationUser, Guid>(defaultUser.Id, userRole.Name);
 
             adminRole.Rules.Add(createServicesRule);
+            adminRole.Rules.Add(editServicesRule);
+            adminRole.Rules.Add(deleteServicesRule);
             adminRole.Rules.Add(editSecurityGuidelines);
-
+            adminRole.Rules.Add(registerRoles);
 
             context.SaveChanges();
         }

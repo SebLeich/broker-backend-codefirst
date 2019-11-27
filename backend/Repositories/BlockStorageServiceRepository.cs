@@ -7,8 +7,14 @@ namespace backend.Repositories
 {
     public class BlockStorageServiceRepository
     {
+        /// <summary>
+        /// the attribute provides database access
+        /// </summary>
         private BrokerContext _Ctx;
 
+        /// <summary>
+        /// the constructor creates a new instance of the repository
+        /// </summary>
         public BlockStorageServiceRepository()
         {
             _Ctx = new BrokerContext();

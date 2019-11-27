@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace backend.Models
 {
     public class RoleRuleLink
     {
-        public Guid RoleId { get; set; }
-        public RoleModel Role { get; set; }
+        public List<RoleModel> Roles { get; set; } = new List<RoleModel>();
         public int RuleId { get; set; }
-        public List<Rule> Rules { get; set; }
+        public Rule Rule { get; set; }
         public bool IsAllowed { get; set; }
     }
 }

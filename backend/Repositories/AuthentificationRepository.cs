@@ -48,23 +48,37 @@ namespace backend.Repositories
         {
             ApplicationUser User = _ctx.Users.FirstOrDefault(x => x.UserName == username);
             if (User == null) return null;
-            List<Guid> RoleIDs = User.Roles.Select(x => x.RoleId).ToList();
+            List<Guid> RoleIds = User.Roles.Select(x => x.RoleId).ToList();
             List<RoleRuleLink> Links = new List<RoleRuleLink>();
-            foreach (Guid Id in RoleIDs)
+            foreach (Rule R in _ctx.Rule.ToList())
             {
-                ApplicationRole Role = _ctx.Roles.Find(Id);
-                if (Role == null) continue;
-                List<Rule> Rules = _ctx.Rule.Where(x => x.Roles.Any(e => e.Id == Id)).ToList();
-                Links.Add(new RoleRuleLink()
+                List<Guid> Matches = R.Roles.Select(x => x.Id).Intersect(RoleIds).ToList();
+                if (Matches.Count == 0)
                 {
-                    IsAllowed = Rules.Count > 0,
-                    Rules = Rules,
-                    RoleId = Role.Id,
-                    Role = new RoleModel()
+                    Links.Add(new RoleRuleLink()
                     {
-                        RoleName = Role.Name
+                        IsAllowed = false,
+                        Rule = R,
+                        RuleId = R.Id,
+                        Roles = new List<RoleModel>()
+                    });
+                } else
+                {
+                    List<RoleModel> Roles = new List<RoleModel>();
+                    foreach(Guid id in Matches)
+                    {
+                        ApplicationRole AppRole = _ctx.Roles.Find(id);
+                        if (AppRole == null) continue;
+                        Roles.Add(new RoleModel { RoleName = AppRole.Name });
                     }
-                });
+                    Links.Add(new RoleRuleLink()
+                    {
+                        IsAllowed = true,
+                        Rule = R,
+                        RuleId = R.Id,
+                        Roles = Roles
+                    });
+                }
             }
             return Links;
         }
