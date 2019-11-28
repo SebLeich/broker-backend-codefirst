@@ -1,6 +1,7 @@
 ﻿using backend.Models;
 using backend.Repositories;
 using Microsoft.AspNet.Identity;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -31,9 +32,25 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// the endpoint returns all rights of an user
+        /// the endpoint returns all users
         /// </summary>
-        /// <param name="userModel"></param>
+        /// <returns>HTTP Status Code</returns>
+        [Authorize]
+        [Route("")]
+        [HttpGet]
+        public IHttpActionResult GetUsers()
+        {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
+            return Ok(_Repo.GetUsers());
+        }
+
+        /// <summary>
+        /// the endpoint returns all rights of the current user
+        /// </summary>
         /// <returns>HTTP Status Code</returns>
         [Authorize]
         [Route("current-rights")]
@@ -44,23 +61,80 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// the endpoint registeres a new role in the backend
+        /// the endpoint returns all rights of an user
         /// </summary>
         /// <param name="userModel"></param>
         /// <returns>HTTP Status Code</returns>
         [Authorize]
-        [Route("role/register")]
+        [Route("role-right/{roleName}")]
+        [HttpGet]
+        public IHttpActionResult GetRoleRights(string roleName)
+        {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
+            return Ok(_Repo.GetRightsForRole(roleName));
+        }
+
+        /// <summary>
+        /// the endpoint returns all rights of an user
+        /// </summary>
+        /// <returns>HTTP Status Code</returns>
+        [Authorize]
+        [Route("role-right")]
         [HttpPost]
-        public async Task<IHttpActionResult> Register(RoleModel roleModel)
+        public IHttpActionResult PostRoleRight([FromBody] RoleRuleLink roleRuleLink)
+        {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
+            RoleRuleLink link = _Repo.PersistRoleRuleLink(roleRuleLink);
+
+            if (link == null) return InternalServerError();
+
+            return Ok(link);
+        }
+
+        /// <summary>
+        /// the endpoint returns all registered roles
+        /// </summary>
+        /// <returns>HTTP Status Code</returns>
+        [Authorize]
+        [Route("role")]
+        [HttpGet]
+        public IHttpActionResult GetRoles()
+        {
+
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "register-roles"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
+            return Ok(_Repo.GetRoles());
+        }
+
+        /// <summary>
+        /// the endpoint registeres a new role in the backend
+        /// </summary>
+        /// <param name="roleModel"></param>
+        /// <returns>HTTP Status Code</returns>
+        [Authorize]
+        [Route("role")]
+        [HttpPost]
+        public async Task<IHttpActionResult> RegisterRole(RoleModel roleModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if(!_SecRepo.IsAllowed(User.Identity.Name, "register-roles"))
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "register-roles"))
             {
-                return Unauthorized();
+                return StatusCode(HttpStatusCode.Forbidden);
             }
 
             IdentityResult result = await _Repo.RegisterRole(roleModel);
@@ -73,6 +147,31 @@ namespace backend.Controllers
             }
 
             return Ok();
+        }
+
+        /// <summary>
+        /// the endpoint removes a role
+        /// </summary>
+        /// <returns>HTTP Status Code</returns>
+        [Authorize]
+        [Route("role/{roleName}")]
+        [HttpDelete]
+        public IHttpActionResult DeleteRole(string roleName)
+        {
+
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "register-roles"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
+            RoleModel r = _Repo.DeleteRole(roleName);
+
+            if(r == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(r);
         }
 
         /// <summary>
@@ -100,6 +199,42 @@ namespace backend.Controllers
             }
 
             return Ok();
+        }
+
+        /// <summary>
+        /// the endpoint connects a user with the given roles
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns>HTTP Status Code</returns>
+        [Authorize]
+        [Route("role-connection/add")]
+        [HttpPost]
+        public IHttpActionResult AddUserRoleConnection(UserRoleLink link)
+        {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
+            return Ok(_Repo.AddUserRoleConnection(link));
+        }
+
+        /// <summary>
+        /// the endpoint unlinks a user with the given roles
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns>HTTP Status Code</returns>
+        [Authorize]
+        [Route("role-connection/remove")]
+        [HttpPost]
+        public IHttpActionResult RemoveUserRoleConnection(UserRoleLink link)
+        {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
+            return Ok(_Repo.RemoveUserRoleConnection(link));
         }
 
         /// <summary>

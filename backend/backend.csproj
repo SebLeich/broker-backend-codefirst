@@ -140,6 +140,7 @@
     <Compile Include="Core\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Core\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\BlockStorageService.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\ChargingModel.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Models\ServiceDataLocation.cs" />
     <Compile Include="Models\StorageType.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\UserRoleLink.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuthentificationRepository.cs" />
     <Compile Include="Repositories\BlockStorageServiceRepository.cs" />

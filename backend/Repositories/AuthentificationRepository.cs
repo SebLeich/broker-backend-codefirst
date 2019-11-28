@@ -30,6 +30,33 @@ namespace backend.Repositories
         private RoleManager<ApplicationRole, Guid> _roleManager;
 
         /// <summary>
+        /// the method returns all users and their roles
+        /// </summary>
+        /// <returns></returns>
+        public List<AccountModel> GetUsers()
+        {
+            List<ApplicationUser> Users = _ctx.Users.ToList();
+            List<AccountModel> Output = new List<AccountModel>();
+            foreach(ApplicationUser User in Users)
+            {
+                List<Guid> UserRoles = User.Roles.Select(x => x.RoleId).ToList();
+                List<RoleModel> R = new List<RoleModel>();
+                foreach (Guid RoleId in UserRoles)
+                {
+                    ApplicationRole Role = _roleManager.FindById(RoleId);
+                    R.Add(new RoleModel { RoleName = Role.Name });
+                }
+                Output.Add(new AccountModel
+                {
+                    Id = User.Id,
+                    UserName = User.UserName,
+                    Roles = R
+                });
+            }
+            return Output;
+        }
+
+        /// <summary>
         /// the constructor for creating new instances
         /// </summary>
         public AuthentificationRepository()
@@ -44,15 +71,36 @@ namespace backend.Repositories
         /// </summary>
         /// <param name="username">current user name</param>
         /// <returns>list of rights</returns>
-        public List<RoleRuleLink> GetCurrentRights(string username)
+        public List<RoleRuleLink> GetCurrentRights(string userName)
         {
-            ApplicationUser User = _ctx.Users.FirstOrDefault(x => x.UserName == username);
+            ApplicationUser User = _ctx.Users.FirstOrDefault(x => x.UserName == userName);
             if (User == null) return null;
-            List<Guid> RoleIds = User.Roles.Select(x => x.RoleId).ToList();
+            return GetRights(User.Roles.Select(x => x.RoleId).ToList());
+        }
+        
+        /// <summary>
+        /// the method returns all rights for a given role
+        /// </summary>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
+        public List<RoleRuleLink> GetRightsForRole(string roleName)
+        {
+            ApplicationRole Role = _ctx.Roles.FirstOrDefault(x => x.Name == roleName);
+            if (Role == null) return null;
+            return GetRights(new List<Guid>() { Role.Id });
+        }
+
+        /// <summary>
+        /// the method returns all rights for a list of given role ids
+        /// </summary>
+        /// <param name="roleIds"></param>
+        /// <returns></returns>
+        public List<RoleRuleLink> GetRights(List<Guid> roleIds)
+        {
             List<RoleRuleLink> Links = new List<RoleRuleLink>();
             foreach (Rule R in _ctx.Rule.ToList())
             {
-                List<Guid> Matches = R.Roles.Select(x => x.Id).Intersect(RoleIds).ToList();
+                List<Guid> Matches = R.Roles.Select(x => x.Id).Intersect(roleIds).ToList();
                 if (Matches.Count == 0)
                 {
                     Links.Add(new RoleRuleLink()
@@ -62,10 +110,11 @@ namespace backend.Repositories
                         RuleId = R.Id,
                         Roles = new List<RoleModel>()
                     });
-                } else
+                }
+                else
                 {
                     List<RoleModel> Roles = new List<RoleModel>();
-                    foreach(Guid id in Matches)
+                    foreach (Guid id in Matches)
                     {
                         ApplicationRole AppRole = _ctx.Roles.Find(id);
                         if (AppRole == null) continue;
@@ -81,6 +130,60 @@ namespace backend.Repositories
                 }
             }
             return Links;
+        }
+
+        /// <summary>
+        /// the method returns all registered roles
+        /// </summary>
+        /// <returns></returns>
+        public List<RoleModel> GetRoles()
+        {
+            List<ApplicationRole> roles = _ctx.Roles.ToList();
+            List<RoleModel> output = new List<RoleModel>();
+            foreach (ApplicationRole r in roles) output.Add(new RoleModel
+            {
+                RoleName = r.Name
+            });
+            return output;
+        }
+
+
+        public RoleRuleLink PersistRoleRuleLink(RoleRuleLink link)
+        {
+            if (link.Roles.Count == 0) return null;
+            ApplicationRole role = _roleManager.FindByName(link.Roles[0].RoleName);
+            Rule rule = _ctx.Rule.Find(link.RuleId);
+            if (link.IsAllowed)
+            {
+                if(!role.Rules.Any(x => x.Id == link.RuleId))
+                {
+                    role.Rules.Add(rule);
+                    _ctx.SaveChanges();
+                    return link;
+                }
+            } else
+            {
+                if (role.Rules.Any(x => x.Id == link.RuleId))
+                {
+                    role.Rules.Remove(rule);
+                    _ctx.SaveChanges();
+                    return link;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// the method removes a role with the given role name
+        /// </summary>
+        /// <param name="roleName">the roles name</param>
+        /// <returns>role model</returns>
+        public RoleModel DeleteRole(string roleName)
+        {
+            ApplicationRole role = _roleManager.FindByName(roleName);
+            if (role == null) return null;
+            _roleManager.Delete(role);
+            return new RoleModel { RoleName = roleName };
         }
 
         /// <summary>
@@ -117,6 +220,57 @@ namespace backend.Repositories
             var result = await _roleManager.CreateAsync(role);
 
             return result;
+        }
+
+
+        public AccountModel AddUserRoleConnection(UserRoleLink link)
+        {
+            ApplicationUser user = _userManager.FindByName(link.userName);
+            if (user == null) return null;
+            foreach(string RoleName in link.roles)
+            {
+                if (!_userManager.IsInRole(user.Id, RoleName)) _userManager.AddToRole(user.Id, RoleName);
+            }
+            List<RoleModel> Roles = new List<RoleModel>();
+            foreach(var i in user.Roles)
+            {
+                ApplicationRole R = _roleManager.FindById(i.RoleId);
+                Roles.Add(new RoleModel
+                {
+                    RoleName = R.Name
+                });
+            }
+            return new AccountModel
+            {
+                Id = user.Id,
+                Roles = Roles,
+                UserName = user.UserName
+            };
+        }
+
+        public AccountModel RemoveUserRoleConnection(UserRoleLink link)
+        {
+            ApplicationUser user = _userManager.FindByName(link.userName);
+            if (user == null) return null;
+            foreach (string RoleName in link.roles)
+            {
+                if (_userManager.IsInRole(user.Id, RoleName)) _userManager.RemoveFromRole(user.Id, RoleName);
+            }
+            List<RoleModel> Roles = new List<RoleModel>();
+            foreach (var i in user.Roles)
+            {
+                ApplicationRole R = _roleManager.FindById(i.RoleId);
+                Roles.Add(new RoleModel
+                {
+                    RoleName = R.Name
+                });
+            }
+            return new AccountModel
+            {
+                Id = user.Id,
+                Roles = Roles,
+                UserName = user.UserName
+            };
         }
 
         /// <summary>
