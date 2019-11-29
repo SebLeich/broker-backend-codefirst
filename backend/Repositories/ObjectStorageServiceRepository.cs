@@ -1,5 +1,6 @@
 ﻿using backend.Core;
 using backend.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,13 +35,9 @@ namespace backend.Repositories
         /// <returns>the posted object storage service</returns>
         public ObjectStorageService PostObjectStorageService(ObjectStorageService ObjectStorageService)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                db.ObjectStorageService.Add(ObjectStorageService);
-                db.SaveChanges();
-                return ObjectStorageService;
-            }
-
+            _Ctx.ObjectStorageService.Add(ObjectStorageService);
+            _Ctx.SaveChanges();
+            return ObjectStorageService;
         }
         /// <summary>
         /// the method puts a new object storage service from the database
@@ -48,12 +45,9 @@ namespace backend.Repositories
         /// <returns>the puted object storage service</returns>
         public ObjectStorageService PutObjectStorageService(ObjectStorageService Service)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                db.Entry(Service).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return Service;
-            }
+            _Ctx.Entry(Service).State = System.Data.Entity.EntityState.Modified;
+            _Ctx.SaveChanges();
+            return Service;
         }
         /// <summary>
         /// the method deletes a object storage service from the database by id
@@ -61,12 +55,21 @@ namespace backend.Repositories
         /// <returns>1 = success </returns>
         public bool DeleteObjectStorageService(int id)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                ObjectStorageService Service = db.ObjectStorageService.Find(id);
-                db.ObjectStorageService.Remove(Service);
-                return 1 == db.SaveChanges();
-            }
+            ObjectStorageService Service = _Ctx.ObjectStorageService.Find(id);
+            _Ctx.ObjectStorageService.Remove(Service);
+            return 1 == _Ctx.SaveChanges();
+        }
+        /// <summary>
+        /// the endpoint enables users to search for block level storages
+        /// </summary>
+        /// <param name="Search">search vector</param>
+        /// <returns>best match</returns>
+        public ObjectStorageService Search(SearchVector Search)
+        {
+            var rand = new Random();
+            var services = _Ctx.ObjectStorageService.ToList();
+            if (services.Count == 0) return null;
+            return services[rand.Next(services.Count)];
         }
     }
 }

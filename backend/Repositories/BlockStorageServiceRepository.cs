@@ -1,5 +1,6 @@
 ﻿using backend.Core;
 using backend.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,13 +42,9 @@ namespace backend.Repositories
         /// <returns>the posted block storage service</returns>
         public BlockStorageService PostBlockStorageService(BlockStorageService BlockStorageService)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                db.BlockStorageService.Add(BlockStorageService);
-                db.SaveChanges();
-                return BlockStorageService;
-            }
-
+            _Ctx.BlockStorageService.Add(BlockStorageService);
+            _Ctx.SaveChanges();
+            return BlockStorageService;
         }
         /// <summary>
         /// the method puts a new block storage service from the database
@@ -55,12 +52,9 @@ namespace backend.Repositories
         /// <returns>the puted block storage service</returns>
         public BlockStorageService PutBlockStorageService(BlockStorageService Service)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                db.Entry(Service).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return Service;
-            }
+            _Ctx.Entry(Service).State = System.Data.Entity.EntityState.Modified;
+            _Ctx.SaveChanges();
+            return Service;
         }
         /// <summary>
         /// the method deletes a block storage service from the database by id
@@ -68,12 +62,21 @@ namespace backend.Repositories
         /// <returns>1 = success </returns>
         public bool DeleteBlockStorageService(int id)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                BlockStorageService Service = db.BlockStorageService.Find(id);
-                db.BlockStorageService.Remove(Service);
-                return 1 == db.SaveChanges();
-            }
+            BlockStorageService Service = _Ctx.BlockStorageService.Find(id);
+            _Ctx.BlockStorageService.Remove(Service);
+            return 1 == _Ctx.SaveChanges();
+        }
+        /// <summary>
+        /// the endpoint enables users to search for block level storages
+        /// </summary>
+        /// <param name="Search">search vector</param>
+        /// <returns>best match</returns>
+        public BlockStorageService Search(SearchVector Search)
+        {
+            var rand = new Random();
+            var services = _Ctx.BlockStorageService.ToList();
+            if (services.Count == 0) return null;
+            return services[rand.Next(services.Count)];
         }
     }
 }

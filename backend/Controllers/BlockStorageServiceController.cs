@@ -65,6 +65,7 @@ namespace backend.Controllers
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services")) {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
+
             return Ok(_Repo.PostBlockStorageService(Service));
         }
 
@@ -99,6 +100,19 @@ namespace backend.Controllers
                 return StatusCode(HttpStatusCode.Forbidden);
             }
             return Ok(_Repo.DeleteBlockStorageService(id));
+        }
+        /// <summary>
+        /// the endpoint returns a service according to the given search
+        /// </summary>
+        /// <returns>service</returns>
+        [Route("search")]
+        [HttpPost]
+        [AllowAnonymous]
+        public IHttpActionResult Search([FromBody] SearchVector Search)
+        {
+            var result = _Repo.Search(Search);
+            if (result == null) return NotFound();
+            return Ok(result);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using backend.Core;
 using backend.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,12 +37,9 @@ namespace backend.Repositories
         /// <returns>the posted online drive storage service</returns>
         public OnlineDriveStorageService PostOnlineDriveStorageService(OnlineDriveStorageService Service)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                db.OnlineDriveStorageService.Add(Service);
-                db.SaveChanges();
-                return Service;
-            }
+            _Ctx.OnlineDriveStorageService.Add(Service);
+            _Ctx.SaveChanges();
+            return Service;
         }
         /// <summary>
         /// the method puts a new online drive storage services from the database
@@ -49,12 +47,9 @@ namespace backend.Repositories
         /// <returns>list of services</returns>
         public OnlineDriveStorageService PutOnlineDriveStorageService(OnlineDriveStorageService Service)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                db.Entry(Service).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return Service;
-            }
+            _Ctx.Entry(Service).State = System.Data.Entity.EntityState.Modified;
+            _Ctx.SaveChanges();
+            return Service;
         }
         /// <summary>
         /// the method deletes a online drive storage service from the database by id
@@ -62,12 +57,21 @@ namespace backend.Repositories
         /// <returns>list of services</returns>
         public bool DeleteOnlineDriveStorageService(int id)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                OnlineDriveStorageService Service = db.OnlineDriveStorageService.Find(id);
-                db.OnlineDriveStorageService.Remove(Service);
-                return 1 == db.SaveChanges();
-            }
+            OnlineDriveStorageService Service = _Ctx.OnlineDriveStorageService.Find(id);
+            _Ctx.OnlineDriveStorageService.Remove(Service);
+            return 1 == _Ctx.SaveChanges();
+        }
+        /// <summary>
+        /// the endpoint enables users to search for block level storages
+        /// </summary>
+        /// <param name="Search">search vector</param>
+        /// <returns>best match</returns>
+        public OnlineDriveStorageService Search(SearchVector Search)
+        {
+            var rand = new Random();
+            var services = _Ctx.OnlineDriveStorageService.ToList();
+            if (services.Count == 0) return null;
+            return services[rand.Next(services.Count)];
         }
     }
 }

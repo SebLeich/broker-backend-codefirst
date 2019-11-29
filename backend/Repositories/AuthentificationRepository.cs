@@ -77,7 +77,33 @@ namespace backend.Repositories
             if (User == null) return null;
             return GetRights(User.Roles.Select(x => x.RoleId).ToList());
         }
-        
+
+        /// <summary>
+        /// the method removes a user from the database
+        /// </summary>
+        /// <param name="username">user's name</param>
+        /// <returns>user</returns>
+        public AccountModel RemoveUser(string username)
+        {
+            ApplicationUser User = _userManager.FindByName(username);
+            if (User == null) return null;
+            List<Guid> RoleIds = User.Roles.Select(x => x.RoleId).ToList();
+            _userManager.Delete(User);
+            List<RoleModel> Roles = new List<RoleModel>();
+            foreach(Guid RId in RoleIds)
+            {
+                ApplicationRole Role = _roleManager.FindById(RId);
+                if (Role == null) continue;
+                Roles.Add(new RoleModel { RoleName = Role.Name });
+            }
+            return new AccountModel
+            {
+                Id = User.Id,
+                Roles = Roles,
+                UserName = User.UserName
+            };
+        }
+
         /// <summary>
         /// the method returns all rights for a given role
         /// </summary>

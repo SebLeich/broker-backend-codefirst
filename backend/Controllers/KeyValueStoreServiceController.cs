@@ -96,5 +96,18 @@ namespace backend.Controllers
             }
             return Ok(_Repo.DeleteKeyValueStoreService(id));
         }
+        /// <summary>
+        /// the endpoint returns a service according to the given search
+        /// </summary>
+        /// <returns>service</returns>
+        [Route("search")]
+        [HttpPost]
+        [AllowAnonymous]
+        public IHttpActionResult Search([FromBody] SearchVector Search)
+        {
+            var result = _Repo.Search(Search);
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
     }
 }

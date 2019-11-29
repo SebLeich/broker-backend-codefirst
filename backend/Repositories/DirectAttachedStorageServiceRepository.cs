@@ -1,5 +1,6 @@
 ﻿using backend.Core;
 using backend.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 namespace backend.Repositories
@@ -33,13 +34,9 @@ namespace backend.Repositories
         /// <returns>the posted direct attached storage service</returns>
         public DirectAttachedStorageService PostDirectAttachedStorageService(DirectAttachedStorageService DirectAttachedStorageService)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                db.DirectAttachedStorageService.Add(DirectAttachedStorageService);
-                db.SaveChanges();
-                return DirectAttachedStorageService;
-            }
-
+            _Ctx.DirectAttachedStorageService.Add(DirectAttachedStorageService);
+            _Ctx.SaveChanges();
+            return DirectAttachedStorageService;
         }
         /// <summary>
         /// the method puts a new direct attached storage service from the database
@@ -47,12 +44,9 @@ namespace backend.Repositories
         /// <returns>the puted direct attached storage service</returns>
         public DirectAttachedStorageService PutDirectAttachedStorageService(DirectAttachedStorageService Service)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                db.Entry(Service).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return Service;
-            }
+            _Ctx.Entry(Service).State = System.Data.Entity.EntityState.Modified;
+            _Ctx.SaveChanges();
+            return Service;
         }
         /// <summary>
         /// the method deletes a direct attached storage service from the database by id
@@ -60,12 +54,21 @@ namespace backend.Repositories
         /// <returns>1 = success </returns>
         public bool DeleteDirectAttachedStorageService(int id)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                DirectAttachedStorageService Service = db.DirectAttachedStorageService.Find(id);
-                db.DirectAttachedStorageService.Remove(Service);
-                return 1 == db.SaveChanges();
-            }
+            DirectAttachedStorageService Service = _Ctx.DirectAttachedStorageService.Find(id);
+            _Ctx.DirectAttachedStorageService.Remove(Service);
+            return 1 == _Ctx.SaveChanges();
+        }
+        /// <summary>
+        /// the endpoint enables users to search for block level storages
+        /// </summary>
+        /// <param name="Search">search vector</param>
+        /// <returns>best match</returns>
+        public DirectAttachedStorageService Search(SearchVector Search)
+        {
+            var rand = new Random();
+            var services = _Ctx.DirectAttachedStorageService.ToList();
+            if (services.Count == 0) return null;
+            return services[rand.Next(services.Count)];
         }
     }
 }

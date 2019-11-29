@@ -29,5 +29,16 @@ namespace backend.Repositories
         {
             return _Ctx.CloudServiceCategory.ToList();
         }
+        /// <summary>
+        /// the method persists a new cloud service category
+        /// </summary>
+        /// <param name="Category">cloud service category</param>
+        /// <returns>cloud service category</returns>
+        public CloudServiceCategory PostCloudServiceCategories(CloudServiceCategory Category)
+        {
+            _Ctx.CloudServiceCategory.Add(Category);
+            _Ctx.SaveChanges();
+            return Category;
+        }
     }
 }

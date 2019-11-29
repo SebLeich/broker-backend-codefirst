@@ -49,6 +49,23 @@ namespace backend.Controllers
         }
 
         /// <summary>
+        /// the endpoint removes a user from the database
+        /// </summary>
+        /// <returns>HTTP Status Code</returns>
+        [Authorize]
+        [Route("{username}")]
+        [HttpDelete]
+        public IHttpActionResult RemoveUser(string username)
+        {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+
+            return Ok(_Repo.RemoveUser(username));
+        }
+
+        /// <summary>
         /// the endpoint returns all rights of the current user
         /// </summary>
         /// <returns>HTTP Status Code</returns>

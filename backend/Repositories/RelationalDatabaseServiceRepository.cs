@@ -1,5 +1,6 @@
 ﻿using backend.Core;
 using backend.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,13 +35,9 @@ namespace backend.Repositories
         /// <returns>the posted relational database service</returns>
         public RelationalDatabaseService PostRelationalDatabaseService(RelationalDatabaseService relationalDatabaseService)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                db.RelationalDatabaseService.Add(relationalDatabaseService);
-                db.SaveChanges();
-                return relationalDatabaseService;
-            }
-
+            _Ctx.RelationalDatabaseService.Add(relationalDatabaseService);
+            _Ctx.SaveChanges();
+            return relationalDatabaseService;
         }
         /// <summary>
         /// the method puts a new relational database service from the database
@@ -48,12 +45,9 @@ namespace backend.Repositories
         /// <returns>the puted relational database service</returns>
         public RelationalDatabaseService PutRelationalDatabaseService(RelationalDatabaseService Service)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                db.Entry(Service).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return Service;
-            }
+            _Ctx.Entry(Service).State = System.Data.Entity.EntityState.Modified;
+            _Ctx.SaveChanges();
+            return Service;
         }
         /// <summary>
         /// the method deletes a relational database service from the database by id
@@ -61,14 +55,21 @@ namespace backend.Repositories
         /// <returns>1 = success </returns>
         public bool DeleteRelationalDatabaseService(int id)
         {
-            using (BrokerContext db = new BrokerContext())
-            {
-                RelationalDatabaseService Service = db.RelationalDatabaseService.Find(id);
-                db.RelationalDatabaseService.Remove(Service);
-                return 1 == db.SaveChanges();
-            }
+            RelationalDatabaseService Service = _Ctx.RelationalDatabaseService.Find(id);
+            _Ctx.RelationalDatabaseService.Remove(Service);
+            return 1 == _Ctx.SaveChanges();
+        }
+        /// <summary>
+        /// the endpoint enables users to search for block level storages
+        /// </summary>
+        /// <param name="Search">search vector</param>
+        /// <returns>best match</returns>
+        public RelationalDatabaseService Search(SearchVector Search)
+        {
+            var rand = new Random();
+            var services = _Ctx.RelationalDatabaseService.ToList();
+            if (services.Count == 0) return null;
+            return services[rand.Next(services.Count)];
         }
     }
-
-  
 }
