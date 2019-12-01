@@ -135,6 +135,7 @@
     <Compile Include="Controllers\ObjectStorageServiceController.cs" />
     <Compile Include="Controllers\OnlineDriveStorageServiceController.cs" />
     <Compile Include="Controllers\RelationalDatabaseServiceController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\ServiceModelController.cs" />
     <Compile Include="Controllers\ServiceProviderController.cs" />
     <Compile Include="Controllers\StorageTypeController.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Models\ServiceCertificate.cs" />
     <Compile Include="Models\ServiceChargingModel.cs" />
     <Compile Include="Models\ServiceDataLocation.cs" />
+    <Compile Include="Models\ServiceWrapper.cs" />
     <Compile Include="Models\StorageType.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserRoleLink.cs" />
@@ -190,6 +192,7 @@
     <Compile Include="Repositories\RoleRightRepository.cs" />
     <Compile Include="Repositories\ServiceModelRepository.cs" />
     <Compile Include="Repositories\ServiceProviderRepository.cs" />
+    <Compile Include="Repositories\ServiceRepository.cs" />
     <Compile Include="Repositories\StorageTypeRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
