@@ -34,6 +34,8 @@ namespace backend.Repositories
         /// <returns>the posted direct attached storage service</returns>
         public DirectAttachedStorageService PostDirectAttachedStorageService(DirectAttachedStorageService DirectAttachedStorageService)
         {
+            DirectAttachedStorageService.Creation = DateTime.Now;
+            DirectAttachedStorageService.LastModified = DateTime.Now;
             _Ctx.DirectAttachedStorageService.Add(DirectAttachedStorageService);
             _Ctx.SaveChanges();
             return DirectAttachedStorageService;
@@ -44,7 +46,25 @@ namespace backend.Repositories
         /// <returns>the puted direct attached storage service</returns>
         public DirectAttachedStorageService PutDirectAttachedStorageService(DirectAttachedStorageService Service)
         {
-            _Ctx.Entry(Service).State = System.Data.Entity.EntityState.Modified;
+            DirectAttachedStorageService OldService = _Ctx.DirectAttachedStorageService.Find(Service.Id);
+            if (OldService == null) return null;
+            OldService.CloudServiceCategoryId = Service.CloudServiceCategoryId;
+            OldService.CloudServiceModelId = Service.CloudServiceModelId;
+            OldService.DeploymentInfoId = Service.DeploymentInfoId;
+            OldService.HasFileCompression = Service.HasFileCompression;
+            OldService.HasFileEncryption = Service.HasFileEncryption;
+            OldService.HasFileLocking = Service.HasFileLocking;
+            OldService.HasFilePermissions = Service.HasFilePermissions;
+            OldService.HasReplication = Service.HasReplication;
+            OldService.LastModified = DateTime.Now;
+            OldService.ProviderId = Service.ProviderId;
+            OldService.ServcieAvailability = Service.ServcieAvailability;
+            OldService.ServiceCompliance = Service.ServiceCompliance;
+            OldService.ServiceDescription = Service.ServiceDescription;
+            OldService.ServiceName = Service.ServiceName;
+            OldService.ServiceSLA = Service.ServiceSLA;
+            OldService.ServiceTitle = Service.ServiceTitle;
+            OldService.StorageTypeId = Service.StorageTypeId;
             _Ctx.SaveChanges();
             return Service;
         }

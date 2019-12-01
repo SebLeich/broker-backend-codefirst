@@ -40,6 +40,8 @@ namespace backend.Repositories
         /// <returns>the posted key value store service</returns>
         public KeyValueStoreService PostKeyValueStoreService(KeyValueStoreService Service)
         {
+            Service.Creation = DateTime.Now;
+            Service.LastModified = DateTime.Now;
             _Ctx.KeyValueStoreService.Add(Service);
             _Ctx.SaveChanges();
             return Service;
@@ -50,7 +52,21 @@ namespace backend.Repositories
         /// <returns>list of services</returns>
         public KeyValueStoreService PutKeyValueStoreService(KeyValueStoreService Service)
         {
-            _Ctx.Entry(Service).State = System.Data.Entity.EntityState.Modified;
+            KeyValueStoreService OldService = _Ctx.KeyValueStoreService.Find(Service.Id);
+            if (OldService == null) return null;
+            OldService.CloudServiceCategoryId = Service.CloudServiceCategoryId;
+            OldService.CloudServiceModelId = Service.CloudServiceModelId;
+            OldService.DeploymentInfoId = Service.DeploymentInfoId;
+            OldService.HasDBMS = Service.HasDBMS;
+            OldService.HasReplication = Service.HasReplication;
+            OldService.LastModified = DateTime.Now;
+            OldService.ProviderId = Service.ProviderId;
+            OldService.ServcieAvailability = Service.ServcieAvailability;
+            OldService.ServiceCompliance = Service.ServiceCompliance;
+            OldService.ServiceDescription = Service.ServiceDescription;
+            OldService.ServiceName = Service.ServiceName;
+            OldService.ServiceSLA = Service.ServiceSLA;
+            OldService.ServiceTitle = Service.ServiceTitle;
             _Ctx.SaveChanges();
             return Service;
         }

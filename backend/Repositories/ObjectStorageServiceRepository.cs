@@ -36,6 +36,8 @@ namespace backend.Repositories
         /// <returns>the posted object storage service</returns>
         public ObjectStorageService PostObjectStorageService(ObjectStorageService ObjectStorageService)
         {
+            ObjectStorageService.Creation = DateTime.Now;
+            ObjectStorageService.LastModified = DateTime.Now;
             _Ctx.ObjectStorageService.Add(ObjectStorageService);
             _Ctx.SaveChanges();
             return ObjectStorageService;
@@ -46,14 +48,30 @@ namespace backend.Repositories
         /// <returns>the puted object storage service</returns>
         public ObjectStorageService PutObjectStorageService(ObjectStorageService Service)
         {
-
-            foreach(ServiceCertificate C in Service.ServiceCertificates)
+            ObjectStorageService OldService = _Ctx.ObjectStorageService.Find(Service.Id);
+            if (OldService == null) return null;
+            OldService.CloudServiceCategoryId = Service.CloudServiceCategoryId;
+            OldService.CloudServiceModelId = Service.CloudServiceModelId;
+            OldService.DeploymentInfoId = Service.DeploymentInfoId;
+            OldService.HasFileEncryption = Service.HasFileEncryption;
+            OldService.HasFileLocking = Service.HasFileLocking;
+            OldService.HasFilePermissions = Service.HasFilePermissions;
+            OldService.HasFileVersioning = Service.HasFileVersioning;
+            OldService.HasReplication = Service.HasReplication;
+            OldService.LastModified = DateTime.Now;
+            OldService.ProviderId = Service.ProviderId;
+            OldService.ServcieAvailability = Service.ServcieAvailability;
+            OldService.ServiceCompliance = Service.ServiceCompliance;
+            OldService.ServiceDescription = Service.ServiceDescription;
+            OldService.ServiceName = Service.ServiceName;
+            OldService.ServiceSLA = Service.ServiceSLA;
+            OldService.ServiceTitle = Service.ServiceTitle;
+            foreach (ServiceCertificate C in Service.ServiceCertificates)
             {
                 Certificate Ct = _Ctx.Certificate.Find(C.CertificateId);
                 C.Certificate = Ct;
                 _Ctx.Entry(Ct).State = EntityState.Modified;
             }
-            _Ctx.Entry(Service).State = EntityState.Modified;
             _Ctx.SaveChanges();
             return Service;
         }

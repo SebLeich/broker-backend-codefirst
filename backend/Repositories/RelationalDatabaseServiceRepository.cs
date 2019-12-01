@@ -33,11 +33,13 @@ namespace backend.Repositories
         /// the method posts a new relational database service to the database
         /// </summary>
         /// <returns>the posted relational database service</returns>
-        public RelationalDatabaseService PostRelationalDatabaseService(RelationalDatabaseService relationalDatabaseService)
+        public RelationalDatabaseService PostRelationalDatabaseService(RelationalDatabaseService Service)
         {
-            _Ctx.RelationalDatabaseService.Add(relationalDatabaseService);
+            Service.Creation = DateTime.Now;
+            Service.LastModified = DateTime.Now;
+            _Ctx.RelationalDatabaseService.Add(Service);
             _Ctx.SaveChanges();
-            return relationalDatabaseService;
+            return Service;
         }
         /// <summary>
         /// the method puts a new relational database service from the database
@@ -45,7 +47,21 @@ namespace backend.Repositories
         /// <returns>the puted relational database service</returns>
         public RelationalDatabaseService PutRelationalDatabaseService(RelationalDatabaseService Service)
         {
-            _Ctx.Entry(Service).State = System.Data.Entity.EntityState.Modified;
+            RelationalDatabaseService OldService = _Ctx.RelationalDatabaseService.Find(Service.Id);
+            if (OldService == null) return null;
+            OldService.CloudServiceCategoryId = Service.CloudServiceCategoryId;
+            OldService.CloudServiceModelId = Service.CloudServiceModelId;
+            OldService.DeploymentInfoId = Service.DeploymentInfoId;
+            OldService.HasDBMS = Service.HasDBMS;
+            OldService.HasReplication = Service.HasReplication;
+            OldService.LastModified = DateTime.Now;
+            OldService.ProviderId = Service.ProviderId;
+            OldService.ServcieAvailability = Service.ServcieAvailability;
+            OldService.ServiceCompliance = Service.ServiceCompliance;
+            OldService.ServiceDescription = Service.ServiceDescription;
+            OldService.ServiceName = Service.ServiceName;
+            OldService.ServiceSLA = Service.ServiceSLA;
+            OldService.ServiceTitle = Service.ServiceTitle;
             _Ctx.SaveChanges();
             return Service;
         }

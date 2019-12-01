@@ -58,11 +58,14 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult PostOnlineDriveStorageServices([FromBody] OnlineDriveStorageService Service)
         {
+            if (!ModelState.IsValid) return BadRequest();
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
-            return Ok(_Repo.PostOnlineDriveStorageService(Service));
+            var _Resp = _Repo.PostOnlineDriveStorageService(Service);
+            if (_Resp == null) return NotFound();
+            return Ok(_Resp);
         }
         /// <summary>
         /// the endpoint overwrites a service in the database with the given object
@@ -74,11 +77,14 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult PutOnlineDriveStorageServices([FromBody] OnlineDriveStorageService Service)
         {
+            if (!ModelState.IsValid) return BadRequest();
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-services"))
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
-            return Ok(_Repo.PutOnlineDriveStorageService(Service));
+            var _Resp = _Repo.PutOnlineDriveStorageService(Service);
+            if (_Resp == null) return NotFound();
+            return Ok(_Resp);
         }
         /// <summary>
         /// the endpoint deletes the online drive storage with the given id

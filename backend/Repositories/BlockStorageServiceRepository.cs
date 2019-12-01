@@ -42,6 +42,8 @@ namespace backend.Repositories
         /// <returns>the posted block storage service</returns>
         public BlockStorageService PostBlockStorageService(BlockStorageService BlockStorageService)
         {
+            BlockStorageService.Creation = DateTime.Now;
+            BlockStorageService.LastModified = DateTime.Now;
             _Ctx.BlockStorageService.Add(BlockStorageService);
             _Ctx.SaveChanges();
             return BlockStorageService;
@@ -52,7 +54,22 @@ namespace backend.Repositories
         /// <returns>the puted block storage service</returns>
         public BlockStorageService PutBlockStorageService(BlockStorageService Service)
         {
-            _Ctx.Entry(Service).State = System.Data.Entity.EntityState.Modified;
+            BlockStorageService OldService = _Ctx.BlockStorageService.Find(Service.Id);
+            if (OldService == null) return null;
+            OldService.CloudServiceCategoryId = Service.CloudServiceCategoryId;
+            OldService.CloudServiceModelId = Service.CloudServiceModelId;
+            OldService.DeploymentInfoId = Service.DeploymentInfoId;
+            OldService.HasFileEncryption = Service.HasFileEncryption;
+            OldService.HasReplication = Service.HasReplication;
+            OldService.LastModified = DateTime.Now;
+            OldService.ProviderId = Service.ProviderId;
+            OldService.ServcieAvailability = Service.ServcieAvailability;
+            OldService.ServiceCompliance = Service.ServiceCompliance;
+            OldService.ServiceDescription = Service.ServiceDescription;
+            OldService.ServiceName = Service.ServiceName;
+            OldService.ServiceSLA = Service.ServiceSLA;
+            OldService.ServiceTitle = Service.ServiceTitle;
+            OldService.StorageTypeId = Service.StorageTypeId;
             _Ctx.SaveChanges();
             return Service;
         }

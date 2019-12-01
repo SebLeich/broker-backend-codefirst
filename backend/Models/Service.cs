@@ -18,6 +18,8 @@ namespace backend.Models
         public string ServiceSLA { get; set; }
         public string ServiceTitle { get; set; }
         public string ServcieAvailability { get; set; }
+        public DateTime Creation { get; set; }
+        public DateTime LastModified { get; set; }
 
         [ForeignKey("CloudServiceCategory")]
         public Nullable<int> CloudServiceCategoryId { get; set; }
@@ -27,15 +29,11 @@ namespace backend.Models
         public Nullable<int> ProviderId { get; set; }
         [ForeignKey("DeploymentInfo")]
         public Nullable<int> DeploymentInfoId { get; set; }
-        [ForeignKey("StorageType")]
-        public Nullable<int> StorageTypeId { get; set; }
 
         [ForeignKey(nameof(CloudServiceCategoryId))]
         public virtual CloudServiceCategory CloudServiceCategory { get; set; }
         [ForeignKey(nameof(CloudServiceModelId))]
         public virtual CloudServiceModel CloudServiceModel { get; set; }
-        [ForeignKey(nameof(StorageTypeId))]
-        public virtual StorageType StorageType { get; set; }
         [ForeignKey(nameof(ProviderId))]
         public virtual Provider Provider { get; set; }
         [ForeignKey(nameof(DeploymentInfoId))]

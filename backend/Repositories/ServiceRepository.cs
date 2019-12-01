@@ -33,7 +33,13 @@ namespace backend.Repositories
             List<Service> Services = _Ctx.Service.ToList();
             foreach(Service Service in Services)
             {
-                Output.Add(new ServiceWrapper { Id = Service.Id, Discriminator = Service.GetType().Name, ServiceName = Service.ServiceName });
+                Output.Add(new ServiceWrapper {
+                    Id = Service.Id,
+                    Discriminator = Service.GetType().Name,
+                    ServiceName = Service.ServiceName,
+                    Creation = Service.Creation,
+                    LastModified = Service.LastModified
+                });
             }
             return Output;
         }

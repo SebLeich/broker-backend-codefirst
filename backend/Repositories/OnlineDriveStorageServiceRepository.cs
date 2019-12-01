@@ -37,6 +37,8 @@ namespace backend.Repositories
         /// <returns>the posted online drive storage service</returns>
         public OnlineDriveStorageService PostOnlineDriveStorageService(OnlineDriveStorageService Service)
         {
+            Service.Creation = DateTime.Now;
+            Service.LastModified = DateTime.Now;
             _Ctx.OnlineDriveStorageService.Add(Service);
             _Ctx.SaveChanges();
             return Service;
@@ -47,7 +49,23 @@ namespace backend.Repositories
         /// <returns>list of services</returns>
         public OnlineDriveStorageService PutOnlineDriveStorageService(OnlineDriveStorageService Service)
         {
-            _Ctx.Entry(Service).State = System.Data.Entity.EntityState.Modified;
+            OnlineDriveStorageService OldService = _Ctx.OnlineDriveStorageService.Find(Service.Id);
+            if (OldService == null) return null;
+            OldService.CloudServiceCategoryId = Service.CloudServiceCategoryId;
+            OldService.CloudServiceModelId = Service.CloudServiceModelId;
+            OldService.DeploymentInfoId = Service.DeploymentInfoId;
+            OldService.HasAutomatedSynchronisation = Service.HasAutomatedSynchronisation;
+            OldService.HasFileEncryption = Service.HasFileEncryption;
+            OldService.HasFilePermissions = Service.HasFilePermissions;
+            OldService.HasFileVersioning = Service.HasFileVersioning;
+            OldService.LastModified = DateTime.Now;
+            OldService.ProviderId = Service.ProviderId;
+            OldService.ServcieAvailability = Service.ServcieAvailability;
+            OldService.ServiceCompliance = Service.ServiceCompliance;
+            OldService.ServiceDescription = Service.ServiceDescription;
+            OldService.ServiceName = Service.ServiceName;
+            OldService.ServiceSLA = Service.ServiceSLA;
+            OldService.ServiceTitle = Service.ServiceTitle;
             _Ctx.SaveChanges();
             return Service;
         }
