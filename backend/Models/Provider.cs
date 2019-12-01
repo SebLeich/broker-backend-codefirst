@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace backend.Models
 {
@@ -15,7 +13,12 @@ namespace backend.Models
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string ProviderName { get; set; }
+        public string URL { get; set; }
+        public string Revision { get; set; }
+        public bool Verified { get; set; } = false;
 
         public virtual ICollection<ProviderPayment> ProviderPayments { get; set; }
+        [JsonIgnore]
+        public virtual List<Service> Services { get; set; }
     }
 }

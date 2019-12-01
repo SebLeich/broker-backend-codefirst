@@ -6,15 +6,29 @@ using System.Data.Entity;
 
 namespace backend.Core
 {
+    /// <summary>
+    /// the broker context user class
+    /// </summary>
     public class ApplicationUser : IdentityUser<Guid, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim> {
+        /// <summary>
+        /// the constructor creates a new instance of an application user
+        /// </summary>
         public ApplicationUser()
         {
             Id = Guid.NewGuid();
         }
     }
+    /// <summary>
+    /// the application user roles
+    /// </summary>
     public class ApplicationUserRole : IdentityUserRole<Guid> { }
+    /// <summary>
+    /// 
+    /// </summary>
     public class ApplicationUserClaim : IdentityUserClaim<Guid> { }
+
     public class ApplicationUserLogin : IdentityUserLogin<Guid> { }
+
     public class ApplicationRole : IdentityRole<Guid, ApplicationUserRole> {
         public virtual ICollection<Rule> Rules { get; set; } = new HashSet<Rule>();
         public ApplicationRole()
@@ -68,6 +82,14 @@ namespace backend.Core
         /// </summary>
         public DbSet<DataLocation> DataLocation { get; set; }
         /// <summary>
+        /// the data location type relation
+        /// </summary>
+        public DbSet<DataLocationType> DataLocationType { get; set; }
+        /// <summary>
+        /// the deployment information relation
+        /// </summary>
+        public DbSet<DeploymentInfo> DeploymentInfo { get; set; }
+        /// <summary>
         /// the direct attached storage service relation
         /// </summary>
         public DbSet<DirectAttachedStorageService> DirectAttachedStorageService { get; set; }
@@ -88,6 +110,18 @@ namespace backend.Core
         /// </summary>
         public DbSet<Payment> Payment { get; set; }
         /// <summary>
+        /// the service pricing relation
+        /// </summary>
+        public DbSet<Pricing> Pricing { get; set; }
+        /// <summary>
+        /// the pricing model relation
+        /// </summary>
+        public DbSet<PricingModel> PricingModel { get; set; }
+        /// <summary>
+        /// the pricing period relation
+        /// </summary>
+        public DbSet<PricingPeriod> PricingPeriod { get; set; }
+        /// <summary>
         /// the provider relation
         /// </summary>
         public DbSet<Provider> Provider { get; set; }
@@ -99,6 +133,10 @@ namespace backend.Core
         /// the relational database relation
         /// </summary>
         public DbSet<RelationalDatabaseService> RelationalDatabaseService { get; set; }
+        /// <summary>
+        /// the rule relation
+        /// </summary>
+        public DbSet<Rule> Rule { get; set; }
         /// <summary>
         /// the service relation
         /// </summary>
@@ -116,9 +154,9 @@ namespace backend.Core
         /// </summary>
         public DbSet<ServiceDataLocation> ServiceDataLocation { get; set; }
         /// <summary>
-        /// the rule relation
+        /// the service storage type relation
         /// </summary>
-        public DbSet<Rule> Rule { get; set; }
+        public DbSet<StorageType> StorageType { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

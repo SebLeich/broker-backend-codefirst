@@ -5,16 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models
 {
-    /// <summary>
-    /// the class contains the payment model
-    /// </summary>
-    public class Payment
+    public class DeploymentInfo
     {
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string PaymentType { get; set; }
+        public string DeploymentName { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<ProviderPayment> ProviderPayments { get; set; }
+        public virtual List<Service> Services { get; set; }
     }
 }

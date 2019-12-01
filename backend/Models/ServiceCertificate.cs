@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models
@@ -13,7 +14,8 @@ namespace backend.Models
         [Key, Column(Order = 1)]
         public int CertificateId { get; set; }
 
-        public Service Service { get; set; }
-        public Certificate Certificate { get; set; }
+        [JsonIgnore]
+        public virtual Service Service { get; set; }
+        public virtual Certificate Certificate { get; set; }
     }
 }

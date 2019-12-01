@@ -14,17 +14,36 @@ namespace backend.Models
         public int Id { get; set; }
         public string ServiceName { get; set; }
         public string ServiceDescription { get; set; }
+        public string ServiceCompliance { get; set; }
+        public string ServiceSLA { get; set; }
         public string ServiceTitle { get; set; }
         public string ServcieAvailability { get; set; }
-        public Nullable<int> CloudServiceCategoryId { get; set; }
-        public Nullable<int> CloudServiceModelId { get; set; }
-        public Nullable<int> ProviderId { get; set; }
 
-        public CloudServiceCategory CloudServiceCategory { get; set; }
-        public CloudServiceModel CloudServiceModel { get; set; }
-        public Provider Provider { get; set; }
+        [ForeignKey("CloudServiceCategory")]
+        public Nullable<int> CloudServiceCategoryId { get; set; }
+        [ForeignKey("CloudServiceModel")]
+        public Nullable<int> CloudServiceModelId { get; set; }
+        [ForeignKey("Provider")]
+        public Nullable<int> ProviderId { get; set; }
+        [ForeignKey("DeploymentInfo")]
+        public Nullable<int> DeploymentInfoId { get; set; }
+        [ForeignKey("StorageType")]
+        public Nullable<int> StorageTypeId { get; set; }
+
+        [ForeignKey(nameof(CloudServiceCategoryId))]
+        public virtual CloudServiceCategory CloudServiceCategory { get; set; }
+        [ForeignKey(nameof(CloudServiceModelId))]
+        public virtual CloudServiceModel CloudServiceModel { get; set; }
+        [ForeignKey(nameof(StorageTypeId))]
+        public virtual StorageType StorageType { get; set; }
+        [ForeignKey(nameof(ProviderId))]
+        public virtual Provider Provider { get; set; }
+        [ForeignKey(nameof(DeploymentInfoId))]
+        public virtual DeploymentInfo DeploymentInfo { get; set; }
+
         public virtual List<ServiceChargingModel> ServiceChargingModels { get; set; }
         public virtual List<ServiceCertificate> ServiceCertificates { get; set; }
         public virtual List<ServiceDataLocation> ServiceDataLocations { get; set; }
+        public virtual List<Pricing> Pricing { get; set; }
     }
 }

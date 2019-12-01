@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models
 {
@@ -10,5 +11,7 @@ namespace backend.Models
         [Key]
         public int Id { get; set; }
         public string CloudServiceCategoryName { get; set; }
+
+        public virtual List<Service> Services { get; set; }
     }
 }

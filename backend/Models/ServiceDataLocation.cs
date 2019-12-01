@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace backend.Models
 {
@@ -17,7 +13,7 @@ namespace backend.Models
         [Key, Column(Order = 1)]
         public int DataLocationId { get; set; }
 
-        public Service Service { get; set; }
-        public DataLocation DataLocation { get; set; }
+        public virtual Service Service { get; set; }
+        public virtual DataLocation DataLocation { get; set; }
     }
 }

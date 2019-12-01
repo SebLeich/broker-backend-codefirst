@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models
 {
@@ -10,8 +8,11 @@ namespace backend.Models
         public bool HasFileEncryption { get; set; }
         public bool HasReplication { get; set; }
 
+        [ForeignKey("StorageType")]
         public Nullable<int> StorageTypeId { get; set; }
-        public StorageType StorageType { get; set; }
+
+        [ForeignKey(nameof(StorageTypeId))]
+        public virtual StorageType StorageType { get; set; }
 
     }
 }

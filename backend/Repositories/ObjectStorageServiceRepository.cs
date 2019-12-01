@@ -2,6 +2,7 @@
 using backend.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace backend.Repositories
@@ -45,7 +46,14 @@ namespace backend.Repositories
         /// <returns>the puted object storage service</returns>
         public ObjectStorageService PutObjectStorageService(ObjectStorageService Service)
         {
-            _Ctx.Entry(Service).State = System.Data.Entity.EntityState.Modified;
+
+            foreach(ServiceCertificate C in Service.ServiceCertificates)
+            {
+                Certificate Ct = _Ctx.Certificate.Find(C.CertificateId);
+                C.Certificate = Ct;
+                _Ctx.Entry(Ct).State = EntityState.Modified;
+            }
+            _Ctx.Entry(Service).State = EntityState.Modified;
             _Ctx.SaveChanges();
             return Service;
         }
