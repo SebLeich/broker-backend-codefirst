@@ -105,8 +105,8 @@ namespace backend.Controllers
         public IHttpActionResult Search([FromBody] SearchVector Search)
         {
             var result = _Repo.Search(Search);
-            if (result == null) return NotFound();
-            return Ok(result);
+            if (result.error != null) return Content(result.state, result.error);
+            return Content(result.state, result.content);
         }
     }
 }

@@ -129,6 +129,7 @@
     <Compile Include="Controllers\BlockStorageServiceController.cs" />
     <Compile Include="Controllers\CertificateController.cs" />
     <Compile Include="Controllers\CloudServiceCategoryController.cs" />
+    <Compile Include="Controllers\DataLocationController.cs" />
     <Compile Include="Controllers\DeploymentInformationController.cs" />
     <Compile Include="Controllers\DirectAttachedStorageServiceController.cs" />
     <Compile Include="Controllers\KeyValueStoreServiceController.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Models\DeploymentInfo.cs" />
     <Compile Include="Models\DirectAttachedStorageService.cs" />
     <Compile Include="Models\KeyValueStoreService.cs" />
+    <Compile Include="Models\MatchingResponse.cs" />
     <Compile Include="Models\ObjectStorageService.cs" />
     <Compile Include="Models\OnlineDriveStorageService.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -166,6 +168,7 @@
     <Compile Include="Models\Provider.cs" />
     <Compile Include="Models\ProviderPayment.cs" />
     <Compile Include="Models\RelationalDatabaseService.cs" />
+    <Compile Include="Models\ResponseWrapper.cs" />
     <Compile Include="Models\RoleModel.cs" />
     <Compile Include="Models\RoleRuleLink.cs" />
     <Compile Include="Models\Rule.cs" />
@@ -183,6 +186,7 @@
     <Compile Include="Repositories\BlockStorageServiceRepository.cs" />
     <Compile Include="Repositories\CertificateRepository.cs" />
     <Compile Include="Repositories\CloudServiceCategoryRepository.cs" />
+    <Compile Include="Repositories\DataLocationRepository.cs" />
     <Compile Include="Repositories\DeploymentInformationRepository.cs" />
     <Compile Include="Repositories\DirectAttachedStorageServiceRepository.cs" />
     <Compile Include="Repositories\KeyValueStoreServiceRepository.cs" />

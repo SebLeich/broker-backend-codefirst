@@ -79,16 +79,35 @@ namespace backend.Repositories
             return 1 == _Ctx.SaveChanges();
         }
         /// <summary>
-        /// the endpoint enables users to search for block level storages
+        /// the endpoint enables users to search for direct attached storages
         /// </summary>
         /// <param name="Search">search vector</param>
         /// <returns>best match</returns>
-        public DirectAttachedStorageService Search(SearchVector Search)
+        public ResponseWrapper<List<MatchingResponseWrapper<DirectAttachedStorageService>>> Search(SearchVector Search)
         {
-            var rand = new Random();
-            var services = _Ctx.DirectAttachedStorageService.ToList();
-            if (services.Count == 0) return null;
-            return services[rand.Next(services.Count)];
+            var output = new List<MatchingResponseWrapper<DirectAttachedStorageService>>();
+            foreach (DirectAttachedStorageService Service in _Ctx.DirectAttachedStorageService.ToList())
+            {
+                var result = Service.MatchWithSearchVector(Search);
+                if (result.total == 0) return new ResponseWrapper<List<MatchingResponseWrapper<DirectAttachedStorageService>>>
+                {
+                    state = System.Net.HttpStatusCode.BadRequest,
+                    error = "Fehlerhafte Eingabe: vergebenes Rating muss ingesamt mindestens 1 sein. Wert: 0"
+                };
+                if (result.percentage >= Search.minFulfillmentPercentage)
+                {
+                    output.Add(new MatchingResponseWrapper<DirectAttachedStorageService>
+                    {
+                        content = Service,
+                        match = result
+                    });
+                }
+            }
+            return new ResponseWrapper<List<MatchingResponseWrapper<DirectAttachedStorageService>>>
+            {
+                state = System.Net.HttpStatusCode.OK,
+                content = output
+            };
         }
     }
 }
