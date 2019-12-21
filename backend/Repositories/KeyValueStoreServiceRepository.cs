@@ -81,16 +81,35 @@ namespace backend.Repositories
             return 1 == _Ctx.SaveChanges();
         }
         /// <summary>
-        /// the endpoint enables users to search for block level storages
+        /// the endpoint enables users to search for key value storages
         /// </summary>
         /// <param name="Search">search vector</param>
         /// <returns>best match</returns>
-        public KeyValueStoreService Search(SearchVector Search)
+        public ResponseWrapper<List<MatchingResponseWrapper<KeyValueStoreService>>> Search(SearchVector Search)
         {
-            var rand = new Random();
-            var services = _Ctx.KeyValueStoreService.ToList();
-            if (services.Count == 0) return null;
-            return services[rand.Next(services.Count)];
+            if (Search.total == 0) return new ResponseWrapper<List<MatchingResponseWrapper<KeyValueStoreService>>>
+            {
+                state = System.Net.HttpStatusCode.BadRequest,
+                error = "Fehlerhafte Eingabe: vergebenes Rating muss ingesamt mindestens 1 sein. Wert: 0"
+            };
+            var output = new List<MatchingResponseWrapper<KeyValueStoreService>>();
+            foreach (KeyValueStoreService Service in _Ctx.KeyValueStoreService.ToList())
+            {
+                var result = Service.MatchWithSearchVector(Search);
+                if (result.percentage >= Search.minFulfillmentPercentage)
+                {
+                    output.Add(new MatchingResponseWrapper<KeyValueStoreService>
+                    {
+                        content = Service,
+                        match = result
+                    });
+                }
+            }
+            return new ResponseWrapper<List<MatchingResponseWrapper<KeyValueStoreService>>>
+            {
+                state = System.Net.HttpStatusCode.OK,
+                content = output
+            };
         }
     }
 }

@@ -56,34 +56,29 @@ namespace backend.Models
         public MatchingResponse MatchWithSearchVector(SearchVector Search)
         {
             MatchingResponse Output = new MatchingResponse();
+            Output.total = Search.total;
             if(Search.categories != null && Search.categories.value != null && Search.categories.value.Count > 0 && Search.categories.priority > 0)
             {
-                Output.total += Search.categories.priority;
                 if(CloudServiceCategoryId.HasValue && Search.categories.value.Contains(CloudServiceCategoryId.Value)) Output.points += Search.categories.priority;
             }
             if (Search.models != null && Search.models.value != null && Search.models.value.Count > 0 && Search.models.priority > 0)
             {
-                Output.total += Search.models.priority;
                 if (CloudServiceModelId.HasValue && Search.models.value.Contains(CloudServiceModelId.Value)) Output.points += Search.models.priority;
             }
             if (Search.providers != null && Search.providers.value != null && Search.providers.value.Count > 0 && Search.providers.priority > 0)
             {
-                Output.total += Search.providers.priority;
                 if (ProviderId.HasValue && Search.providers.value.Contains(ProviderId.Value)) Output.points += Search.providers.priority;
             }
             if (Search.deploymentinfos != null && Search.deploymentinfos.value != null && Search.deploymentinfos.value.Count > 0 && Search.deploymentinfos.priority > 0)
             {
-                Output.total += Search.deploymentinfos.priority;
                 if (DeploymentInfoId.HasValue && Search.deploymentinfos.value.Contains(DeploymentInfoId.Value)) Output.points += Search.deploymentinfos.priority;
             }
             if (Search.datalocations != null && Search.datalocations.value != null && Search.datalocations.value.Count > 0 && Search.datalocations.priority > 0)
             {
-                Output.total += Search.datalocations.priority;
                 if (ServiceDataLocations.Select(x => x.DataLocationId).Intersect(Search.datalocations.value).Any()) Output.points += Search.datalocations.priority;
             }
             if (Search.certificates != null && Search.certificates.value != null && Search.certificates.value.Count > 0 && Search.certificates.priority > 0)
             {
-                Output.total += Search.certificates.priority;
                 if (ServiceCertificates.Select(x => x.CertificateId).Intersect(Search.certificates.value).Any()) Output.points += Search.certificates.priority;
             }
             return Output;

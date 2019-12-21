@@ -85,15 +85,15 @@ namespace backend.Repositories
         /// <returns>best match</returns>
         public ResponseWrapper<List<MatchingResponseWrapper<DirectAttachedStorageService>>> Search(SearchVector Search)
         {
+            if (Search.total == 0) return new ResponseWrapper<List<MatchingResponseWrapper<DirectAttachedStorageService>>>
+            {
+                state = System.Net.HttpStatusCode.BadRequest,
+                error = "Fehlerhafte Eingabe: vergebenes Rating muss ingesamt mindestens 1 sein. Wert: 0"
+            };
             var output = new List<MatchingResponseWrapper<DirectAttachedStorageService>>();
             foreach (DirectAttachedStorageService Service in _Ctx.DirectAttachedStorageService.ToList())
             {
                 var result = Service.MatchWithSearchVector(Search);
-                if (result.total == 0) return new ResponseWrapper<List<MatchingResponseWrapper<DirectAttachedStorageService>>>
-                {
-                    state = System.Net.HttpStatusCode.BadRequest,
-                    error = "Fehlerhafte Eingabe: vergebenes Rating muss ingesamt mindestens 1 sein. Wert: 0"
-                };
                 if (result.percentage >= Search.minFulfillmentPercentage)
                 {
                     output.Add(new MatchingResponseWrapper<DirectAttachedStorageService>

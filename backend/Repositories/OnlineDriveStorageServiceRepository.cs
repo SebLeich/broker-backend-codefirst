@@ -80,16 +80,35 @@ namespace backend.Repositories
             return 1 == _Ctx.SaveChanges();
         }
         /// <summary>
-        /// the endpoint enables users to search for block level storages
+        /// the endpoint enables users to search for online drive storages
         /// </summary>
         /// <param name="Search">search vector</param>
         /// <returns>best match</returns>
-        public OnlineDriveStorageService Search(SearchVector Search)
+        public ResponseWrapper<List<MatchingResponseWrapper<OnlineDriveStorageService>>> Search(SearchVector Search)
         {
-            var rand = new Random();
-            var services = _Ctx.OnlineDriveStorageService.ToList();
-            if (services.Count == 0) return null;
-            return services[rand.Next(services.Count)];
+            if (Search.total == 0) return new ResponseWrapper<List<MatchingResponseWrapper<OnlineDriveStorageService>>>
+            {
+                state = System.Net.HttpStatusCode.BadRequest,
+                error = "Fehlerhafte Eingabe: vergebenes Rating muss ingesamt mindestens 1 sein. Wert: 0"
+            };
+            var output = new List<MatchingResponseWrapper<OnlineDriveStorageService>>();
+            foreach (OnlineDriveStorageService Service in _Ctx.OnlineDriveStorageService.ToList())
+            {
+                var result = Service.MatchWithSearchVector(Search);
+                if (result.percentage >= Search.minFulfillmentPercentage)
+                {
+                    output.Add(new MatchingResponseWrapper<OnlineDriveStorageService>
+                    {
+                        content = Service,
+                        match = result
+                    });
+                }
+            }
+            return new ResponseWrapper<List<MatchingResponseWrapper<OnlineDriveStorageService>>>
+            {
+                state = System.Net.HttpStatusCode.OK,
+                content = output
+            };
         }
     }
 }

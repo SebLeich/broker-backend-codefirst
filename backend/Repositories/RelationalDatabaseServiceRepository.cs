@@ -76,16 +76,35 @@ namespace backend.Repositories
             return 1 == _Ctx.SaveChanges();
         }
         /// <summary>
-        /// the endpoint enables users to search for block level storages
+        /// the endpoint enables users to search for relational database storages
         /// </summary>
         /// <param name="Search">search vector</param>
         /// <returns>best match</returns>
-        public RelationalDatabaseService Search(SearchVector Search)
+        public ResponseWrapper<List<MatchingResponseWrapper<RelationalDatabaseService>>> Search(SearchVector Search)
         {
-            var rand = new Random();
-            var services = _Ctx.RelationalDatabaseService.ToList();
-            if (services.Count == 0) return null;
-            return services[rand.Next(services.Count)];
+            if (Search.total == 0) return new ResponseWrapper<List<MatchingResponseWrapper<RelationalDatabaseService>>>
+            {
+                state = System.Net.HttpStatusCode.BadRequest,
+                error = "Fehlerhafte Eingabe: vergebenes Rating muss ingesamt mindestens 1 sein. Wert: 0"
+            };
+            var output = new List<MatchingResponseWrapper<RelationalDatabaseService>>();
+            foreach (RelationalDatabaseService Service in _Ctx.RelationalDatabaseService.ToList())
+            {
+                var result = Service.MatchWithSearchVector(Search);
+                if (result.percentage >= Search.minFulfillmentPercentage)
+                {
+                    output.Add(new MatchingResponseWrapper<RelationalDatabaseService>
+                    {
+                        content = Service,
+                        match = result
+                    });
+                }
+            }
+            return new ResponseWrapper<List<MatchingResponseWrapper<RelationalDatabaseService>>>
+            {
+                state = System.Net.HttpStatusCode.OK,
+                content = output
+            };
         }
     }
 }
