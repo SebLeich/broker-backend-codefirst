@@ -13,13 +13,13 @@
             MatchingResponse Output = base.MatchWithSearchVector(Search);
             if (Search.hasDBMS != null && Search.hasDBMS.priority > 0)
             {
-                Output.total += Search.hasDBMS.priority;
-                if (HasDBMS) Output.points += Search.hasDBMS.priority;
+                Output.priorityHasDBMS = Search.hasDBMS.priority;
+                if (HasDBMS) Output.pointsHasDBMS = Search.hasDBMS.priority;
             }
             if (Search.hasReplication != null && Search.hasReplication.priority > 0)
             {
-                Output.total += Search.hasReplication.priority;
-                if (HasReplication) Output.points += Search.hasReplication.priority;
+                Output.priorityHasReplication = Search.hasReplication.priority;
+                if (HasReplication) Output.pointsHasReplication = Search.hasReplication.priority;
             }
             return Output;
         }

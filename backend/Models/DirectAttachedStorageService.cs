@@ -16,33 +16,33 @@ namespace backend.Models
             MatchingResponse Output = base.MatchWithSearchVector(Search);
             if (Search.hasFileEncryption != null && Search.hasFileEncryption.priority > 0)
             {
-                Output.total += Search.hasFileEncryption.priority;
-                if (HasFileEncryption) Output.points += Search.hasFileEncryption.priority;
+                Output.priorityHasFileEncryption = Search.hasFileEncryption.priority;
+                if (HasFileEncryption) Output.pointsHasFileEncryption = Search.hasFileEncryption.priority;
             }
             if (Search.hasReplication != null && Search.hasReplication.priority > 0)
             {
-                Output.total += Search.hasReplication.priority;
-                if (HasReplication) Output.points += Search.hasReplication.priority;
+                Output.priorityHasReplication = Search.hasReplication.priority;
+                if (HasReplication) Output.pointsHasReplication = Search.hasReplication.priority;
             }
             if (Search.hasFilePermissions != null && Search.hasFilePermissions.priority > 0)
             {
-                Output.total += Search.hasFilePermissions.priority;
-                if (HasFilePermissions) Output.points += Search.hasFilePermissions.priority;
+                Output.priorityHasFilePermissions = Search.hasFilePermissions.priority;
+                if (HasFilePermissions) Output.pointsHasFilePermissions = Search.hasFilePermissions.priority;
             }
             if (Search.hasFileLocking != null && Search.hasFileLocking.priority > 0)
             {
-                Output.total += Search.hasFileLocking.priority;
-                if (HasFileLocking) Output.points += Search.hasFileLocking.priority;
+                Output.priorityHasFileLocking = Search.hasFileLocking.priority;
+                if (HasFileLocking) Output.pointsHasFileLocking = Search.hasFileLocking.priority;
             }
             if (Search.hasFileCompression != null && Search.hasFileCompression.priority > 0)
             {
-                Output.total += Search.hasFileCompression.priority;
-                if (HasFileCompression) Output.points += Search.hasFileCompression.priority;
+                Output.priorityHasFileCompression = Search.hasFileCompression.priority;
+                if (HasFileCompression) Output.pointsHasFileCompression = Search.hasFileCompression.priority;
             }
             if (Search.storageType != null && Search.storageType.value != null && Search.storageType.value.Count > 0 && Search.storageType.priority > 0)
             {
-                Output.total += Search.storageType.priority;
-                if (StorageTypeId.HasValue && Search.storageType.value.Contains(StorageTypeId.Value)) Output.points += Search.storageType.priority;
+                Output.prioritystoragetype = Search.storageType.priority;
+                if (StorageTypeId.HasValue && Search.storageType.value.Contains(StorageTypeId.Value)) Output.pointsstoragetype = Search.storageType.priority;
             }
             return Output;
         }

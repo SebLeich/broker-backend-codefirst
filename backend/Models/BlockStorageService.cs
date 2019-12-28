@@ -19,11 +19,13 @@ namespace backend.Models
             MatchingResponse Output = base.MatchWithSearchVector(Search);
             if (Search.hasFileEncryption != null && Search.hasFileEncryption.priority > 0)
             {
-                if (HasFileEncryption) Output.points += Search.hasFileEncryption.priority;
+                Output.priorityHasFileEncryption = Search.hasFileEncryption.priority;
+                if (HasFileEncryption) Output.pointsHasFileEncryption = Search.hasFileEncryption.priority;
             }
             if (Search.hasReplication != null && Search.hasReplication.priority > 0)
             {
-                if (HasReplication) Output.points += Search.hasReplication.priority;
+                Output.priorityHasReplication = Search.hasReplication.priority;
+                if (HasReplication) Output.pointsHasReplication = Search.hasReplication.priority;
             }
             return Output;
         }

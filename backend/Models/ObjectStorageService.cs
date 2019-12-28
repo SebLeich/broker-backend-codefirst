@@ -13,28 +13,28 @@
             MatchingResponse Output = base.MatchWithSearchVector(Search);
             if (Search.hasFileEncryption != null && Search.hasFileEncryption.priority > 0)
             {
-                Output.total += Search.hasFileEncryption.priority;
-                if (HasFileEncryption) Output.points += Search.hasFileEncryption.priority;
+                Output.priorityHasFileEncryption = Search.hasFileEncryption.priority;
+                if (HasFileEncryption) Output.pointsHasFileEncryption = Search.hasFileEncryption.priority;
             }
             if (Search.hasReplication != null && Search.hasReplication.priority > 0)
             {
-                Output.total += Search.hasReplication.priority;
-                if (HasReplication) Output.points += Search.hasReplication.priority;
+                Output.priorityHasReplication = Search.hasReplication.priority;
+                if (HasReplication) Output.pointsHasReplication = Search.hasReplication.priority;
             }
             if (Search.hasFilePermissions != null && Search.hasFilePermissions.priority > 0)
             {
-                Output.total += Search.hasFilePermissions.priority;
-                if (HasFilePermissions) Output.points += Search.hasFilePermissions.priority;
+                Output.priorityHasFilePermissions = Search.hasFilePermissions.priority;
+                if (HasFilePermissions) Output.pointsHasFilePermissions = Search.hasFilePermissions.priority;
             }
             if (Search.hasFileLocking != null && Search.hasFileLocking.priority > 0)
             {
-                Output.total += Search.hasFileLocking.priority;
-                if (HasFileLocking) Output.points += Search.hasFileLocking.priority;
+                Output.priorityHasFileLocking = Search.hasFileLocking.priority;
+                if (HasFileLocking) Output.pointsHasFileLocking = Search.hasFileLocking.priority;
             }
             if (Search.hasFileVersioning != null && Search.hasFileVersioning.priority > 0)
             {
-                Output.total += Search.hasFileVersioning.priority;
-                if (HasFileVersioning) Output.points += Search.hasFileVersioning.priority;
+                Output.priorityHasFileVersioning = Search.hasFileVersioning.priority;
+                if (HasFileVersioning) Output.pointsHasFileVersioning = Search.hasFileVersioning.priority;
             }
             return Output;
         }

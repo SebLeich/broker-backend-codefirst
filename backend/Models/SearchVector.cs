@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace backend.Models
 {
@@ -24,21 +25,21 @@ namespace backend.Models
         public int total { get
             {
                 var output = 0;
-                if (categories != null) output += categories.priority;
-                if (certificates != null) output += certificates.priority;
-                if (datalocations != null) output += datalocations.priority;
-                if (deploymentinfos != null) output += deploymentinfos.priority;
-                if (models != null) output += models.priority;
-                if (providers != null) output += providers.priority;
-                if (storageType != null) output += storageType.priority;
-                if (hasFileEncryption != null) output += hasFileEncryption.priority;
-                if (hasReplication != null) output += hasReplication.priority;
-                if (hasFilePermissions != null) output += hasFilePermissions.priority;
-                if (hasFileLocking != null) output += hasFileLocking.priority;
-                if (hasFileCompression != null) output += hasFileCompression.priority;
-                if (hasDBMS != null) output += hasDBMS.priority;
-                if (hasFileVersioning != null) output += hasFileVersioning.priority;
-                if (hasAutomatedSynchronisation != null) output += hasAutomatedSynchronisation.priority;
+                if (categories != null && categories.value != null && categories.value.Count > 0) output += categories.priority;
+                if (certificates != null && certificates.value != null && certificates.value.Count > 0) output += certificates.priority;
+                if (datalocations != null && datalocations.value != null && datalocations.value.Count > 0) output += datalocations.priority;
+                if (deploymentinfos != null && deploymentinfos.value != null && deploymentinfos.value.Count > 0) output += deploymentinfos.priority;
+                if (models != null && models.value != null && models.value.Count > 0) output += models.priority;
+                if (providers != null && providers.value != null && providers.value.Count > 0) output += providers.priority;
+                if (storageType != null && storageType.value != null && storageType.value.Count > 0) output += storageType.priority;
+                if (hasFileEncryption != null && hasFileEncryption.value.HasValue) output += hasFileEncryption.priority;
+                if (hasReplication != null && hasReplication.value.HasValue) output += hasReplication.priority;
+                if (hasFilePermissions != null && hasFilePermissions.value.HasValue) output += hasFilePermissions.priority;
+                if (hasFileLocking != null && hasFileLocking.value.HasValue) output += hasFileLocking.priority;
+                if (hasFileCompression != null && hasFileCompression.value.HasValue) output += hasFileCompression.priority;
+                if (hasDBMS != null && hasDBMS.value.HasValue) output += hasDBMS.priority;
+                if (hasFileVersioning != null && hasFileVersioning.value.HasValue) output += hasFileVersioning.priority;
+                if (hasAutomatedSynchronisation != null && hasAutomatedSynchronisation.value.HasValue) output += hasAutomatedSynchronisation.priority;
                 return output;
             }
         }
@@ -56,7 +57,7 @@ namespace backend.Models
     }
     public class SearchVectorBooleanEntry
     {
-        public bool value { get; set; }
+        public Nullable<bool> value { get; set; }
         public int priority { get; set; }
     }
 }
