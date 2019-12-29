@@ -56,72 +56,84 @@ namespace backend.Repositories
         /// the method validates all certificates for the given service
         /// </summary>
         /// <param name="Service">service of validation</param>
-        private void validateCertificates(Service Service)
+        private void validateCertificates(Service NewService)
         {
             List<Certificate> temp = new List<Certificate>();
-            foreach (Certificate certificate in Service.Certificates)
+            foreach (Certificate certificate in NewService.Certificates)
             {
                 temp.Add(_Ctx.Certificate.Find(certificate.Id));
             }
-            Service = _Ctx.Service.Find(Service.Id);
-            List<Certificate> add = temp.Except(Service.Certificates.ToList()).ToList();
-            List<Certificate> remove = Service.Certificates.Except(temp.ToList()).ToList();
-            Service.Certificates.AddRange(add);
-            Service.Certificates.RemoveAll(x => remove.Contains(x));
+            Service Service = _Ctx.Service.Find(NewService.Id);
+            if(Service != null)
+            {
+                List<Certificate> add = temp.Except(Service.Certificates.ToList()).ToList();
+                List<Certificate> remove = Service.Certificates.Except(temp.ToList()).ToList();
+                Service.Certificates.AddRange(add);
+                Service.Certificates.RemoveAll(x => remove.Contains(x));
+            }
         }
 
         /// <summary>
         /// the method validates all charging models for the given service
         /// </summary>
         /// <param name="Service">service of validation</param>
-        private void validateChargingModels(Service Service)
+        private void validateChargingModels(Service NewService)
         {
             List<ChargingModel> temp = new List<ChargingModel>();
-            foreach (ChargingModel chargingModel in Service.ChargingModels)
+            foreach (ChargingModel chargingModel in NewService.ChargingModels)
             {
                 temp.Add(_Ctx.ChargingModel.Find(chargingModel.Id));
             }
-            Service = _Ctx.Service.Find(Service.Id);
-            List<ChargingModel> add = temp.Except(Service.ChargingModels.ToList()).ToList();
-            List<ChargingModel> remove = Service.ChargingModels.Except(temp.ToList()).ToList();
-            Service.ChargingModels.AddRange(add);
-            Service.ChargingModels.RemoveAll(x => remove.Contains(x));
+            Service Service = _Ctx.Service.Find(NewService.Id);
+            if (Service != null)
+            {
+                List<ChargingModel> add = temp.Except(Service.ChargingModels.ToList()).ToList();
+                List<ChargingModel> remove = Service.ChargingModels.Except(temp.ToList()).ToList();
+                Service.ChargingModels.AddRange(add);
+                Service.ChargingModels.RemoveAll(x => remove.Contains(x));
+            }
         }
 
         /// <summary>
         /// the method validates all datalocations for the given service
         /// </summary>
         /// <param name="Service">service of validation</param>
-        private void validateDataLocations(Service Service)
+        private void validateDataLocations(Service NewService)
         {
             List<DataLocation> temp = new List<DataLocation>();
-            foreach (DataLocation dataLocation in Service.DataLocations)
+            foreach (DataLocation dataLocation in NewService.DataLocations)
             {
                 temp.Add(_Ctx.DataLocation.Find(dataLocation.Id));
             }
-            Service = _Ctx.Service.Find(Service.Id);
-            List<DataLocation> add = temp.Except(Service.DataLocations.ToList()).ToList();
-            List<DataLocation> remove = Service.DataLocations.Except(temp.ToList()).ToList();
-            Service.DataLocations.AddRange(add);
-            Service.DataLocations.RemoveAll(x => remove.Contains(x));
+            Service Service = _Ctx.Service.Find(NewService.Id);
+            if (Service != null)
+            {
+                List<DataLocation> add = temp.Except(Service.DataLocations.ToList()).ToList();
+                List<DataLocation> remove = Service.DataLocations.Except(temp.ToList()).ToList();
+                Service.DataLocations.AddRange(add);
+                Service.DataLocations.RemoveAll(x => remove.Contains(x));
+            }
         }
 
         /// <summary>
         /// the method validates all pricing models for the given service
         /// </summary>
         /// <param name="Service">service of validation</param>
-        private void validatePricing(Service Service)
+        private void validatePricing(Service NewService)
         {
             List<Pricing> temp = new List<Pricing>();
-            foreach (Pricing pricing in Service.Pricing)
+            foreach (Pricing pricing in NewService.Pricing)
             {
                 temp.Add(_Ctx.Pricing.Find(pricing.Id));
             }
-            Service = _Ctx.Service.Find(Service.Id);
-            List<Pricing> add = temp.Except(Service.Pricing.ToList()).ToList();
-            List<Pricing> remove = Service.Pricing.Except(temp.ToList()).ToList();
-            Service.Pricing.AddRange(add);
-            Service.Pricing.RemoveAll(x => remove.Contains(x));
+            Service Service = _Ctx.Service.Find(NewService.Id);
+            if (Service != null)
+            {
+                List<Pricing> add = temp.Except(Service.Pricing.ToList()).ToList();
+                List<Pricing> remove = Service.Pricing.Except(temp.ToList()).ToList();
+                Service.Pricing.AddRange(add);
+                Service.Pricing.RemoveAll(x => remove.Contains(x));
+            }
         }
     }
 }

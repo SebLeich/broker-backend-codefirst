@@ -1,0 +1,45 @@
+﻿using backend.Models;
+using backend.Repositories;
+using System.Collections.Generic;
+using System.Web.Http;
+
+namespace backend.Controllers
+{
+    [RoutePrefix("api/project")]
+    public class ProjectController : ApiController
+    {
+        private ProjectRepository _Repo;
+        public ProjectController()
+        {
+            _Repo = new ProjectRepository();
+        }
+
+        /// <summary>
+        /// the endpoint returns all projects of the current user
+        /// </summary>
+        /// <returns>list of projects</returns>
+        [Authorize]
+        [HttpGet]
+        [Route("current")]
+        public IHttpActionResult GetCurrentProjects()
+        {
+            ResponseWrapper<List<Project>> response = _Repo.GetCurrentProjects(User.Identity.Name);
+            if (response.error != null) return Content(response.state, response.error);
+            return Content(response.state, response.content);
+        }
+
+        /// <summary>
+        /// the endpoint saves a new project to the database
+        /// </summary>
+        /// <returns>persisted project</returns>
+        [Authorize]
+        [HttpPost]
+        [Route("current")]
+        public IHttpActionResult PostCurrentProject([FromBody] Project Project)
+        {
+            ResponseWrapper<Project> response = _Repo.PostCurrentProject(User.Identity.Name, Project);
+            if (response.error != null) return Content(response.state, response.error);
+            return Content(response.state, response.content);
+        }
+    }
+}

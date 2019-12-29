@@ -1,7 +1,13 @@
-﻿namespace backend.Models
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace backend.Models
 {
     public class MatchingResponse
     {
+        [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
         public int pointscategories { get; set; } = 0;
         public int pointscertificates { get; set; } = 0;
         public int pointsdatalocations { get; set; } = 0;
@@ -32,6 +38,12 @@
         public int priorityHasDBMS { get; set; } = 0;
         public int priorityHasFileVersioning { get; set; } = 0;
         public int priorityHasAutomatedSynchronisation { get; set; } = 0;
+
+        [ForeignKey("Project")]
+        public int ProjectId { get; set; }
+
+        [ForeignKey(nameof(ProjectId))]
+        public Project Project { get; set; }
 
         public int percentage { get
             {

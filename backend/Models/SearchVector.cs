@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models
 {
     public class SearchVector
     {
+        [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         public int minFulfillmentPercentage { get; set; }
-        public SearchVectorEntryList categories { get; set; }
-        public SearchVectorEntryList certificates { get; set; }
-        public SearchVectorEntryList datalocations { get; set; }
-        public SearchVectorEntryList deploymentinfos { get; set; }
-        public SearchVectorEntryList models { get; set; }
-        public SearchVectorEntryList providers { get; set; }
-        public SearchVectorEntryList storageType { get; set; }
+        public SearchVectorListEntry categories { get; set; }
+        public SearchVectorListEntry certificates { get; set; }
+        public SearchVectorListEntry datalocations { get; set; }
+        public SearchVectorListEntry deploymentinfos { get; set; }
+        public SearchVectorListEntry models { get; set; }
+        public SearchVectorListEntry providers { get; set; }
+        public SearchVectorListEntry storageType { get; set; }
         public SearchVectorBooleanEntry hasFileEncryption { get; set; }
         public SearchVectorBooleanEntry hasReplication { get; set; }
         public SearchVectorBooleanEntry hasFilePermissions { get; set; }
@@ -21,6 +25,12 @@ namespace backend.Models
         public SearchVectorBooleanEntry hasDBMS { get; set; }
         public SearchVectorBooleanEntry hasFileVersioning { get; set; }
         public SearchVectorBooleanEntry hasAutomatedSynchronisation { get; set; }
+
+        [ForeignKey("MatchingResponse")]
+        public int MatchingResponseId { get; set; }
+
+        [ForeignKey(nameof(MatchingResponseId))]
+        public Project MatchingResponse { get; set; }
 
         public int total { get
             {
@@ -45,19 +55,36 @@ namespace backend.Models
         }
     }
 
-    public class SearchVectorEntryList
+    public class SearchVectorListEntry
     {
+        [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         public List<int> value { get; set; }
         public int priority { get; set; }
 
-        public SearchVectorEntryList()
+        [ForeignKey("SearchVector")]
+        public Guid SearchVectorId { get; set; }
+
+        [ForeignKey(nameof(SearchVectorId))]
+        public SearchVector SearchVector { get; set; }
+
+
+        public SearchVectorListEntry()
         {
             value = new List<int>();
         }
     }
     public class SearchVectorBooleanEntry
     {
+        [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
         public Nullable<bool> value { get; set; }
         public int priority { get; set; }
+
+        [ForeignKey("SearchVector")]
+        public Guid SearchVectorId { get; set; }
+
+        [ForeignKey(nameof(SearchVectorId))]
+        public SearchVector SearchVector { get; set; }
     }
 }

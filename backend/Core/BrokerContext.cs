@@ -98,6 +98,10 @@ namespace backend.Core
         /// </summary>
         public DbSet<KeyValueStoreService> KeyValueStoreService { get; set; }
         /// <summary>
+        /// a set of matching responses
+        /// </summary>
+        public DbSet<MatchingResponse> MatchingResponse { get; set; }
+        /// <summary>
         /// the online drive storage service relation
         /// </summary>
         public DbSet<ObjectStorageService> ObjectStorageService { get; set; }
@@ -122,6 +126,10 @@ namespace backend.Core
         /// </summary>
         public DbSet<PricingPeriod> PricingPeriod { get; set; }
         /// <summary>
+        /// all projects
+        /// </summary>
+        public DbSet<Project> Project { get; set; }
+        /// <summary>
         /// the provider relation
         /// </summary>
         public DbSet<Provider> Provider { get; set; }
@@ -137,6 +145,18 @@ namespace backend.Core
         /// the rule relation
         /// </summary>
         public DbSet<Rule> Rule { get; set; }
+        /// <summary>
+        /// all search vectors related to projects
+        /// </summary>
+        public DbSet<SearchVector> SearchVector { get; set; }
+        /// <summary>
+        /// all search vector boolean entries
+        /// </summary>
+        public DbSet<SearchVectorBooleanEntry> SearchVectorBooleanEntry { get; set; }
+        /// <summary>
+        /// all search vector boolean entries
+        /// </summary>
+        public DbSet<SearchVectorListEntry> SearchVectorListEntry { get; set; }
         /// <summary>
         /// the service relation
         /// </summary>

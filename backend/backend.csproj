@@ -135,6 +135,7 @@
     <Compile Include="Controllers\KeyValueStoreServiceController.cs" />
     <Compile Include="Controllers\ObjectStorageServiceController.cs" />
     <Compile Include="Controllers\OnlineDriveStorageServiceController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\RelationalDatabaseServiceController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\ServiceModelController.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Models\Pricing.cs" />
     <Compile Include="Models\PricingModel.cs" />
     <Compile Include="Models\PricingPeriod.cs" />
+    <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Provider.cs" />
     <Compile Include="Models\ProviderPayment.cs" />
     <Compile Include="Models\RelationalDatabaseService.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="Repositories\KeyValueStoreServiceRepository.cs" />
     <Compile Include="Repositories\ObjectStorageServiceRepository.cs" />
     <Compile Include="Repositories\OnlineDriveStorageServiceRepository.cs" />
+    <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Repositories\RelationalDatabaseServiceRepository.cs" />
     <Compile Include="Repositories\RoleRightRepository.cs" />
     <Compile Include="Repositories\ServiceModelRepository.cs" />
