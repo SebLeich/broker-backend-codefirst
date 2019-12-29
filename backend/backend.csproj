@@ -176,7 +176,6 @@
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\ServiceCertificate.cs" />
     <Compile Include="Models\ServiceChargingModel.cs" />
-    <Compile Include="Models\ServiceDataLocation.cs" />
     <Compile Include="Models\ServiceWrapper.cs" />
     <Compile Include="Models\StorageType.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -189,6 +188,7 @@
     <Compile Include="Repositories\DataLocationRepository.cs" />
     <Compile Include="Repositories\DeploymentInformationRepository.cs" />
     <Compile Include="Repositories\DirectAttachedStorageServiceRepository.cs" />
+    <Compile Include="Repositories\GenericServiceRepository.cs" />
     <Compile Include="Repositories\KeyValueStoreServiceRepository.cs" />
     <Compile Include="Repositories\ObjectStorageServiceRepository.cs" />
     <Compile Include="Repositories\OnlineDriveStorageServiceRepository.cs" />

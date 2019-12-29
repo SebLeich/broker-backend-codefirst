@@ -18,7 +18,7 @@ namespace backend.Models
         public Nullable<int> DataLocationTypeId { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<ServiceDataLocation> ServiceDataLocations { get; set; }
+        public virtual ICollection<Service> Services { get; set; }
         [ForeignKey(nameof(DataLocationTypeId))]
         public virtual DataLocationType DataLocationType { get; set; }
     }

@@ -83,7 +83,9 @@ namespace backend.Controllers
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
-            return Ok(_Repo.PutBlockStorageService(Service));
+            ResponseWrapper<BlockStorageService> response = _Repo.PutBlockStorageService(Service);
+            if (response.error != null) return Content(response.state, response.error);
+            return Content(response.state, response.content);
         }
         /// <summary>
         /// the endpoint deletes the block storage service with the given id

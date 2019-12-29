@@ -18,7 +18,7 @@ namespace backend.Models
         public string ServiceCompliance { get; set; }
         public string ServiceSLA { get; set; }
         public string ServiceTitle { get; set; }
-        public string ServcieAvailability { get; set; }
+        public string ServiceAvailability { get; set; }
         public DateTime Creation { get; set; }
         public DateTime LastModified { get; set; }
 
@@ -40,16 +40,16 @@ namespace backend.Models
         [ForeignKey(nameof(DeploymentInfoId))]
         public virtual DeploymentInfo DeploymentInfo { get; set; }
 
-        public virtual List<ServiceChargingModel> ServiceChargingModels { get; set; }
-        public virtual List<ServiceCertificate> ServiceCertificates { get; set; }
-        public virtual List<ServiceDataLocation> ServiceDataLocations { get; set; }
+        public virtual List<ChargingModel> ChargingModels { get; set; }
+        public virtual List<Certificate> Certificates { get; set; }
+        public virtual List<DataLocation> DataLocations { get; set; }
         public virtual List<Pricing> Pricing { get; set; }
 
         public Service()
         {
-            ServiceChargingModels = new List<ServiceChargingModel>();
-            ServiceCertificates = new List<ServiceCertificate>();
-            ServiceDataLocations = new List<ServiceDataLocation>();
+            ChargingModels = new List<ChargingModel>();
+            Certificates = new List<Certificate>();
+            DataLocations = new List<DataLocation>();
             Pricing = new List<Pricing>();
         }
 
@@ -79,12 +79,12 @@ namespace backend.Models
             if (Search.datalocations != null && Search.datalocations.value != null && Search.datalocations.value.Count > 0 && Search.datalocations.priority > 0)
             {
                 Output.prioritydatalocations = Search.datalocations.priority;
-                if (ServiceDataLocations.Select(x => x.DataLocationId).Intersect(Search.datalocations.value).Any()) Output.pointsdatalocations = Search.datalocations.priority;
+                if (DataLocations.Select(x => x.Id).Intersect(Search.datalocations.value).Any()) Output.pointsdatalocations = Search.datalocations.priority;
             }
             if (Search.certificates != null && Search.certificates.value != null && Search.certificates.value.Count > 0 && Search.certificates.priority > 0)
             {
                 Output.prioritycertificates = Search.certificates.priority;
-                if (ServiceCertificates.Select(x => x.CertificateId).Intersect(Search.certificates.value).Any()) Output.pointscertificates = Search.certificates.priority;
+                if (Certificates.Select(x => x.Id).Intersect(Search.certificates.value).Any()) Output.pointscertificates = Search.certificates.priority;
             }
             return Output;
         }

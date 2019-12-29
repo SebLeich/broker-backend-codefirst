@@ -3,17 +3,14 @@ using backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace backend.Repositories
 {
-    public class OnlineDriveStorageServiceRepository
+    public class OnlineDriveStorageServiceRepository : GenericServiceRepository
     {
-        private BrokerContext _Ctx;
 
-        public OnlineDriveStorageServiceRepository()
-        {
-            _Ctx = new BrokerContext();
-        }
+        public OnlineDriveStorageServiceRepository() { }
 
         /// <summary>
         /// the method returns all online drive storage services from the database
@@ -47,27 +44,31 @@ namespace backend.Repositories
         /// the method puts a new online drive storage services from the database
         /// </summary>
         /// <returns>list of services</returns>
-        public OnlineDriveStorageService PutOnlineDriveStorageService(OnlineDriveStorageService Service)
+        public ResponseWrapper<OnlineDriveStorageService> PutOnlineDriveStorageService(OnlineDriveStorageService Service)
         {
+            base.validateNMRelations(Service);
             OnlineDriveStorageService OldService = _Ctx.OnlineDriveStorageService.Find(Service.Id);
-            if (OldService == null) return null;
-            OldService.CloudServiceCategoryId = Service.CloudServiceCategoryId;
-            OldService.CloudServiceModelId = Service.CloudServiceModelId;
-            OldService.DeploymentInfoId = Service.DeploymentInfoId;
-            OldService.HasAutomatedSynchronisation = Service.HasAutomatedSynchronisation;
+
+            if (OldService == null) return new ResponseWrapper<OnlineDriveStorageService>
+            {
+                state = HttpStatusCode.NotFound,
+                error = "Fehler beim Speichern: Service konnte nicht gefunden werden"
+            };
+
+            base.overwriteService(OldService, Service);
+
             OldService.HasFileEncryption = Service.HasFileEncryption;
-            OldService.HasFilePermissions = Service.HasFilePermissions;
             OldService.HasFileVersioning = Service.HasFileVersioning;
-            OldService.LastModified = DateTime.Now;
-            OldService.ProviderId = Service.ProviderId;
-            OldService.ServcieAvailability = Service.ServcieAvailability;
-            OldService.ServiceCompliance = Service.ServiceCompliance;
-            OldService.ServiceDescription = Service.ServiceDescription;
-            OldService.ServiceName = Service.ServiceName;
-            OldService.ServiceSLA = Service.ServiceSLA;
-            OldService.ServiceTitle = Service.ServiceTitle;
+            OldService.HasFilePermissions = Service.HasFilePermissions;
+            OldService.HasAutomatedSynchronisation = Service.HasAutomatedSynchronisation;
+
             _Ctx.SaveChanges();
-            return Service;
+
+            return new ResponseWrapper<OnlineDriveStorageService>
+            {
+                state = HttpStatusCode.OK,
+                content = OldService
+            };
         }
         /// <summary>
         /// the method deletes a online drive storage service from the database by id

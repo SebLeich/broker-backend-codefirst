@@ -3,20 +3,17 @@ using backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace backend.Repositories
 {
     /// <summary>
     /// the repository contains all methods to manipulate the key value store services of the database
     /// </summary>
-    public class KeyValueStoreServiceRepository
+    public class KeyValueStoreServiceRepository : GenericServiceRepository
     {
-        private BrokerContext _Ctx;
 
-        public KeyValueStoreServiceRepository()
-        {
-            _Ctx = new BrokerContext();
-        }
+        public KeyValueStoreServiceRepository() { }
 
         /// <summary>
         /// the method returns all key value store services from the database
@@ -50,25 +47,29 @@ namespace backend.Repositories
         /// the method puts a new key value store services from the database
         /// </summary>
         /// <returns>list of services</returns>
-        public KeyValueStoreService PutKeyValueStoreService(KeyValueStoreService Service)
+        public ResponseWrapper<KeyValueStoreService> PutKeyValueStoreService(KeyValueStoreService Service)
         {
+            base.validateNMRelations(Service);
             KeyValueStoreService OldService = _Ctx.KeyValueStoreService.Find(Service.Id);
-            if (OldService == null) return null;
-            OldService.CloudServiceCategoryId = Service.CloudServiceCategoryId;
-            OldService.CloudServiceModelId = Service.CloudServiceModelId;
-            OldService.DeploymentInfoId = Service.DeploymentInfoId;
+
+            if (OldService == null) return new ResponseWrapper<KeyValueStoreService>
+            {
+                state = HttpStatusCode.NotFound,
+                error = "Fehler beim Speichern: Service konnte nicht gefunden werden"
+            };
+
+            base.overwriteService(OldService, Service);
+
             OldService.HasDBMS = Service.HasDBMS;
             OldService.HasReplication = Service.HasReplication;
-            OldService.LastModified = DateTime.Now;
-            OldService.ProviderId = Service.ProviderId;
-            OldService.ServcieAvailability = Service.ServcieAvailability;
-            OldService.ServiceCompliance = Service.ServiceCompliance;
-            OldService.ServiceDescription = Service.ServiceDescription;
-            OldService.ServiceName = Service.ServiceName;
-            OldService.ServiceSLA = Service.ServiceSLA;
-            OldService.ServiceTitle = Service.ServiceTitle;
+
             _Ctx.SaveChanges();
-            return Service;
+
+            return new ResponseWrapper<KeyValueStoreService>
+            {
+                state = HttpStatusCode.OK,
+                content = OldService
+            };
         }
         /// <summary>
         /// the method deletes a key value store service from the database by id

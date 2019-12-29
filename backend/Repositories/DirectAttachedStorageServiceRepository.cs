@@ -1,17 +1,15 @@
-﻿using backend.Core;
-using backend.Models;
+﻿using backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+
 namespace backend.Repositories
 {
-    public class DirectAttachedStorageServiceRepository
+    public class DirectAttachedStorageServiceRepository : GenericServiceRepository
     {
-        private BrokerContext _Ctx;
-        public DirectAttachedStorageServiceRepository()
-        {
-            _Ctx = new BrokerContext();
-        }
+        public DirectAttachedStorageServiceRepository() { }
+
         /// <summary>
         /// the method returns all direct attached storage services from the database
         /// </summary>
@@ -44,29 +42,33 @@ namespace backend.Repositories
         /// the method puts a new direct attached storage service from the database
         /// </summary>
         /// <returns>the puted direct attached storage service</returns>
-        public DirectAttachedStorageService PutDirectAttachedStorageService(DirectAttachedStorageService Service)
+        public ResponseWrapper<DirectAttachedStorageService> PutDirectAttachedStorageService(DirectAttachedStorageService Service)
         {
+            base.validateNMRelations(Service);
             DirectAttachedStorageService OldService = _Ctx.DirectAttachedStorageService.Find(Service.Id);
-            if (OldService == null) return null;
-            OldService.CloudServiceCategoryId = Service.CloudServiceCategoryId;
-            OldService.CloudServiceModelId = Service.CloudServiceModelId;
-            OldService.DeploymentInfoId = Service.DeploymentInfoId;
-            OldService.HasFileCompression = Service.HasFileCompression;
+
+            if (OldService == null) return new ResponseWrapper<DirectAttachedStorageService>
+            {
+                state = HttpStatusCode.NotFound,
+                error = "Fehler beim Speichern: Service konnte nicht gefunden werden"
+            };
+
+            base.overwriteService(OldService, Service);
+
             OldService.HasFileEncryption = Service.HasFileEncryption;
-            OldService.HasFileLocking = Service.HasFileLocking;
-            OldService.HasFilePermissions = Service.HasFilePermissions;
             OldService.HasReplication = Service.HasReplication;
-            OldService.LastModified = DateTime.Now;
-            OldService.ProviderId = Service.ProviderId;
-            OldService.ServcieAvailability = Service.ServcieAvailability;
-            OldService.ServiceCompliance = Service.ServiceCompliance;
-            OldService.ServiceDescription = Service.ServiceDescription;
-            OldService.ServiceName = Service.ServiceName;
-            OldService.ServiceSLA = Service.ServiceSLA;
-            OldService.ServiceTitle = Service.ServiceTitle;
+            OldService.HasFilePermissions = Service.HasFilePermissions;
+            OldService.HasFileLocking = Service.HasFileLocking;
+            OldService.HasFileCompression = Service.HasFileCompression;
             OldService.StorageTypeId = Service.StorageTypeId;
+
             _Ctx.SaveChanges();
-            return Service;
+
+            return new ResponseWrapper<DirectAttachedStorageService>
+            {
+                state = HttpStatusCode.OK,
+                content = OldService
+            };
         }
         /// <summary>
         /// the method deletes a direct attached storage service from the database by id

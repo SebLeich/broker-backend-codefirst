@@ -1,18 +1,15 @@
-﻿using backend.Core;
-using backend.Models;
+﻿using backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace backend.Repositories
 {
-    public class RelationalDatabaseServiceRepository
+    public class RelationalDatabaseServiceRepository : GenericServiceRepository
     {
-        private BrokerContext _Ctx;
-        public RelationalDatabaseServiceRepository()
-        {
-            _Ctx = new BrokerContext();
-        }
+        public RelationalDatabaseServiceRepository() { }
+
         /// <summary>
         /// the method returns all relational database services from the database
         /// </summary>
@@ -41,30 +38,36 @@ namespace backend.Repositories
             _Ctx.SaveChanges();
             return Service;
         }
+
         /// <summary>
         /// the method puts a new relational database service from the database
         /// </summary>
         /// <returns>the puted relational database service</returns>
-        public RelationalDatabaseService PutRelationalDatabaseService(RelationalDatabaseService Service)
+        public ResponseWrapper<RelationalDatabaseService> PutRelationalDatabaseService(RelationalDatabaseService Service)
         {
+            base.validateNMRelations(Service);
             RelationalDatabaseService OldService = _Ctx.RelationalDatabaseService.Find(Service.Id);
-            if (OldService == null) return null;
-            OldService.CloudServiceCategoryId = Service.CloudServiceCategoryId;
-            OldService.CloudServiceModelId = Service.CloudServiceModelId;
-            OldService.DeploymentInfoId = Service.DeploymentInfoId;
+
+            if (OldService == null) return new ResponseWrapper<RelationalDatabaseService>
+            {
+                state = HttpStatusCode.NotFound,
+                error = "Fehler beim Speichern: Service konnte nicht gefunden werden"
+            };
+
+            base.overwriteService(OldService, Service);
+
             OldService.HasDBMS = Service.HasDBMS;
             OldService.HasReplication = Service.HasReplication;
-            OldService.LastModified = DateTime.Now;
-            OldService.ProviderId = Service.ProviderId;
-            OldService.ServcieAvailability = Service.ServcieAvailability;
-            OldService.ServiceCompliance = Service.ServiceCompliance;
-            OldService.ServiceDescription = Service.ServiceDescription;
-            OldService.ServiceName = Service.ServiceName;
-            OldService.ServiceSLA = Service.ServiceSLA;
-            OldService.ServiceTitle = Service.ServiceTitle;
+
             _Ctx.SaveChanges();
-            return Service;
+
+            return new ResponseWrapper<RelationalDatabaseService>
+            {
+                state = HttpStatusCode.OK,
+                content = OldService
+            };
         }
+
         /// <summary>
         /// the method deletes a relational database service from the database by id
         /// </summary>

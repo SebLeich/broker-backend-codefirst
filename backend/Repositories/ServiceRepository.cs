@@ -8,20 +8,13 @@ namespace backend.Repositories
     /// <summary>
     /// the repository contains method for service control
     /// </summary>
-    public class ServiceRepository
+    public class ServiceRepository : GenericServiceRepository
     {
-        /// <summary>
-        /// the attributeprovides database access
-        /// </summary>
-        private BrokerContext _Ctx;
 
         /// <summary>
         /// the constructor creates a new instance
         /// </summary>
-        public ServiceRepository()
-        {
-            _Ctx = new BrokerContext();
-        }
+        public ServiceRepository() { }
 
         /// <summary>
         /// the endpoint returns all services

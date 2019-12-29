@@ -142,18 +142,6 @@ namespace backend.Core
         /// </summary>
         public DbSet<Service> Service { get; set; }
         /// <summary>
-        /// the service certificate relation
-        /// </summary>
-        public DbSet<ServiceCertificate> ServiceCertificate { get; set; }
-        /// <summary>
-        /// the service charging model relation
-        /// </summary>
-        public DbSet<ServiceChargingModel> ServiceChargingModel { get; set; }
-        /// <summary>
-        /// the service data location relation
-        /// </summary>
-        public DbSet<ServiceDataLocation> ServiceDataLocation { get; set; }
-        /// <summary>
         /// the service storage type relation
         /// </summary>
         public DbSet<StorageType> StorageType { get; set; }
