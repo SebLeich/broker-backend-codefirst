@@ -97,7 +97,7 @@ namespace backend.Repositories
             foreach (KeyValueStoreService Service in _Ctx.KeyValueStoreService.ToList())
             {
                 var result = Service.MatchWithSearchVector(Search);
-                if (result.percentage >= Search.minFulfillmentPercentage)
+                if (((result.points / Search.total) * 100) >= Search.minFulfillmentPercentage)
                 {
                     output.Add(new MatchingResponseWrapper<KeyValueStoreService>
                     {

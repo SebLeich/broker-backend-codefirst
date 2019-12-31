@@ -11,30 +11,25 @@
         new public MatchingResponse MatchWithSearchVector(SearchVector Search)
         {
             MatchingResponse Output = base.MatchWithSearchVector(Search);
-            if (Search.hasFileEncryption != null && Search.hasFileEncryption.priority > 0)
+            if (Search.hasFileEncryption != null && Search.hasFileEncryption.Priority > 0)
             {
-                Output.priorityHasFileEncryption = Search.hasFileEncryption.priority;
-                if (HasFileEncryption) Output.pointsHasFileEncryption = Search.hasFileEncryption.priority;
+                if (HasFileEncryption) Output.pointsHasFileEncryption = Search.hasFileEncryption.Priority;
             }
-            if (Search.hasReplication != null && Search.hasReplication.priority > 0)
+            if (Search.hasReplication != null && Search.hasReplication.Priority > 0)
             {
-                Output.priorityHasReplication = Search.hasReplication.priority;
-                if (HasReplication) Output.pointsHasReplication = Search.hasReplication.priority;
+                if (HasReplication) Output.pointsHasReplication = Search.hasReplication.Priority;
             }
-            if (Search.hasFilePermissions != null && Search.hasFilePermissions.priority > 0)
+            if (Search.hasFilePermissions != null && Search.hasFilePermissions.Priority > 0)
             {
-                Output.priorityHasFilePermissions = Search.hasFilePermissions.priority;
-                if (HasFilePermissions) Output.pointsHasFilePermissions = Search.hasFilePermissions.priority;
+                if (HasFilePermissions) Output.pointsHasFilePermissions = Search.hasFilePermissions.Priority;
             }
-            if (Search.hasFileLocking != null && Search.hasFileLocking.priority > 0)
+            if (Search.hasFileLocking != null && Search.hasFileLocking.Priority > 0)
             {
-                Output.priorityHasFileLocking = Search.hasFileLocking.priority;
-                if (HasFileLocking) Output.pointsHasFileLocking = Search.hasFileLocking.priority;
+                if (HasFileLocking) Output.pointsHasFileLocking = Search.hasFileLocking.Priority;
             }
-            if (Search.hasFileVersioning != null && Search.hasFileVersioning.priority > 0)
+            if (Search.hasFileVersioning != null && Search.hasFileVersioning.Priority > 0)
             {
-                Output.priorityHasFileVersioning = Search.hasFileVersioning.priority;
-                if (HasFileVersioning) Output.pointsHasFileVersioning = Search.hasFileVersioning.priority;
+                if (HasFileVersioning) Output.pointsHasFileVersioning = Search.hasFileVersioning.Priority;
             }
             return Output;
         }

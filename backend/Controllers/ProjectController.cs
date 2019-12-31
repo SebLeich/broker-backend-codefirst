@@ -41,5 +41,19 @@ namespace backend.Controllers
             if (response.error != null) return Content(response.state, response.error);
             return Content(response.state, response.content);
         }
+
+        /// <summary>
+        /// the endpoint overwrites an existing project
+        /// </summary>
+        /// <returns>persisted project</returns>
+        [Authorize]
+        [HttpPut]
+        [Route("")]
+        public IHttpActionResult PutProject([FromBody] Project Project)
+        {
+            ResponseWrapper<Project> response = _Repo.PutProject(Project);
+            if (response.error != null) return Content(response.state, response.error);
+            return Content(response.state, response.content);
+        }
     }
 }

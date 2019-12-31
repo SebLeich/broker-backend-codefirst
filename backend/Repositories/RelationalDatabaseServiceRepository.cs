@@ -94,7 +94,7 @@ namespace backend.Repositories
             foreach (RelationalDatabaseService Service in _Ctx.RelationalDatabaseService.ToList())
             {
                 var result = Service.MatchWithSearchVector(Search);
-                if (result.percentage >= Search.minFulfillmentPercentage)
+                if (((result.points / Search.total) * 100) >= Search.minFulfillmentPercentage)
                 {
                     output.Add(new MatchingResponseWrapper<RelationalDatabaseService>
                     {

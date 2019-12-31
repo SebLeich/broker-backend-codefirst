@@ -1,5 +1,6 @@
 ﻿using backend.Core;
 using backend.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -55,12 +56,39 @@ namespace backend.Repositories
                 error = "Fehler: aktueller Benutzer konnte nicht im Kontext gefunden werden"
             };
             Project.UserId = User.Id;
+            Project.Created = DateTime.Now;
+            Project.LastModified = DateTime.Now;
             _Ctx.Project.Add(Project);
             _Ctx.SaveChanges();
             return new ResponseWrapper<Project>
             {
                 state = HttpStatusCode.OK,
                 content = Project
+            };
+        }
+
+        /// <summary>
+        /// the method overwrites an existing project
+        /// </summary>
+        /// <param name="username">current user's name</param>
+        /// <param name="Project">new project</param>
+        /// <returns></returns>
+        public ResponseWrapper<Project> PutProject(Project Project)
+        {
+            Project OldProject = _Ctx.Project.Find(Project.ProjectId);
+            if (OldProject == null) return new ResponseWrapper<Project>
+            {
+                state = HttpStatusCode.NotFound,
+                error = "Fehler: Projekt soll beareitet werden, existiert allerdings noch nicht"
+            };
+            OldProject.LastModified = DateTime.Now;
+            OldProject.ProjectDescription = Project.ProjectDescription;
+            OldProject.ProjectTitle = Project.ProjectTitle;
+            _Ctx.SaveChanges();
+            return new ResponseWrapper<Project>
+            {
+                state = HttpStatusCode.OK,
+                content = OldProject
             };
         }
     }

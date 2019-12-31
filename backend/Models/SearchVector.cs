@@ -8,7 +8,11 @@ namespace backend.Models
     public class SearchVector
     {
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public int SearchVectorId { get; set; }
+
+        [Required]
+        public virtual Project Project { get; set; }
+
         public int minFulfillmentPercentage { get; set; }
         public SearchVectorListEntry categories { get; set; }
         public SearchVectorListEntry certificates { get; set; }
@@ -26,30 +30,24 @@ namespace backend.Models
         public SearchVectorBooleanEntry hasFileVersioning { get; set; }
         public SearchVectorBooleanEntry hasAutomatedSynchronisation { get; set; }
 
-        [ForeignKey("MatchingResponse")]
-        public int MatchingResponseId { get; set; }
-
-        [ForeignKey(nameof(MatchingResponseId))]
-        public Project MatchingResponse { get; set; }
-
         public int total { get
             {
                 var output = 0;
-                if (categories != null && categories.value != null && categories.value.Count > 0) output += categories.priority;
-                if (certificates != null && certificates.value != null && certificates.value.Count > 0) output += certificates.priority;
-                if (datalocations != null && datalocations.value != null && datalocations.value.Count > 0) output += datalocations.priority;
-                if (deploymentinfos != null && deploymentinfos.value != null && deploymentinfos.value.Count > 0) output += deploymentinfos.priority;
-                if (models != null && models.value != null && models.value.Count > 0) output += models.priority;
-                if (providers != null && providers.value != null && providers.value.Count > 0) output += providers.priority;
-                if (storageType != null && storageType.value != null && storageType.value.Count > 0) output += storageType.priority;
-                if (hasFileEncryption != null && hasFileEncryption.value.HasValue) output += hasFileEncryption.priority;
-                if (hasReplication != null && hasReplication.value.HasValue) output += hasReplication.priority;
-                if (hasFilePermissions != null && hasFilePermissions.value.HasValue) output += hasFilePermissions.priority;
-                if (hasFileLocking != null && hasFileLocking.value.HasValue) output += hasFileLocking.priority;
-                if (hasFileCompression != null && hasFileCompression.value.HasValue) output += hasFileCompression.priority;
-                if (hasDBMS != null && hasDBMS.value.HasValue) output += hasDBMS.priority;
-                if (hasFileVersioning != null && hasFileVersioning.value.HasValue) output += hasFileVersioning.priority;
-                if (hasAutomatedSynchronisation != null && hasAutomatedSynchronisation.value.HasValue) output += hasAutomatedSynchronisation.priority;
+                if (categories != null && categories.Value != null && categories.Value.Count > 0) output += categories.Priority;
+                if (certificates != null && certificates.Value != null && certificates.Value.Count > 0) output += certificates.Priority;
+                if (datalocations != null && datalocations.Value != null && datalocations.Value.Count > 0) output += datalocations.Priority;
+                if (deploymentinfos != null && deploymentinfos.Value != null && deploymentinfos.Value.Count > 0) output += deploymentinfos.Priority;
+                if (models != null && models.Value != null && models.Value.Count > 0) output += models.Priority;
+                if (providers != null && providers.Value != null && providers.Value.Count > 0) output += providers.Priority;
+                if (storageType != null && storageType.Value != null && storageType.Value.Count > 0) output += storageType.Priority;
+                if (hasFileEncryption != null && hasFileEncryption.Value.HasValue) output += hasFileEncryption.Priority;
+                if (hasReplication != null && hasReplication.Value.HasValue) output += hasReplication.Priority;
+                if (hasFilePermissions != null && hasFilePermissions.Value.HasValue) output += hasFilePermissions.Priority;
+                if (hasFileLocking != null && hasFileLocking.Value.HasValue) output += hasFileLocking.Priority;
+                if (hasFileCompression != null && hasFileCompression.Value.HasValue) output += hasFileCompression.Priority;
+                if (hasDBMS != null && hasDBMS.Value.HasValue) output += hasDBMS.Priority;
+                if (hasFileVersioning != null && hasFileVersioning.Value.HasValue) output += hasFileVersioning.Priority;
+                if (hasAutomatedSynchronisation != null && hasAutomatedSynchronisation.Value.HasValue) output += hasAutomatedSynchronisation.Priority;
                 return output;
             }
         }
@@ -58,12 +56,12 @@ namespace backend.Models
     public class SearchVectorListEntry
     {
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
-        public List<int> value { get; set; }
-        public int priority { get; set; }
+        public int Id { get; set; }
+        public List<int> Value { get; set; }
+        public int Priority { get; set; }
 
         [ForeignKey("SearchVector")]
-        public Guid SearchVectorId { get; set; }
+        public int SearchVectorId { get; set; }
 
         [ForeignKey(nameof(SearchVectorId))]
         public SearchVector SearchVector { get; set; }
@@ -71,18 +69,18 @@ namespace backend.Models
 
         public SearchVectorListEntry()
         {
-            value = new List<int>();
+            Value = new List<int>();
         }
     }
     public class SearchVectorBooleanEntry
     {
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
-        public Nullable<bool> value { get; set; }
-        public int priority { get; set; }
+        public int Id { get; set; }
+        public Nullable<bool> Value { get; set; }
+        public int Priority { get; set; }
 
         [ForeignKey("SearchVector")]
-        public Guid SearchVectorId { get; set; }
+        public int SearchVectorId { get; set; }
 
         [ForeignKey(nameof(SearchVectorId))]
         public SearchVector SearchVector { get; set; }

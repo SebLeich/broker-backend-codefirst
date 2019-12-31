@@ -11,15 +11,13 @@
         new public MatchingResponse MatchWithSearchVector(SearchVector Search)
         {
             MatchingResponse Output = base.MatchWithSearchVector(Search);
-            if (Search.hasDBMS != null && Search.hasDBMS.priority > 0)
+            if (Search.hasDBMS != null && Search.hasDBMS.Priority > 0)
             {
-                Output.priorityHasDBMS = Search.hasDBMS.priority;
-                if (HasDBMS) Output.pointsHasDBMS = Search.hasDBMS.priority;
+                if (HasDBMS) Output.pointsHasDBMS = Search.hasDBMS.Priority;
             }
-            if (Search.hasReplication != null && Search.hasReplication.priority > 0)
+            if (Search.hasReplication != null && Search.hasReplication.Priority > 0)
             {
-                Output.priorityHasReplication = Search.hasReplication.priority;
-                if (HasReplication) Output.pointsHasReplication = Search.hasReplication.priority;
+                if (HasReplication) Output.pointsHasReplication = Search.hasReplication.Priority;
             }
             return Output;
         }

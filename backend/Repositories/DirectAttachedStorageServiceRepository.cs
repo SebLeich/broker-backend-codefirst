@@ -96,7 +96,7 @@ namespace backend.Repositories
             foreach (DirectAttachedStorageService Service in _Ctx.DirectAttachedStorageService.ToList())
             {
                 var result = Service.MatchWithSearchVector(Search);
-                if (result.percentage >= Search.minFulfillmentPercentage)
+                if (((result.points / Search.total) * 100) >= Search.minFulfillmentPercentage)
                 {
                     output.Add(new MatchingResponseWrapper<DirectAttachedStorageService>
                     {

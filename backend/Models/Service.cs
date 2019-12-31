@@ -56,35 +56,29 @@ namespace backend.Models
         public MatchingResponse MatchWithSearchVector(SearchVector Search)
         {
             MatchingResponse Output = new MatchingResponse();
-            if(Search.categories != null && Search.categories.value != null && Search.categories.value.Count > 0 && Search.categories.priority > 0)
+            if(Search.categories != null && Search.categories.Value != null && Search.categories.Value.Count > 0 && Search.categories.Priority > 0)
             {
-                Output.prioritycategories = Search.categories.priority;
-                if(CloudServiceCategoryId.HasValue && Search.categories.value.Contains(CloudServiceCategoryId.Value)) Output.pointscategories = Search.categories.priority;
+                if(CloudServiceCategoryId.HasValue && Search.categories.Value.Contains(CloudServiceCategoryId.Value)) Output.pointscategories = Search.categories.Priority;
             }
-            if (Search.models != null && Search.models.value != null && Search.models.value.Count > 0 && Search.models.priority > 0)
+            if (Search.models != null && Search.models.Value != null && Search.models.Value.Count > 0 && Search.models.Priority > 0)
             {
-                Output.prioritymodels = Search.models.priority;
-                if (CloudServiceModelId.HasValue && Search.models.value.Contains(CloudServiceModelId.Value)) Output.pointsmodels = Search.models.priority;
+                if (CloudServiceModelId.HasValue && Search.models.Value.Contains(CloudServiceModelId.Value)) Output.pointsmodels = Search.models.Priority;
             }
-            if (Search.providers != null && Search.providers.value != null && Search.providers.value.Count > 0 && Search.providers.priority > 0)
+            if (Search.providers != null && Search.providers.Value != null && Search.providers.Value.Count > 0 && Search.providers.Priority > 0)
             {
-                Output.priorityproviders = Search.providers.priority;
-                if (ProviderId.HasValue && Search.providers.value.Contains(ProviderId.Value)) Output.pointsproviders = Search.providers.priority;
+                if (ProviderId.HasValue && Search.providers.Value.Contains(ProviderId.Value)) Output.pointsproviders = Search.providers.Priority;
             }
-            if (Search.deploymentinfos != null && Search.deploymentinfos.value != null && Search.deploymentinfos.value.Count > 0 && Search.deploymentinfos.priority > 0)
+            if (Search.deploymentinfos != null && Search.deploymentinfos.Value != null && Search.deploymentinfos.Value.Count > 0 && Search.deploymentinfos.Priority > 0)
             {
-                Output.prioritydeploymentinfos = Search.deploymentinfos.priority;
-                if (DeploymentInfoId.HasValue && Search.deploymentinfos.value.Contains(DeploymentInfoId.Value)) Output.pointsdeploymentinfos = Search.deploymentinfos.priority;
+                if (DeploymentInfoId.HasValue && Search.deploymentinfos.Value.Contains(DeploymentInfoId.Value)) Output.pointsdeploymentinfos = Search.deploymentinfos.Priority;
             }
-            if (Search.datalocations != null && Search.datalocations.value != null && Search.datalocations.value.Count > 0 && Search.datalocations.priority > 0)
+            if (Search.datalocations != null && Search.datalocations.Value != null && Search.datalocations.Value.Count > 0 && Search.datalocations.Priority > 0)
             {
-                Output.prioritydatalocations = Search.datalocations.priority;
-                if (DataLocations.Select(x => x.Id).Intersect(Search.datalocations.value).Any()) Output.pointsdatalocations = Search.datalocations.priority;
+                if (DataLocations.Select(x => x.Id).Intersect(Search.datalocations.Value).Any()) Output.pointsdatalocations = Search.datalocations.Priority;
             }
-            if (Search.certificates != null && Search.certificates.value != null && Search.certificates.value.Count > 0 && Search.certificates.priority > 0)
+            if (Search.certificates != null && Search.certificates.Value != null && Search.certificates.Value.Count > 0 && Search.certificates.Priority > 0)
             {
-                Output.prioritycertificates = Search.certificates.priority;
-                if (Certificates.Select(x => x.Id).Intersect(Search.certificates.value).Any()) Output.pointscertificates = Search.certificates.priority;
+                if (Certificates.Select(x => x.Id).Intersect(Search.certificates.Value).Any()) Output.pointscertificates = Search.certificates.Priority;
             }
             return Output;
         }

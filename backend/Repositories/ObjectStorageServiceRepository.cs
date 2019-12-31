@@ -97,7 +97,7 @@ namespace backend.Repositories
             foreach (ObjectStorageService Service in _Ctx.ObjectStorageService.ToList())
             {
                 var result = Service.MatchWithSearchVector(Search);
-                if (result.percentage >= Search.minFulfillmentPercentage)
+                if (((result.points / Search.total) * 100) >= Search.minFulfillmentPercentage)
                 {
                     output.Add(new MatchingResponseWrapper<ObjectStorageService>
                     {

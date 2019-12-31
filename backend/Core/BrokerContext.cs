@@ -171,6 +171,10 @@ namespace backend.Core
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ApplicationRole>().ToTable("Roles");
             modelBuilder.Entity<ApplicationUser>().ToTable("Users");
+            modelBuilder.Entity<Project>()
+                .HasOptional(x => x.SearchVector)
+                .WithRequired(x => x.Project)
+                .WillCascadeOnDelete(false);
         }
     }
 }

@@ -10,25 +10,21 @@
         new public MatchingResponse MatchWithSearchVector(SearchVector Search)
         {
             MatchingResponse Output = base.MatchWithSearchVector(Search);
-            if (Search.hasFileEncryption != null && Search.hasFileEncryption.priority > 0)
+            if (Search.hasFileEncryption != null && Search.hasFileEncryption.Priority > 0)
             {
-                Output.priorityHasFileEncryption = Search.hasFileEncryption.priority;
-                if (HasFileEncryption) Output.pointsHasFileEncryption = Search.hasFileEncryption.priority;
+                if (HasFileEncryption) Output.pointsHasFileEncryption = Search.hasFileEncryption.Priority;
             }
-            if (Search.hasFileVersioning != null && Search.hasFileVersioning.priority > 0)
+            if (Search.hasFileVersioning != null && Search.hasFileVersioning.Priority > 0)
             {
-                Output.priorityHasFileVersioning = Search.hasFileVersioning.priority;
-                if (HasFileVersioning) Output.pointsHasFileVersioning = Search.hasFileVersioning.priority;
+                if (HasFileVersioning) Output.pointsHasFileVersioning = Search.hasFileVersioning.Priority;
             }
-            if (Search.hasFilePermissions != null && Search.hasFilePermissions.priority > 0)
+            if (Search.hasFilePermissions != null && Search.hasFilePermissions.Priority > 0)
             {
-                Output.priorityHasFilePermissions = Search.hasFilePermissions.priority;
-                if (HasFilePermissions) Output.pointsHasFilePermissions = Search.hasFilePermissions.priority;
+                if (HasFilePermissions) Output.pointsHasFilePermissions = Search.hasFilePermissions.Priority;
             }
-            if (Search.hasAutomatedSynchronisation != null && Search.hasAutomatedSynchronisation.priority > 0)
+            if (Search.hasAutomatedSynchronisation != null && Search.hasAutomatedSynchronisation.Priority > 0)
             {
-                Output.priorityHasAutomatedSynchronisation = Search.hasAutomatedSynchronisation.priority;
-                if (HasAutomatedSynchronisation) Output.pointsHasAutomatedSynchronisation = Search.hasAutomatedSynchronisation.priority;
+                if (HasAutomatedSynchronisation) Output.pointsHasAutomatedSynchronisation = Search.hasAutomatedSynchronisation.Priority;
             }
             return Output;
         }
