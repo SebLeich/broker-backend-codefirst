@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,5 +15,13 @@ namespace backend.Models
         public string CertificateName { get; set; }
 
         public virtual ICollection<ServiceCertificate> ServiceCertificates { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Project> Projects { get; set; }
+
+        public Certificate()
+        {
+            ServiceCertificates = new HashSet<ServiceCertificate>();
+            Projects = new HashSet<Project>();
+        }
     }
 }

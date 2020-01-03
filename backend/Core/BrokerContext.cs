@@ -96,7 +96,7 @@ namespace backend.Core
         /// <summary>
         /// the key value store service relation
         /// </summary>
-        public DbSet<KeyValueStoreService> KeyValueStoreService { get; set; }
+        public DbSet<KeyValueStorageService> KeyValueStoreService { get; set; }
         /// <summary>
         /// a set of matching responses
         /// </summary>
@@ -130,6 +130,10 @@ namespace backend.Core
         /// </summary>
         public DbSet<Project> Project { get; set; }
         /// <summary>
+        /// all service types
+        /// </summary>
+        public DbSet<ProjectServiceType> ProjectServiceType { get; set; }
+        /// <summary>
         /// the provider relation
         /// </summary>
         public DbSet<Provider> Provider { get; set; }
@@ -140,23 +144,11 @@ namespace backend.Core
         /// <summary>
         /// the relational database relation
         /// </summary>
-        public DbSet<RelationalDatabaseService> RelationalDatabaseService { get; set; }
+        public DbSet<RelationalDatabaseStorageService> RelationalDatabaseService { get; set; }
         /// <summary>
         /// the rule relation
         /// </summary>
         public DbSet<Rule> Rule { get; set; }
-        /// <summary>
-        /// all search vectors related to projects
-        /// </summary>
-        public DbSet<SearchVector> SearchVector { get; set; }
-        /// <summary>
-        /// all search vector boolean entries
-        /// </summary>
-        public DbSet<SearchVectorBooleanEntry> SearchVectorBooleanEntry { get; set; }
-        /// <summary>
-        /// all search vector boolean entries
-        /// </summary>
-        public DbSet<SearchVectorListEntry> SearchVectorListEntry { get; set; }
         /// <summary>
         /// the service relation
         /// </summary>
@@ -171,10 +163,6 @@ namespace backend.Core
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ApplicationRole>().ToTable("Roles");
             modelBuilder.Entity<ApplicationUser>().ToTable("Users");
-            modelBuilder.Entity<Project>()
-                .HasOptional(x => x.SearchVector)
-                .WithRequired(x => x.Project)
-                .WillCascadeOnDelete(false);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace backend.Repositories
         /// the method returns all key value store services from the database
         /// </summary>
         /// <returns>list of services</returns>
-        public List<KeyValueStoreService> GetKeyValueStoreServices()
+        public List<KeyValueStorageService> GetKeyValueStoreServices()
         {
             return _Ctx.KeyValueStoreService.ToList();
         }
@@ -27,7 +27,7 @@ namespace backend.Repositories
         /// the method returns a key value store service from the database by id
         /// </summary>
         /// <returns> a specific key value store service</returns>
-        public KeyValueStoreService GetKeyValueStoreService(int id)
+        public KeyValueStorageService GetKeyValueStoreService(int id)
         {
             return _Ctx.KeyValueStoreService.Find(id);
         }
@@ -35,7 +35,7 @@ namespace backend.Repositories
         /// the method posts a new key value store service to the database
         /// </summary>
         /// <returns>the posted key value store service</returns>
-        public KeyValueStoreService PostKeyValueStoreService(KeyValueStoreService Service)
+        public KeyValueStorageService PostKeyValueStoreService(KeyValueStorageService Service)
         {
             Service.Creation = DateTime.Now;
             Service.LastModified = DateTime.Now;
@@ -47,12 +47,12 @@ namespace backend.Repositories
         /// the method puts a new key value store services from the database
         /// </summary>
         /// <returns>list of services</returns>
-        public ResponseWrapper<KeyValueStoreService> PutKeyValueStoreService(KeyValueStoreService Service)
+        public ResponseWrapper<KeyValueStorageService> PutKeyValueStoreService(KeyValueStorageService Service)
         {
             base.validateNMRelations(Service);
-            KeyValueStoreService OldService = _Ctx.KeyValueStoreService.Find(Service.Id);
+            KeyValueStorageService OldService = _Ctx.KeyValueStoreService.Find(Service.Id);
 
-            if (OldService == null) return new ResponseWrapper<KeyValueStoreService>
+            if (OldService == null) return new ResponseWrapper<KeyValueStorageService>
             {
                 state = HttpStatusCode.NotFound,
                 error = "Fehler beim Speichern: Service konnte nicht gefunden werden"
@@ -65,7 +65,7 @@ namespace backend.Repositories
 
             _Ctx.SaveChanges();
 
-            return new ResponseWrapper<KeyValueStoreService>
+            return new ResponseWrapper<KeyValueStorageService>
             {
                 state = HttpStatusCode.OK,
                 content = OldService
@@ -77,7 +77,7 @@ namespace backend.Repositories
         /// <returns>list of services</returns>
         public bool DeleteKeyValueStoreService(int id)
         {
-            KeyValueStoreService Service = _Ctx.KeyValueStoreService.Find(id);
+            KeyValueStorageService Service = _Ctx.KeyValueStoreService.Find(id);
             _Ctx.KeyValueStoreService.Remove(Service);
             return 1 == _Ctx.SaveChanges();
         }
@@ -86,27 +86,23 @@ namespace backend.Repositories
         /// </summary>
         /// <param name="Search">search vector</param>
         /// <returns>best match</returns>
-        public ResponseWrapper<List<MatchingResponseWrapper<KeyValueStoreService>>> Search(SearchVector Search)
+        public ResponseWrapper<List<MatchingResponse>> Search(SearchVector Search)
         {
-            if (Search.total == 0) return new ResponseWrapper<List<MatchingResponseWrapper<KeyValueStoreService>>>
+            if (Search.total == 0) return new ResponseWrapper<List<MatchingResponse>>
             {
                 state = System.Net.HttpStatusCode.BadRequest,
                 error = "Fehlerhafte Eingabe: vergebenes Rating muss ingesamt mindestens 1 sein. Wert: 0"
             };
-            var output = new List<MatchingResponseWrapper<KeyValueStoreService>>();
-            foreach (KeyValueStoreService Service in _Ctx.KeyValueStoreService.ToList())
+            var output = new List<MatchingResponse>();
+            foreach (KeyValueStorageService Service in _Ctx.KeyValueStoreService.ToList())
             {
                 var result = Service.MatchWithSearchVector(Search);
                 if (((result.points / Search.total) * 100) >= Search.minFulfillmentPercentage)
                 {
-                    output.Add(new MatchingResponseWrapper<KeyValueStoreService>
-                    {
-                        content = Service,
-                        match = result
-                    });
+                    output.Add(result);
                 }
             }
-            return new ResponseWrapper<List<MatchingResponseWrapper<KeyValueStoreService>>>
+            return new ResponseWrapper<List<MatchingResponse>>
             {
                 state = System.Net.HttpStatusCode.OK,
                 content = output

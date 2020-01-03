@@ -14,6 +14,14 @@ namespace backend.Models
         public string CloudServiceModelName { get; set; }
 
         [JsonIgnore]
-        public virtual List<Service> Services { get; set; }
+        public virtual ICollection<Service> Services { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Project> Projects { get; set; }
+
+        public CloudServiceModel()
+        {
+            Services = new HashSet<Service>();
+            Projects = new HashSet<Project>();
+        }
     }
 }

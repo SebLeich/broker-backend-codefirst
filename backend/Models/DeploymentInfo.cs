@@ -12,6 +12,14 @@ namespace backend.Models
         public string DeploymentName { get; set; }
 
         [JsonIgnore]
-        public virtual List<Service> Services { get; set; }
+        public virtual ICollection<Service> Services { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Project> Projects { get; set; }
+
+        public DeploymentInfo()
+        {
+            Services = new HashSet<Service>();
+            Projects = new HashSet<Project>();
+        }
     }
 }

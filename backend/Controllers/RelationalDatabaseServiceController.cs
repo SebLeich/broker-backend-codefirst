@@ -56,7 +56,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPost]
         [Authorize]
-        public IHttpActionResult PostRelationalDatabaseServices([FromBody] RelationalDatabaseService Service)
+        public IHttpActionResult PostRelationalDatabaseServices([FromBody] RelationalDatabaseStorageService Service)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
             {
@@ -72,7 +72,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPut]
         [Authorize]
-        public IHttpActionResult PutRelationalDatabaseServices([FromBody] RelationalDatabaseService Service)
+        public IHttpActionResult PutRelationalDatabaseServices([FromBody] RelationalDatabaseStorageService Service)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-services"))
             {

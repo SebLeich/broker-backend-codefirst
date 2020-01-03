@@ -1,9 +1,14 @@
-﻿namespace backend.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace backend.Models
 {
     /// <summary>
-    /// the class contains a relational database service
+    /// the class contains a key value store service
     /// </summary>
-    public class RelationalDatabaseService : Service
+    public class KeyValueStorageService : Service
     {
         public bool HasDBMS { get; set; }
         public bool HasReplication { get; set; }

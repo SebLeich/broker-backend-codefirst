@@ -19,13 +19,13 @@ namespace broker_backend_test
         [TestMethod]
         public void PostKeyValueStoreService_ShouldReturnNewKeyValueStoreService()
         {
-            KeyValueStoreService Service = new KeyValueStoreService()
+            KeyValueStorageService Service = new KeyValueStorageService()
             {
                 HasDBMS = true,
                 HasReplication = true
             };
             var controller = new KeyValueStoreServiceController();
-            var result = controller.PostKeyValueStoreServices(Service) as KeyValueStoreService;
+            var result = controller.PostKeyValueStoreServices(Service) as KeyValueStorageService;
             Assert.AreEqual(Service.Id, 1);
         }
         /// <summary>

@@ -56,7 +56,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPost]
         [Authorize]
-        public IHttpActionResult PostKeyValueStoreServices([FromBody] KeyValueStoreService Service)
+        public IHttpActionResult PostKeyValueStoreServices([FromBody] KeyValueStorageService Service)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
             {
@@ -72,7 +72,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPut]
         [Authorize]
-        public IHttpActionResult PutKeyValueStoreServices([FromBody] KeyValueStoreService Service)
+        public IHttpActionResult PutKeyValueStoreServices([FromBody] KeyValueStorageService Service)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-services"))
             {

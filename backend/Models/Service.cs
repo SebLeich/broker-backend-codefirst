@@ -56,6 +56,8 @@ namespace backend.Models
         public MatchingResponse MatchWithSearchVector(SearchVector Search)
         {
             MatchingResponse Output = new MatchingResponse();
+            Output.Service = this;
+            Output.ServiceId = Id;
             if(Search.categories != null && Search.categories.Value != null && Search.categories.Value.Count > 0 && Search.categories.Priority > 0)
             {
                 if(CloudServiceCategoryId.HasValue && Search.categories.Value.Contains(CloudServiceCategoryId.Value)) Output.pointscategories = Search.categories.Priority;

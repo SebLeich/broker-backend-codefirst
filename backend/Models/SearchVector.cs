@@ -1,19 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace backend.Models
 {
     public class SearchVector
     {
-        [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity), ForeignKey(nameof(Project))]
         public int SearchVectorId { get; set; }
 
         [Required]
         public virtual Project Project { get; set; }
 
-        public int minFulfillmentPercentage { get; set; }
+        public Nullable<int> minFulfillmentPercentage { get; set; } = 0;
         public SearchVectorListEntry categories { get; set; }
         public SearchVectorListEntry certificates { get; set; }
         public SearchVectorListEntry datalocations { get; set; }
@@ -57,6 +59,7 @@ namespace backend.Models
     {
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [NotMapped]
         public List<int> Value { get; set; }
         public int Priority { get; set; }
 
@@ -70,6 +73,18 @@ namespace backend.Models
         public SearchVectorListEntry()
         {
             Value = new List<int>();
+        }
+
+        [Required]
+        [JsonIgnore]
+        public string StringValues
+        {
+            get {
+                return String.Join(",", Value.Select(x => x.ToString()).ToArray());
+            }
+            set { 
+                Value = StringValues.Split(',').Select(Int32.Parse).ToList();
+            }
         }
     }
     public class SearchVectorBooleanEntry

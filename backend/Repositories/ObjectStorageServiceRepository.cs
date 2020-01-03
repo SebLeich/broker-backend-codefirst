@@ -86,27 +86,23 @@ namespace backend.Repositories
         /// </summary>
         /// <param name="Search">search vector</param>
         /// <returns>best match</returns>
-        public ResponseWrapper<List<MatchingResponseWrapper<ObjectStorageService>>> Search(SearchVector Search)
+        public ResponseWrapper<List<MatchingResponse>> Search(SearchVector Search)
         {
-            if (Search.total == 0) return new ResponseWrapper<List<MatchingResponseWrapper<ObjectStorageService>>>
+            if (Search.total == 0) return new ResponseWrapper<List<MatchingResponse>>
             {
                 state = System.Net.HttpStatusCode.BadRequest,
                 error = "Fehlerhafte Eingabe: vergebenes Rating muss ingesamt mindestens 1 sein. Wert: 0"
             };
-            var output = new List<MatchingResponseWrapper<ObjectStorageService>>();
+            var output = new List<MatchingResponse>();
             foreach (ObjectStorageService Service in _Ctx.ObjectStorageService.ToList())
             {
                 var result = Service.MatchWithSearchVector(Search);
                 if (((result.points / Search.total) * 100) >= Search.minFulfillmentPercentage)
                 {
-                    output.Add(new MatchingResponseWrapper<ObjectStorageService>
-                    {
-                        content = Service,
-                        match = result
-                    });
+                    output.Add(result);
                 }
             }
-            return new ResponseWrapper<List<MatchingResponseWrapper<ObjectStorageService>>>
+            return new ResponseWrapper<List<MatchingResponse>>
             {
                 state = System.Net.HttpStatusCode.OK,
                 content = output

@@ -85,27 +85,23 @@ namespace backend.Repositories
         /// </summary>
         /// <param name="Search">search vector</param>
         /// <returns>best match</returns>
-        public ResponseWrapper<List<MatchingResponseWrapper<OnlineDriveStorageService>>> Search(SearchVector Search)
+        public ResponseWrapper<List<MatchingResponse>> Search(SearchVector Search)
         {
-            if (Search.total == 0) return new ResponseWrapper<List<MatchingResponseWrapper<OnlineDriveStorageService>>>
+            if (Search.total == 0) return new ResponseWrapper<List<MatchingResponse>>
             {
                 state = System.Net.HttpStatusCode.BadRequest,
                 error = "Fehlerhafte Eingabe: vergebenes Rating muss ingesamt mindestens 1 sein. Wert: 0"
             };
-            var output = new List<MatchingResponseWrapper<OnlineDriveStorageService>>();
+            var output = new List<MatchingResponse>();
             foreach (OnlineDriveStorageService Service in _Ctx.OnlineDriveStorageService.ToList())
             {
                 var result = Service.MatchWithSearchVector(Search);
                 if (((result.points / Search.total) * 100) >= Search.minFulfillmentPercentage)
                 {
-                    output.Add(new MatchingResponseWrapper<OnlineDriveStorageService>
-                    {
-                        content = Service,
-                        match = result
-                    });
+                    output.Add(result);
                 }
             }
-            return new ResponseWrapper<List<MatchingResponseWrapper<OnlineDriveStorageService>>>
+            return new ResponseWrapper<List<MatchingResponse>>
             {
                 state = System.Net.HttpStatusCode.OK,
                 content = output

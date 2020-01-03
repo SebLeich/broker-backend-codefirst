@@ -55,5 +55,19 @@ namespace backend.Controllers
             if (response.error != null) return Content(response.state, response.error);
             return Content(response.state, response.content);
         }
+
+        /// <summary>
+        /// the endpoint removes a project with the given id
+        /// </summary>
+        /// <returns>deleted project</returns>
+        [Authorize]
+        [HttpDelete]
+        [Route("{id}")]
+        public IHttpActionResult DeleteProject(int id)
+        {
+            ResponseWrapper<Project> response = _Repo.DeleteProject(id);
+            if (response.error != null) return Content(response.state, response.error);
+            return Content(response.state, response.content);
+        }
     }
 }

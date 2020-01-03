@@ -19,7 +19,16 @@ namespace backend.Models
 
         [JsonIgnore]
         public virtual ICollection<Service> Services { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Project> Projects { get; set; }
+
         [ForeignKey(nameof(DataLocationTypeId))]
         public virtual DataLocationType DataLocationType { get; set; }
+
+        public DataLocation()
+        {
+            Services = new HashSet<Service>();
+            Projects = new HashSet<Project>();
+        }
     }
 }

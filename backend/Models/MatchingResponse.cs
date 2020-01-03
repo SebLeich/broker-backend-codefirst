@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Models
@@ -23,11 +24,18 @@ namespace backend.Models
         public int pointsHasFileVersioning { get; set; } = 0;
         public int pointsHasAutomatedSynchronisation { get; set; } = 0;
 
-        [ForeignKey("Project")]
+        [ForeignKey(nameof(Project))]
         public int ProjectId { get; set; }
 
+        [ForeignKey("Service")]
+        public int ServiceId { get; set; }
+
+        [JsonIgnore]
         [ForeignKey(nameof(ProjectId))]
-        public Project Project { get; set; }
+        public virtual Project Project { get; set; }
+
+        [ForeignKey(nameof(ServiceId))]
+        public virtual Service Service { get; set; }
 
         public int points { get
             {
@@ -49,17 +57,6 @@ namespace backend.Models
                     this.pointsstoragetype
                 );
             }
-        }
-    }
-
-    public class MatchingResponseWrapper<T>
-    {
-        public MatchingResponse match { get; set; }
-        public T content { get; set; }
-
-        public MatchingResponseWrapper()
-        {
-
         }
     }
 }
