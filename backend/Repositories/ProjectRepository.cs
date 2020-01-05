@@ -81,9 +81,14 @@ namespace backend.Repositories
         /// <param name="id">id of the project</param>
         /// <param name="matchingResponses">set of matching responses</param>
         /// <returns>http response</returns>
-        public ResponseWrapper<Project> PostMatchingResponses(int id, List<MatchingResponse> matchingResponses)
+        public ResponseWrapper<Project> PostMatchingResponses(List<MatchingResponse> matchingResponses)
         {
-            Project project = _Ctx.Project.Find(id);
+            if (matchingResponses.Count == 0) return new ResponseWrapper<Project>
+            {
+                state = HttpStatusCode.BadRequest,
+                error = "Matching für Projekt soll angelegt werden: leere Liste übergeben."
+            };
+            Project project = _Ctx.Project.Find(matchingResponses[0].ProjectId);
             if (project == null) return new ResponseWrapper<Project>
             {
                 state = HttpStatusCode.NotFound,
@@ -91,15 +96,13 @@ namespace backend.Repositories
             };
             foreach(MatchingResponse response in matchingResponses)
             {
-                response.ProjectId = id;
                 _Ctx.MatchingResponse.Add(response);
-
             }
             _Ctx.SaveChanges();
             return new ResponseWrapper<Project>
             {
                 state = HttpStatusCode.OK,
-                content = _Ctx.Project.Find(id)
+                content = _Ctx.Project.Find(matchingResponses[0].ProjectId)
             };
         }
 

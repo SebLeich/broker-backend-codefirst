@@ -49,11 +49,11 @@ namespace backend.Controllers
         /// <returns>persisted project</returns>
         [Authorize]
         [HttpPost]
-        [Route("matchingResponses/{id}")]
-        public IHttpActionResult PostMatchingResponses(int projectId, [FromBody] List<MatchingResponse> matchingResponses)
+        [Route("matchingresponses")]
+        public IHttpActionResult PostMatchingResponses([FromBody] List<MatchingResponse> matchingResponses)
         {
             if (matchingResponses == null) return Content(System.Net.HttpStatusCode.BadRequest, "Matching soll angelegt werden: übergebenes Objekt ist null");
-            ResponseWrapper<Project> response = _Repo.PostMatchingResponses(projectId, matchingResponses);
+            ResponseWrapper<Project> response = _Repo.PostMatchingResponses(matchingResponses);
             if (response.error != null) return Content(response.state, response.error);
             return Content(response.state, response.content);
         }
