@@ -17,13 +17,13 @@ namespace backend.Models
         new public MatchingResponse MatchWithSearchVector(SearchVector Search)
         {
             MatchingResponse Output = base.MatchWithSearchVector(Search);
-            if (Search.hasFileEncryption != null && Search.hasFileEncryption.Priority > 0)
+            if (Search.hasFileEncryption != null && Search.hasFileEncryption.Value.HasValue && Search.hasFileEncryption.Priority > 0)
             {
-                if (HasFileEncryption) Output.pointsHasFileEncryption = Search.hasFileEncryption.Priority;
+                if (HasFileEncryption == Search.hasFileEncryption.Value) Output.pointsHasFileEncryption = Search.hasFileEncryption.Priority;
             }
-            if (Search.hasReplication != null && Search.hasReplication.Priority > 0)
+            if (Search.hasReplication != null && Search.hasReplication.Value.HasValue && Search.hasReplication.Priority > 0)
             {
-                if (HasReplication) Output.pointsHasReplication = Search.hasReplication.Priority;
+                if (HasReplication == Search.hasReplication.Value) Output.pointsHasReplication = Search.hasReplication.Priority;
             }
             return Output;
         }

@@ -130,10 +130,6 @@ namespace backend.Core
         /// </summary>
         public DbSet<Project> Project { get; set; }
         /// <summary>
-        /// all service types
-        /// </summary>
-        public DbSet<ProjectServiceType> ProjectServiceType { get; set; }
-        /// <summary>
         /// the provider relation
         /// </summary>
         public DbSet<Provider> Provider { get; set; }

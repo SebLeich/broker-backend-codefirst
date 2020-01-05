@@ -22,14 +22,8 @@ namespace backend.Migrations
         /// the method can be called by execute "update-database" with the nuget-console
         /// </summary>
         /// <param name="context">the database context</param>
-        protected override void Seed(backend.Core.BrokerContext context)
+        protected override void Seed(BrokerContext context)
         {
-            context.ProjectServiceType.AddOrUpdate(x => x.TypeName, new ProjectServiceType { TypeName = "BlockStorageService" });
-            context.ProjectServiceType.AddOrUpdate(x => x.TypeName, new ProjectServiceType { TypeName = "DirectAttachedStorageService" });
-            context.ProjectServiceType.AddOrUpdate(x => x.TypeName, new ProjectServiceType { TypeName = "KeyValueStorageService" });
-            context.ProjectServiceType.AddOrUpdate(x => x.TypeName, new ProjectServiceType { TypeName = "ObjectStorageService" });
-            context.ProjectServiceType.AddOrUpdate(x => x.TypeName, new ProjectServiceType { TypeName = "OnlineDriveStorageService" });
-            context.ProjectServiceType.AddOrUpdate(x => x.TypeName, new ProjectServiceType { TypeName = "RelationalDatabaseStorageService" });
             var uMgr = new UserManager<ApplicationUser, Guid>(new UserStore<ApplicationUser, ApplicationRole, Guid, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>(context));
             var rMgr = new RoleManager<ApplicationRole, Guid>(new RoleStore<ApplicationRole, Guid, ApplicationUserRole>(context));
             var adminRole = new ApplicationRole

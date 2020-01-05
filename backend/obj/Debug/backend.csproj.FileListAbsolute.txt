@@ -214,3 +214,4 @@ C:\Users\lione\Documents\Repository\broker-backend\backend\bin\de\System.Web.Htt
 C:\Users\lione\Documents\Repository\broker-backend\backend\obj\Debug\backend.csproj.CopyComplete
 C:\Users\lione\Documents\Repository\broker-backend\backend\obj\Debug\backend.dll
 C:\Users\lione\Documents\Repository\broker-backend\backend\obj\Debug\backend.pdb
+C:\Users\lione\Documents\Repository\broker-backend\backend\obj\Debug\backend.csprojAssemblyReference.cache

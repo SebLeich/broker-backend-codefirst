@@ -37,7 +37,23 @@ namespace backend.Controllers
         [Route("current")]
         public IHttpActionResult PostCurrentProject([FromBody] Project Project)
         {
+            if (Project == null) return Content(System.Net.HttpStatusCode.BadRequest, "Projekt soll angelegt werden: übergebenes Objekt ist null");
             ResponseWrapper<Project> response = _Repo.PostCurrentProject(User.Identity.Name, Project);
+            if (response.error != null) return Content(response.state, response.error);
+            return Content(response.state, response.content);
+        }
+
+        /// <summary>
+        /// the endpoint saves a set of matching responses
+        /// </summary>
+        /// <returns>persisted project</returns>
+        [Authorize]
+        [HttpPost]
+        [Route("matchingResponses/{id}")]
+        public IHttpActionResult PostMatchingResponses(int projectId, [FromBody] List<MatchingResponse> matchingResponses)
+        {
+            if (matchingResponses == null) return Content(System.Net.HttpStatusCode.BadRequest, "Matching soll angelegt werden: übergebenes Objekt ist null");
+            ResponseWrapper<Project> response = _Repo.PostMatchingResponses(projectId, matchingResponses);
             if (response.error != null) return Content(response.state, response.error);
             return Content(response.state, response.content);
         }
@@ -51,6 +67,7 @@ namespace backend.Controllers
         [Route("")]
         public IHttpActionResult PutProject([FromBody] Project Project)
         {
+            if (Project == null) return Content(System.Net.HttpStatusCode.BadRequest, "Projekt soll überschrieben werden: übergebenes Objekt ist null");
             ResponseWrapper<Project> response = _Repo.PutProject(Project);
             if (response.error != null) return Content(response.state, response.error);
             return Content(response.state, response.content);

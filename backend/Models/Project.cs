@@ -13,6 +13,10 @@ namespace backend.Models
         public int ProjectId { get; set; }
         public string ProjectTitle { get; set; }
         public string ProjectDescription { get; set; }
+        public string Icon { get; set; }
+        public string Color { get; set; }
+        public int MinMatchingPercentage { get; set; } = 50;
+        public bool DeleteOldSearches { get; set; } = false;
 
         public DateTime Created { get; set; }
         public DateTime LastModified { get; set; }
@@ -48,7 +52,16 @@ namespace backend.Models
         public virtual ICollection<DeploymentInfo> DeploymentInfos { get; set; }
         public virtual ICollection<Provider> Providers { get; set; }
         public virtual ICollection<StorageType> StorageTypes { get; set; }
-        public virtual ICollection<ProjectServiceType> ServiceTypes { get; set; }
+
+        public ICollection<string> ServiceTypes { get {
+                List<string> Output = new List<string>();
+                foreach(MatchingResponse Response in MatchingResponse)
+                {
+                    if(!Output.Contains(Response.ServiceType)) Output.Add(Response.ServiceType);
+                }
+                return Output;
+            }
+        }
 
         [ForeignKey("User")]
         public Guid UserId { get; set; }
@@ -68,7 +81,7 @@ namespace backend.Models
             DeploymentInfos = new List<DeploymentInfo>();
             Providers = new List<Provider>();
             StorageTypes = new List<StorageType>();
-            ServiceTypes = new List<ProjectServiceType>();
+            MatchingResponse = new List<MatchingResponse>();
         }
     }
 }

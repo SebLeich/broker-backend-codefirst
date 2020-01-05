@@ -74,18 +74,6 @@ namespace backend.Models
         {
             Value = new List<int>();
         }
-
-        [Required]
-        [JsonIgnore]
-        public string StringValues
-        {
-            get {
-                return String.Join(",", Value.Select(x => x.ToString()).ToArray());
-            }
-            set { 
-                Value = StringValues.Split(',').Select(Int32.Parse).ToList();
-            }
-        }
     }
     public class SearchVectorBooleanEntry
     {

@@ -61,6 +61,8 @@ namespace backend.Repositories
                 state = HttpStatusCode.Unauthorized,
                 error = "Fehler: aktueller Benutzer konnte nicht im Kontext gefunden werden"
             };
+            validateNMRelations(Project);
+            Project.MatchingResponse = new List<MatchingResponse>();
             Project.UserId = User.Id;
             Project.Created = DateTime.Now;
             Project.LastModified = DateTime.Now;
@@ -70,6 +72,34 @@ namespace backend.Repositories
             {
                 state = HttpStatusCode.OK,
                 content = Project
+            };
+        }
+
+        /// <summary>
+        /// the method persists a set of matching responses for the project with the given id
+        /// </summary>
+        /// <param name="id">id of the project</param>
+        /// <param name="matchingResponses">set of matching responses</param>
+        /// <returns>http response</returns>
+        public ResponseWrapper<Project> PostMatchingResponses(int id, List<MatchingResponse> matchingResponses)
+        {
+            Project project = _Ctx.Project.Find(id);
+            if (project == null) return new ResponseWrapper<Project>
+            {
+                state = HttpStatusCode.NotFound,
+                error = "Matching für Projekt soll angelegt werden: Projekt-ID nicht vergeben."
+            };
+            foreach(MatchingResponse response in matchingResponses)
+            {
+                response.ProjectId = id;
+                _Ctx.MatchingResponse.Add(response);
+
+            }
+            _Ctx.SaveChanges();
+            return new ResponseWrapper<Project>
+            {
+                state = HttpStatusCode.OK,
+                content = _Ctx.Project.Find(id)
             };
         }
 
@@ -88,6 +118,7 @@ namespace backend.Repositories
                 error = "Fehler: Projekt soll beareitet werden, existiert allerdings noch nicht"
             };
             validateNMRelations(Project);
+            Project.MatchingResponse = new List<MatchingResponse>();
             OldProject.LastModified = DateTime.Now;
             OldProject.ProjectDescription = Project.ProjectDescription;
             OldProject.ProjectTitle = Project.ProjectTitle;
@@ -157,7 +188,6 @@ namespace backend.Repositories
             validateDataLocations(Project);
             validateDeploymentInfos(Project);
             validateProviders(Project);
-            validateServiceTypes(Project);
             validateStorageTypes(Project);
         }
 
@@ -179,6 +209,9 @@ namespace backend.Repositories
                 List<CloudServiceCategory> remove = Project.Categories.Except(temp.ToList()).ToList();
                 add.ForEach(x => Project.Categories.Add(x));
                 remove.ForEach(x => Project.Categories.Remove(x));
+            } else
+            {
+                NewProject.Categories = temp;
             }
         }
 
@@ -200,6 +233,9 @@ namespace backend.Repositories
                 List<Certificate> remove = Project.Certificates.Except(temp.ToList()).ToList();
                 add.ForEach(x => Project.Certificates.Add(x));
                 remove.ForEach(x => Project.Certificates.Remove(x));
+            } else
+            {
+                NewProject.Certificates = temp;
             }
         }
 
@@ -221,6 +257,9 @@ namespace backend.Repositories
                 List<CloudServiceModel> remove = Project.CloudServiceModels.Except(temp.ToList()).ToList();
                 add.ForEach(x => Project.CloudServiceModels.Add(x));
                 remove.ForEach(x => Project.CloudServiceModels.Remove(x));
+            } else
+            {
+                NewProject.CloudServiceModels = temp;
             }
         }
 
@@ -242,6 +281,9 @@ namespace backend.Repositories
                 List<DataLocation> remove = Project.DataLocations.Except(temp.ToList()).ToList();
                 add.ForEach(x => Project.DataLocations.Add(x));
                 remove.ForEach(x => Project.DataLocations.Remove(x));
+            } else
+            {
+                NewProject.DataLocations = temp;
             }
         }
 
@@ -263,6 +305,9 @@ namespace backend.Repositories
                 List<DeploymentInfo> remove = Project.DeploymentInfos.Except(temp.ToList()).ToList();
                 add.ForEach(x => Project.DeploymentInfos.Add(x));
                 remove.ForEach(x => Project.DeploymentInfos.Remove(x));
+            } else
+            {
+                NewProject.DeploymentInfos = temp;
             }
         }
 
@@ -284,27 +329,9 @@ namespace backend.Repositories
                 List<Provider> remove = Project.Providers.Except(temp.ToList()).ToList();
                 add.ForEach(x => Project.Providers.Add(x));
                 remove.ForEach(x => Project.Providers.Remove(x));
-            }
-        }
-
-        /// <summary>
-        /// the method validates all service types for the given project
-        /// </summary>
-        /// <param name="NewProject">project of validation</param>
-        private void validateServiceTypes(Project NewProject)
-        {
-            List<ProjectServiceType> temp = new List<ProjectServiceType>();
-            foreach (ProjectServiceType type in NewProject.ServiceTypes)
+            } else
             {
-                temp.Add(_Ctx.ProjectServiceType.Find(type.Id));
-            }
-            Project Project = _Ctx.Project.Find(NewProject.ProjectId);
-            if (Project != null)
-            {
-                List<ProjectServiceType> add = temp.Except(Project.ServiceTypes.ToList()).ToList();
-                List<ProjectServiceType> remove = Project.ServiceTypes.Except(temp.ToList()).ToList();
-                add.ForEach(x => Project.ServiceTypes.Add(x));
-                remove.ForEach(x => Project.ServiceTypes.Remove(x));
+                NewProject.Providers = temp;
             }
         }
 
@@ -326,6 +353,9 @@ namespace backend.Repositories
                 List<StorageType> remove = Project.StorageTypes.Except(temp.ToList()).ToList();
                 add.ForEach(x => Project.StorageTypes.Add(x));
                 remove.ForEach(x => Project.StorageTypes.Remove(x));
+            } else
+            {
+                NewProject.StorageTypes = temp;
             }
         }
     }
