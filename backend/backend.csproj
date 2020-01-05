@@ -179,7 +179,6 @@
     <Compile Include="Models\Rule.cs" />
     <Compile Include="Models\SearchVector.cs" />
     <Compile Include="Models\Service.cs" />
-    <Compile Include="Models\ServiceCertificate.cs" />
     <Compile Include="Models\ServiceChargingModel.cs" />
     <Compile Include="Models\ServiceWrapper.cs" />
     <Compile Include="Models\StorageType.cs" />

@@ -25,12 +25,13 @@ namespace backend.Repositories
         /// the method validates the n:m relations of the given entity
         /// all passed connections will be added, all leaved connections will be removed (in case they are stored before)
         /// </summary>
-        protected void validateNMRelations(Service Service)
+        protected Service validateNMRelations(Service Service)
         {
-            validateCertificates(Service);
-            validateChargingModels(Service);
-            validateDataLocations(Service);
-            validatePricing(Service);
+            Service = validateCertificates(Service);
+            Service = validateChargingModels(Service);
+            Service = validateDataLocations(Service);
+            Service = validatePricing(Service);
+            return Service;
         }
 
         /// <summary>
@@ -56,7 +57,7 @@ namespace backend.Repositories
         /// the method validates all certificates for the given service
         /// </summary>
         /// <param name="Service">service of validation</param>
-        private void validateCertificates(Service NewService)
+        private Service validateCertificates(Service NewService)
         {
             List<Certificate> temp = new List<Certificate>();
             foreach (Certificate certificate in NewService.Certificates)
@@ -70,6 +71,11 @@ namespace backend.Repositories
                 List<Certificate> remove = Service.Certificates.Except(temp.ToList()).ToList();
                 Service.Certificates.AddRange(add);
                 Service.Certificates.RemoveAll(x => remove.Contains(x));
+                return Service;
+            } else
+            {
+                NewService.Certificates = temp;
+                return NewService;
             }
         }
 
@@ -77,7 +83,7 @@ namespace backend.Repositories
         /// the method validates all charging models for the given service
         /// </summary>
         /// <param name="Service">service of validation</param>
-        private void validateChargingModels(Service NewService)
+        private Service validateChargingModels(Service NewService)
         {
             List<ChargingModel> temp = new List<ChargingModel>();
             foreach (ChargingModel chargingModel in NewService.ChargingModels)
@@ -91,6 +97,11 @@ namespace backend.Repositories
                 List<ChargingModel> remove = Service.ChargingModels.Except(temp.ToList()).ToList();
                 Service.ChargingModels.AddRange(add);
                 Service.ChargingModels.RemoveAll(x => remove.Contains(x));
+                return Service;
+            } else
+            {
+                NewService.ChargingModels = temp;
+                return NewService;
             }
         }
 
@@ -98,7 +109,7 @@ namespace backend.Repositories
         /// the method validates all datalocations for the given service
         /// </summary>
         /// <param name="Service">service of validation</param>
-        private void validateDataLocations(Service NewService)
+        private Service validateDataLocations(Service NewService)
         {
             List<DataLocation> temp = new List<DataLocation>();
             foreach (DataLocation dataLocation in NewService.DataLocations)
@@ -112,14 +123,19 @@ namespace backend.Repositories
                 List<DataLocation> remove = Service.DataLocations.Except(temp.ToList()).ToList();
                 Service.DataLocations.AddRange(add);
                 Service.DataLocations.RemoveAll(x => remove.Contains(x));
-            }
+                return Service;
+            } else
+            {
+                NewService.DataLocations = temp;
+                return NewService;
+            } 
         }
 
         /// <summary>
         /// the method validates all pricing models for the given service
         /// </summary>
         /// <param name="Service">service of validation</param>
-        private void validatePricing(Service NewService)
+        private Service validatePricing(Service NewService)
         {
             List<Pricing> temp = new List<Pricing>();
             foreach (Pricing pricing in NewService.Pricing)
@@ -133,6 +149,11 @@ namespace backend.Repositories
                 List<Pricing> remove = Service.Pricing.Except(temp.ToList()).ToList();
                 Service.Pricing.AddRange(add);
                 Service.Pricing.RemoveAll(x => remove.Contains(x));
+                return Service;
+            } else
+            {
+                NewService.Pricing = temp;
+                return NewService;
             }
         }
     }

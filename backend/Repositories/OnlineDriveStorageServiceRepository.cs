@@ -32,13 +32,14 @@ namespace backend.Repositories
         /// the method posts a new online drive storage service to the database
         /// </summary>
         /// <returns>the posted online drive storage service</returns>
-        public OnlineDriveStorageService PostOnlineDriveStorageService(OnlineDriveStorageService Service)
+        public OnlineDriveStorageService PostOnlineDriveStorageService(OnlineDriveStorageService OnlineDriveStorageService)
         {
-            Service.Creation = DateTime.Now;
-            Service.LastModified = DateTime.Now;
-            _Ctx.OnlineDriveStorageService.Add(Service);
+            OnlineDriveStorageService = (OnlineDriveStorageService) validateNMRelations(OnlineDriveStorageService);
+            OnlineDriveStorageService.Creation = DateTime.Now;
+            OnlineDriveStorageService.LastModified = DateTime.Now;
+            _Ctx.OnlineDriveStorageService.Add(OnlineDriveStorageService);
             _Ctx.SaveChanges();
-            return Service;
+            return OnlineDriveStorageService;
         }
         /// <summary>
         /// the method puts a new online drive storage services from the database

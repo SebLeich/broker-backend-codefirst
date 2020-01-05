@@ -32,6 +32,7 @@ namespace backend.Repositories
         /// <returns>the posted direct attached storage service</returns>
         public DirectAttachedStorageService PostDirectAttachedStorageService(DirectAttachedStorageService DirectAttachedStorageService)
         {
+            DirectAttachedStorageService = (DirectAttachedStorageService) validateNMRelations(DirectAttachedStorageService);
             DirectAttachedStorageService.Creation = DateTime.Now;
             DirectAttachedStorageService.LastModified = DateTime.Now;
             _Ctx.DirectAttachedStorageService.Add(DirectAttachedStorageService);

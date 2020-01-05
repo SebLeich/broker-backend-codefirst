@@ -14,13 +14,13 @@ namespace backend.Models
         public int Id { get; set; }
         public string CertificateName { get; set; }
 
-        public virtual ICollection<ServiceCertificate> ServiceCertificates { get; set; }
+        public virtual ICollection<Service> Services { get; set; }
         [JsonIgnore]
         public virtual ICollection<Project> Projects { get; set; }
 
         public Certificate()
         {
-            ServiceCertificates = new HashSet<ServiceCertificate>();
+            Services = new HashSet<Service>();
             Projects = new HashSet<Project>();
         }
     }

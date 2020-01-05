@@ -36,7 +36,7 @@ namespace backend.Repositories
         /// <returns>the posted block storage service</returns>
         public BlockStorageService PostBlockStorageService(BlockStorageService BlockStorageService)
         {
-            base.validateNMRelations(BlockStorageService);
+            BlockStorageService = (BlockStorageService) validateNMRelations(BlockStorageService);
             BlockStorageService.Creation = DateTime.Now;
             BlockStorageService.LastModified = DateTime.Now;
             _Ctx.BlockStorageService.Add(BlockStorageService);
@@ -50,7 +50,7 @@ namespace backend.Repositories
         /// <returns>the puted block storage service</returns>
         public ResponseWrapper<BlockStorageService> PutBlockStorageService(BlockStorageService Service)
         {
-            base.validateNMRelations(Service);
+            validateNMRelations(Service);
             BlockStorageService OldService = _Ctx.BlockStorageService.Find(Service.Id);
 
             if (OldService == null) return new ResponseWrapper<BlockStorageService>
