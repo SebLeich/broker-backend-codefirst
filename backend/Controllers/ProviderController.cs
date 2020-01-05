@@ -5,37 +5,37 @@ using System.Web.Http;
 
 namespace backend.Controllers
 {
-    [RoutePrefix("api/serviceprovider")]
-    public class ServiceProviderController : ApiController
+    [RoutePrefix("api/provider")]
+    public class ProviderController : ApiController
     {
-        private ServiceProviderRepository _Repo;
+        private ProviderRepository _Repo;
         private RoleRightRepository _SecRepo;
 
-        public ServiceProviderController()
+        public ProviderController()
         {
-            _Repo = new ServiceProviderRepository();
+            _Repo = new ProviderRepository();
             _SecRepo = new RoleRightRepository();
         }
 
         [AllowAnonymous]
         [HttpGet]
         [Route("")]
-        public IHttpActionResult GetServiceProviders()
+        public IHttpActionResult GetProviders()
         {
-            return Ok(_Repo.GetServiceProviders());
+            return Ok(_Repo.GetProviders());
         }
 
         [Authorize]
         [HttpPost]
         [Route("")]
-        public IHttpActionResult PostServiceProvider([FromBody] Provider Provider)
+        public IHttpActionResult PostProvider([FromBody] Provider Provider)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            return Ok(_Repo.PostServiceProvider(Provider));
+            return Ok(_Repo.PostProvider(Provider));
         }
     }
 }

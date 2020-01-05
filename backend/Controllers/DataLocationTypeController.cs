@@ -5,37 +5,37 @@ using System.Web.Http;
 
 namespace backend.Controllers
 {
-    [RoutePrefix("api/datalocation")]
-    public class DataLocationController : ApiController
+    [RoutePrefix("api/datalocationtype")]
+    public class DataLocationTypeController : ApiController
     {
-        private DataLocationRepository _Repo;
+        private DataLocationTypeRepository _Repo;
         private RoleRightRepository _SecRepo;
 
-        public DataLocationController()
+        public DataLocationTypeController()
         {
-            _Repo = new DataLocationRepository();
+            _Repo = new DataLocationTypeRepository();
             _SecRepo = new RoleRightRepository();
         }
 
         [AllowAnonymous]
         [HttpGet]
         [Route("")]
-        public IHttpActionResult GetDataLocation()
+        public IHttpActionResult GetDataLocationypes()
         {
-            return Ok(_Repo.GetDataLocation());
+            return Ok(_Repo.GetDataLocationTypes());
         }
 
         [Authorize]
         [HttpPost]
         [Route("")]
-        public IHttpActionResult PostDataLocation([FromBody] DataLocation DataLocation)
+        public IHttpActionResult PostDataLocationType([FromBody] DataLocationType DataLocationType)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            return Ok(_Repo.PostDataLocation(DataLocation));
+            return Ok(_Repo.PostDataLocationType(DataLocationType));
         }
     }
 }

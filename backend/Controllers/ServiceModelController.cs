@@ -20,7 +20,7 @@ namespace backend.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("")]
-        public IHttpActionResult GetServiceProviders()
+        public IHttpActionResult GetServiceModels()
         {
             return Ok(_Repo.GetServiceModels());
         }
@@ -28,7 +28,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpPost]
         [Route("")]
-        public IHttpActionResult PostServiceProvider([FromBody] CloudServiceModel ServiceModel)
+        public IHttpActionResult PostServiceModel([FromBody] CloudServiceModel ServiceModel)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
             {

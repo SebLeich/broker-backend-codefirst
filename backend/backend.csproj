@@ -130,6 +130,7 @@
     <Compile Include="Controllers\CertificateController.cs" />
     <Compile Include="Controllers\CloudServiceCategoryController.cs" />
     <Compile Include="Controllers\DataLocationController.cs" />
+    <Compile Include="Controllers\DataLocationTypeController.cs" />
     <Compile Include="Controllers\DeploymentInformationController.cs" />
     <Compile Include="Controllers\DirectAttachedStorageServiceController.cs" />
     <Compile Include="Controllers\KeyValueStoreServiceController.cs" />
@@ -137,11 +138,11 @@
     <Compile Include="Controllers\ObjectStorageServiceController.cs" />
     <Compile Include="Controllers\OnlineDriveStorageServiceController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ProviderController.cs" />
     <Compile Include="Controllers\RelationalDatabaseServiceController.cs" />
     <Compile Include="Controllers\SearchVectorController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\ServiceModelController.cs" />
-    <Compile Include="Controllers\ServiceProviderController.cs" />
     <Compile Include="Controllers\StorageTypeController.cs" />
     <Compile Include="Core\BrokerContext.cs" />
     <Compile Include="Core\Client.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Repositories\CertificateRepository.cs" />
     <Compile Include="Repositories\CloudServiceCategoryRepository.cs" />
     <Compile Include="Repositories\DataLocationRepository.cs" />
+    <Compile Include="Repositories\DataLocationTypeRepository.cs" />
     <Compile Include="Repositories\DeploymentInformationRepository.cs" />
     <Compile Include="Repositories\DirectAttachedStorageServiceRepository.cs" />
     <Compile Include="Repositories\GenericServiceRepository.cs" />
@@ -198,11 +200,11 @@
     <Compile Include="Repositories\ObjectStorageServiceRepository.cs" />
     <Compile Include="Repositories\OnlineDriveStorageServiceRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
+    <Compile Include="Repositories\ProviderRepository.cs" />
     <Compile Include="Repositories\RelationalDatabaseServiceRepository.cs" />
     <Compile Include="Repositories\RoleRightRepository.cs" />
     <Compile Include="Repositories\SearchVectorRepository.cs" />
     <Compile Include="Repositories\ServiceModelRepository.cs" />
-    <Compile Include="Repositories\ServiceProviderRepository.cs" />
     <Compile Include="Repositories\ServiceRepository.cs" />
     <Compile Include="Repositories\StorageTypeRepository.cs" />
     <Compile Include="Startup.cs" />

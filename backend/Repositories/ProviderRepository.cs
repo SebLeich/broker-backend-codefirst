@@ -5,21 +5,21 @@ using System.Linq;
 
 namespace backend.Repositories
 {
-    public class ServiceProviderRepository
+    public class ProviderRepository
     {
         private BrokerContext _Ctx;
 
-        public ServiceProviderRepository()
+        public ProviderRepository()
         {
             _Ctx = new BrokerContext();
         }
 
-        public List<Provider> GetServiceProviders()
+        public List<Provider> GetProviders()
         {
             return _Ctx.Provider.ToList();
         }
 
-        public Provider PostServiceProvider(Provider Provider)
+        public Provider PostProvider(Provider Provider)
         {
             _Ctx.Provider.Add(Provider);
             _Ctx.SaveChanges();
