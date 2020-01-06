@@ -19,6 +19,7 @@ namespace backend.Models
         public string ServiceSLA { get; set; }
         public string ServiceTitle { get; set; }
         public string ServiceAvailability { get; set; }
+        public string Logo { get; set; }
         public DateTime Creation { get; set; }
         public DateTime LastModified { get; set; }
 
