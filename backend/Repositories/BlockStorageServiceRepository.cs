@@ -89,11 +89,11 @@ namespace backend.Repositories
         /// </summary>
         /// <param name="Search">search vector</param>
         /// <returns>best match</returns>
-        public ResponseWrapper<List<MatchingResponse>> Search(SearchVector Search)
+        public ResponseWrapper<List<MatchingResponse>> Search(SearchVector Search, string username)
         {
             if (Search.total == 0) return new ResponseWrapper<List<MatchingResponse>>
             {
-                state = System.Net.HttpStatusCode.BadRequest,
+                state = HttpStatusCode.BadRequest,
                 error = "Fehlerhafte Eingabe: vergebenes Rating muss ingesamt mindestens 1 sein. Wert: 0"
             };
             var output = new List<MatchingResponse>();
@@ -105,9 +105,10 @@ namespace backend.Repositories
                     output.Add(result);
                 }
             }
+            saveUserSearch(username);
             return new ResponseWrapper<List<MatchingResponse>>
             {
-                state = System.Net.HttpStatusCode.OK,
+                state = HttpStatusCode.OK,
                 content = output
             };
         }

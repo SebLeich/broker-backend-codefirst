@@ -112,7 +112,7 @@ namespace backend.Controllers
         [AllowAnonymous]
         public IHttpActionResult Search([FromBody] SearchVector Search)
         {
-            var result = _Repo.Search(Search);
+            var result = _Repo.Search(Search, User.Identity.Name);
             if (result.error != null) return Content(result.state, result.error);
             return Content(result.state, result.content);
         }

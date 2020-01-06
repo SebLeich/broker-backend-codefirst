@@ -35,6 +35,42 @@ namespace backend.Repositories
         }
 
         /// <summary>
+        /// the method persists the given user's search
+        /// </summary>
+        /// <param name="User">current user</param>
+        protected void saveUserSearch(string username)
+        {
+            if(username == null)
+            {
+                _Ctx.UserSearch.Add(new UserSearch
+                {
+                    Time = DateTime.Now
+                });
+                _Ctx.SaveChanges();
+            } else
+            {
+                ApplicationUser User = _Ctx.Users.Where(x => x.UserName == username).FirstOrDefault();
+                if(User == null)
+                {
+                    _Ctx.UserSearch.Add(new UserSearch
+                    {
+                        Time = DateTime.Now
+                    });
+                    _Ctx.SaveChanges();
+                } else
+                {
+                    _Ctx.UserSearch.Add(new UserSearch
+                    {
+                        Time = DateTime.Now,
+                        User = User,
+                        UserId = User.Id
+                    });
+                    _Ctx.SaveChanges();
+                }
+            }
+        }
+
+        /// <summary>
         /// the method overwrites all service attributes
         /// </summary>
         /// <param name="Service">new service data</param>

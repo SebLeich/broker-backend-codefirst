@@ -135,6 +135,7 @@
     <Compile Include="Controllers\DirectAttachedStorageServiceController.cs" />
     <Compile Include="Controllers\KeyValueStoreServiceController.cs" />
     <Compile Include="Controllers\MatchingResponseController.cs" />
+    <Compile Include="Controllers\MetaDataController.cs" />
     <Compile Include="Controllers\ObjectStorageServiceController.cs" />
     <Compile Include="Controllers\OnlineDriveStorageServiceController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Models\DirectAttachedStorageService.cs" />
     <Compile Include="Models\KeyValueStorageService.cs" />
     <Compile Include="Models\MatchingResponse.cs" />
+    <Compile Include="Models\MetaData.cs" />
     <Compile Include="Models\ObjectStorageService.cs" />
     <Compile Include="Models\OnlineDriveStorageService.cs" />
     <Compile Include="Models\Payment.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Models\StorageType.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserRoleLink.cs" />
+    <Compile Include="Models\UserSearch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuthentificationRepository.cs" />
     <Compile Include="Repositories\BlockStorageServiceRepository.cs" />
@@ -196,6 +199,7 @@
     <Compile Include="Repositories\GenericServiceRepository.cs" />
     <Compile Include="Repositories\KeyValueStoreServiceRepository.cs" />
     <Compile Include="Repositories\MatchingResponseRepository.cs" />
+    <Compile Include="Repositories\MetaDataRepository.cs" />
     <Compile Include="Repositories\ObjectStorageServiceRepository.cs" />
     <Compile Include="Repositories\OnlineDriveStorageServiceRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />

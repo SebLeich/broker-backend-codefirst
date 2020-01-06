@@ -1,5 +1,6 @@
 ﻿using backend.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,12 +11,20 @@ namespace backend.Core
     /// the broker context user class
     /// </summary>
     public class ApplicationUser : IdentityUser<Guid, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim> {
+
+        /// <summary>
+        /// all search entries of the current user
+        /// </summary>
+        [JsonIgnore]
+        public virtual ICollection<UserSearch> UserSearchs { get; set; }
+
         /// <summary>
         /// the constructor creates a new instance of an application user
         /// </summary>
         public ApplicationUser()
         {
             Id = Guid.NewGuid();
+            UserSearchs = new List<UserSearch>();
         }
     }
     /// <summary>
@@ -153,6 +162,10 @@ namespace backend.Core
         /// the service storage type relation
         /// </summary>
         public DbSet<StorageType> StorageType { get; set; }
+        /// <summary>
+        /// the service storage type relation
+        /// </summary>
+        public DbSet<UserSearch> UserSearch { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
