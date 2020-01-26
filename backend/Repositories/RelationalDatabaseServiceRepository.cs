@@ -83,7 +83,7 @@ namespace backend.Repositories
         /// </summary>
         /// <param name="Search">search vector</param>
         /// <returns>best match</returns>
-        public ResponseWrapper<List<MatchingResponse>> Search(SearchVector Search)
+        public ResponseWrapper<List<MatchingResponse>> Search(SearchVector Search, string username)
         {
             if (Search.total == 0) return new ResponseWrapper<List<MatchingResponse>>
             {

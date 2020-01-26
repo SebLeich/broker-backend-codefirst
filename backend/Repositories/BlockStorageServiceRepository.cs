@@ -26,9 +26,19 @@ namespace backend.Repositories
         /// the method returns a block storage service from the database by id
         /// </summary>
         /// <returns> a specific block storage service</returns>
-        public BlockStorageService GetBlockStorageService(int id)
+        public ResponseWrapper<BlockStorageService> GetBlockStorageService(int id)
         {
-            return _Ctx.BlockStorageService.Find(id);
+            BlockStorageService blockStorageService = _Ctx.BlockStorageService.Find(id);
+            if (blockStorageService == null) return new ResponseWrapper<BlockStorageService>
+            {
+                state = HttpStatusCode.NotFound,
+                error = "Fehler beim Abrufen: Blockstorageservice mit der ID " + id + " konnte nicht gefunden werden"
+            };
+            return new ResponseWrapper<BlockStorageService>
+            {
+                state = HttpStatusCode.OK,
+                content = blockStorageService
+            };
         }
         /// <summary>
         /// the method posts a new block storage service to the database
@@ -105,7 +115,6 @@ namespace backend.Repositories
                     output.Add(result);
                 }
             }
-            saveUserSearch(username);
             return new ResponseWrapper<List<MatchingResponse>>
             {
                 state = HttpStatusCode.OK,

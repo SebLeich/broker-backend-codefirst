@@ -159,9 +159,17 @@ namespace backend.Core
         /// </summary>
         public DbSet<Service> Service { get; set; }
         /// <summary>
+        /// the service class relation
+        /// </summary>
+        public DbSet<ServiceClass> ServiceClass { get; set; }
+        /// <summary>
         /// the service storage type relation
         /// </summary>
         public DbSet<StorageType> StorageType { get; set; }
+        /// <summary>
+        /// the use cases
+        /// </summary>
+        public DbSet<UseCase> UseCase { get; set; }
         /// <summary>
         /// the service storage type relation
         /// </summary>

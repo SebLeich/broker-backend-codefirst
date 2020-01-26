@@ -35,8 +35,22 @@ namespace backend.Controllers
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
-
             return Ok(_Repo.GetServices());
+        }
+        /// <summary>
+        /// the method returns all service classes
+        /// </summary>
+        /// <returns>list of service classes</returns>
+        [Route("classes")]
+        [HttpGet]
+        [Authorize]
+        public IHttpActionResult GetServiceClasses()
+        {
+            if (!_SecRepo.IsAllowed(User.Identity.Name, "manage-use-cases"))
+            {
+                return StatusCode(HttpStatusCode.Forbidden);
+            }
+            return Ok(_Repo.GetServiceClasses());
         }
     }
 }

@@ -24,6 +24,7 @@ namespace backend.Migrations
         /// <param name="context">the database context</param>
         protected override void Seed(BrokerContext context)
         {
+            context.ServiceClass.SeedEnumValues<ServiceClass, ServiceClassEnum>(@enum => @enum);
             var uMgr = new UserManager<ApplicationUser, Guid>(new UserStore<ApplicationUser, ApplicationRole, Guid, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>(context));
             var rMgr = new RoleManager<ApplicationRole, Guid>(new RoleStore<ApplicationRole, Guid, ApplicationUserRole>(context));
             var adminRole = new ApplicationRole
@@ -91,6 +92,13 @@ namespace backend.Migrations
                 RuleDesc = "Dürfen Nutzer der Rollengruppe Rollen entfernen?"
             };
             context.Rule.AddOrUpdate(x => x.RuleCode, deleteRoles);
+            var manageUseCases = new Rule
+            {
+                RuleCode = "manage-use-cases",
+                RuleTitle = "Use-Cases verwalten",
+                RuleDesc = "Dürfen Nutzer der Rollengruppe Use-Cases erstellen, ändern und löschen?"
+            };
+            context.Rule.AddOrUpdate(x => x.RuleCode, deleteRoles);
 
             context.SaveChanges();
 
@@ -102,6 +110,8 @@ namespace backend.Migrations
             adminRole.Rules.Add(deleteServicesRule);
             adminRole.Rules.Add(editSecurityGuidelines);
             adminRole.Rules.Add(registerRoles);
+            adminRole.Rules.Add(deleteRoles);
+            adminRole.Rules.Add(manageUseCases);
 
             var pricingPeriodD = new PricingPeriod { PricingPeriodName = "Täglich", PricingPeriodeCode = "daily" };
             var pricingPeriodM = new PricingPeriod { PricingPeriodName = "Monatlich", PricingPeriodeCode = "monthly" };

@@ -22,9 +22,19 @@ namespace backend.Repositories
         /// the method returns a direct attached storage service from the database by id
         /// </summary>
         /// <returns> a specific direct attached storage service</returns>
-        public DirectAttachedStorageService GetDirectAttachedStorageService(int id)
+        public ResponseWrapper<DirectAttachedStorageService> GetDirectAttachedStorageService(int id)
         {
-            return _Ctx.DirectAttachedStorageService.Find(id);
+            DirectAttachedStorageService directAttachedStorageService = _Ctx.DirectAttachedStorageService.Find(id);
+            if (directAttachedStorageService == null) return new ResponseWrapper<DirectAttachedStorageService>
+            {
+                error = $"Fehler beim Abrufen: Direct Attached Storage Service mit der ID {directAttachedStorageService.Id} konnte nicht gefunden werden",
+                state = HttpStatusCode.NotFound
+            };
+            return new ResponseWrapper<DirectAttachedStorageService>
+            {
+                content = directAttachedStorageService,
+                state = HttpStatusCode.OK
+            };
         }
         /// <summary>
         /// the method posts a new direct attached storage service to the database
@@ -86,11 +96,11 @@ namespace backend.Repositories
         /// </summary>
         /// <param name="Search">search vector</param>
         /// <returns>best match</returns>
-        public ResponseWrapper<List<MatchingResponse>> Search(SearchVector Search)
+        public ResponseWrapper<List<MatchingResponse>> Search(SearchVector Search, string username)
         {
             if (Search.total == 0) return new ResponseWrapper<List<MatchingResponse>>
             {
-                state = System.Net.HttpStatusCode.BadRequest,
+                state = HttpStatusCode.BadRequest,
                 error = "Fehlerhafte Eingabe: vergebenes Rating muss ingesamt mindestens 1 sein. Wert: 0"
             };
             var output = new List<MatchingResponse>();

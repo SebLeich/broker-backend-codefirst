@@ -38,34 +38,39 @@ namespace backend.Repositories
         /// the method persists the given user's search
         /// </summary>
         /// <param name="User">current user</param>
-        protected void saveUserSearch(string username)
+        public void saveUserSearch(string username)
         {
-            if(username == null)
+            using(BrokerContext brokerContext = new BrokerContext())
             {
-                _Ctx.UserSearch.Add(new UserSearch
+                if (username == null)
                 {
-                    Time = DateTime.Now
-                });
-                _Ctx.SaveChanges();
-            } else
-            {
-                ApplicationUser User = _Ctx.Users.Where(x => x.UserName == username).FirstOrDefault();
-                if(User == null)
-                {
-                    _Ctx.UserSearch.Add(new UserSearch
+                    brokerContext.UserSearch.Add(new UserSearch
                     {
                         Time = DateTime.Now
                     });
-                    _Ctx.SaveChanges();
-                } else
+                    brokerContext.SaveChanges();
+                }
+                else
                 {
-                    _Ctx.UserSearch.Add(new UserSearch
+                    ApplicationUser User = _Ctx.Users.Where(x => x.UserName == username).FirstOrDefault();
+                    if (User == null)
                     {
-                        Time = DateTime.Now,
-                        User = User,
-                        UserId = User.Id
-                    });
-                    _Ctx.SaveChanges();
+                        brokerContext.UserSearch.Add(new UserSearch
+                        {
+                            Time = DateTime.Now
+                        });
+                        brokerContext.SaveChanges();
+                    }
+                    else
+                    {
+                        brokerContext.UserSearch.Add(new UserSearch
+                        {
+                            Time = DateTime.Now,
+                            User = User,
+                            UserId = User.Id
+                        });
+                        brokerContext.SaveChanges();
+                    }
                 }
             }
         }

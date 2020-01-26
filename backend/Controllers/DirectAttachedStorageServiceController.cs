@@ -45,7 +45,14 @@ namespace backend.Controllers
         [AllowAnonymous]
         public IHttpActionResult GetDirectAttachedStorageServiceById(int id)
         {
-            return Ok(_Repo.GetDirectAttachedStorageService(id));
+            var result = _Repo.GetDirectAttachedStorageService(id);
+            if(result.error == null)
+            {
+                return Content(result.state, result.content);
+            } else
+            {
+                return Content(result.state, result.error);
+            }
         }
         /// <summary>
         /// the endpoint creates a new service within the database
@@ -104,8 +111,9 @@ namespace backend.Controllers
         [AllowAnonymous]
         public IHttpActionResult Search([FromBody] SearchVector Search)
         {
-            var result = _Repo.Search(Search);
+            var result = _Repo.Search(Search, User.Identity.Name);
             if (result.error != null) return Content(result.state, result.error);
+            _Repo.saveUserSearch(User.Identity.Name);
             return Content(result.state, result.content);
         }
     }

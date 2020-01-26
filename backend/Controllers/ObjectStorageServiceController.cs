@@ -105,8 +105,9 @@ namespace backend.Controllers
         [AllowAnonymous]
         public IHttpActionResult Search([FromBody] SearchVector Search)
         {
-            var result = _Repo.Search(Search);
+            var result = _Repo.Search(Search, User.Identity.Name);
             if (result.error != null) return Content(result.state, result.error);
+            _Repo.saveUserSearch(User.Identity.Name);
             return Content(result.state, result.content);
         }
     }

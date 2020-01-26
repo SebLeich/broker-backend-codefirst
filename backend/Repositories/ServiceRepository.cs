@@ -36,5 +36,14 @@ namespace backend.Repositories
             }
             return Output;
         }
+
+        /// <summary>
+        /// the method returns a list containing all service classes
+        /// </summary>
+        /// <returns>list of service classes</returns>
+        public List<ServiceClass> GetServiceClasses()
+        {
+            return _Ctx.ServiceClass.ToList();
+        }
     }
 }

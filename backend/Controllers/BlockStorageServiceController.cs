@@ -49,7 +49,14 @@ namespace backend.Controllers
         [AllowAnonymous]
         public IHttpActionResult GetBlockStorageServiceById(int id)
         {
-            return Ok(_Repo.GetBlockStorageService(id));
+            var result = _Repo.GetBlockStorageService(id);
+            if(result.error == null)
+            {
+                return Content(result.state, result.content);
+            } else
+            {
+                return Content(result.state, result.error);
+            }
         }
 
         /// <summary>
@@ -114,6 +121,7 @@ namespace backend.Controllers
         {
             var result = _Repo.Search(Search, User.Identity.Name);
             if (result.error != null) return Content(result.state, result.error);
+            _Repo.saveUserSearch(User.Identity.Name);
             return Content(result.state, result.content);
         }
     }

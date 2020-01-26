@@ -145,8 +145,10 @@
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\ServiceModelController.cs" />
     <Compile Include="Controllers\StorageTypeController.cs" />
+    <Compile Include="Controllers\UseCaseController.cs" />
     <Compile Include="Core\BrokerContext.cs" />
     <Compile Include="Core\Client.cs" />
+    <Compile Include="Core\Extensions.cs" />
     <Compile Include="Core\Helper.cs" />
     <Compile Include="Core\RefreshToken.cs" />
     <Compile Include="Core\SimpleAuthorizationServerProvider.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Models\ServiceChargingModel.cs" />
     <Compile Include="Models\ServiceWrapper.cs" />
     <Compile Include="Models\StorageType.cs" />
+    <Compile Include="Models\UseCase.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserRoleLink.cs" />
     <Compile Include="Models\UserSearch.cs" />
@@ -210,6 +213,7 @@
     <Compile Include="Repositories\ServiceModelRepository.cs" />
     <Compile Include="Repositories\ServiceRepository.cs" />
     <Compile Include="Repositories\StorageTypeRepository.cs" />
+    <Compile Include="Repositories\UseCaseRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
