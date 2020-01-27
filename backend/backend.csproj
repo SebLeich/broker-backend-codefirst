@@ -158,7 +158,6 @@
     <Compile Include="Models\BlockStorageService.cs" />
     <Compile Include="Models\Certificate.cs" />
     <Compile Include="Models\ChargingModel.cs" />
-    <Compile Include="Models\CloudServiceCategory.cs" />
     <Compile Include="Models\CloudServiceModel.cs" />
     <Compile Include="Models\DataLocation.cs" />
     <Compile Include="Models\DataLocationType.cs" />

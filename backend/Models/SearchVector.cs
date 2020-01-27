@@ -16,7 +16,6 @@ namespace backend.Models
         public virtual Project Project { get; set; }
 
         public Nullable<int> minFulfillmentPercentage { get; set; } = 0;
-        public SearchVectorListEntry categories { get; set; }
         public SearchVectorListEntry certificates { get; set; }
         public SearchVectorListEntry datalocations { get; set; }
         public SearchVectorListEntry deploymentinfos { get; set; }
@@ -35,7 +34,6 @@ namespace backend.Models
         public int total { get
             {
                 var output = 0;
-                if (categories != null && categories.Value != null && categories.Value.Count > 0) output += categories.Priority;
                 if (certificates != null && certificates.Value != null && certificates.Value.Count > 0) output += certificates.Priority;
                 if (datalocations != null && datalocations.Value != null && datalocations.Value.Count > 0) output += datalocations.Priority;
                 if (deploymentinfos != null && deploymentinfos.Value != null && deploymentinfos.Value.Count > 0) output += deploymentinfos.Priority;

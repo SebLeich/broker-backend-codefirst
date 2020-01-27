@@ -22,18 +22,12 @@ namespace backend.Models
         public string Logo { get; set; }
         public DateTime Creation { get; set; }
         public DateTime LastModified { get; set; }
-
-        [ForeignKey("CloudServiceCategory")]
-        public Nullable<int> CloudServiceCategoryId { get; set; }
         [ForeignKey("CloudServiceModel")]
         public Nullable<int> CloudServiceModelId { get; set; }
         [ForeignKey("Provider")]
         public Nullable<int> ProviderId { get; set; }
         [ForeignKey("DeploymentInfo")]
         public Nullable<int> DeploymentInfoId { get; set; }
-
-        [ForeignKey(nameof(CloudServiceCategoryId))]
-        public virtual CloudServiceCategory CloudServiceCategory { get; set; }
         [ForeignKey(nameof(CloudServiceModelId))]
         public virtual CloudServiceModel CloudServiceModel { get; set; }
         [ForeignKey(nameof(ProviderId))]
@@ -59,10 +53,6 @@ namespace backend.Models
             MatchingResponse Output = new MatchingResponse();
             Output.Service = this;
             Output.ServiceId = Id;
-            if(Search.categories != null && Search.categories.Value != null && Search.categories.Value.Count > 0 && Search.categories.Priority > 0)
-            {
-                if(CloudServiceCategoryId.HasValue && Search.categories.Value.Contains(CloudServiceCategoryId.Value)) Output.pointscategories = Search.categories.Priority;
-            }
             if (Search.models != null && Search.models.Value != null && Search.models.Value.Count > 0 && Search.models.Priority > 0)
             {
                 if (CloudServiceModelId.HasValue && Search.models.Value.Contains(CloudServiceModelId.Value)) Output.pointsmodels = Search.models.Priority;

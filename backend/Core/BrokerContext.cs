@@ -79,10 +79,6 @@ namespace backend.Core
         /// </summary>
         public DbSet<ChargingModel> ChargingModel { get; set; }
         /// <summary>
-        /// the cloud service category relation
-        /// </summary>
-        public DbSet<CloudServiceCategory> CloudServiceCategory { get; set; }
-        /// <summary>
         /// the cloud service model relation
         /// </summary>
         public DbSet<CloudServiceModel> CloudServiceModel { get; set; }
