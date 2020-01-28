@@ -58,6 +58,7 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult PostOnlineDriveStorageServices([FromBody] OnlineDriveStorageService Service)
         {
+            return Ok(Service);
             if (!ModelState.IsValid) return BadRequest();
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
             {
@@ -83,8 +84,13 @@ namespace backend.Controllers
                 return StatusCode(HttpStatusCode.Forbidden);
             }
             var _Resp = _Repo.PutOnlineDriveStorageService(Service);
-            if (_Resp == null) return NotFound();
-            return Ok(_Resp);
+            if(_Resp.error == null)
+            {
+                return Content(_Resp.state, _Resp.content);
+            } else
+            {
+                return Content(_Resp.state, _Resp.error);
+            }
         }
         /// <summary>
         /// the endpoint deletes the online drive storage with the given id

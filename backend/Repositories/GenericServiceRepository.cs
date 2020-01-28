@@ -25,13 +25,57 @@ namespace backend.Repositories
         /// the method validates the n:m relations of the given entity
         /// all passed connections will be added, all leaved connections will be removed (in case they are stored before)
         /// </summary>
-        protected Service validateNMRelations(Service Service)
+        protected Service validateNMRelations(Service service)
         {
-            Service = validateCertificates(Service);
-            Service = validateChargingModels(Service);
-            Service = validateDataLocations(Service);
-            Service = validatePricing(Service);
-            return Service;
+            List<Certificate> tempCert = new List<Certificate>();
+            foreach (Certificate certificate in service.Certificates)
+            {
+                tempCert.Add(_Ctx.Certificate.Find(certificate.Id));
+            }
+            List<ChargingModel> tempChar = new List<ChargingModel>();
+            foreach (ChargingModel charging in service.ChargingModels)
+            {
+                tempChar.Add(_Ctx.ChargingModel.Find(charging.Id));
+            }
+            List<DataLocation> tempDLoc = new List<DataLocation>();
+            foreach (DataLocation dataLocation in service.DataLocations)
+            {
+                tempDLoc.Add(_Ctx.DataLocation.Find(dataLocation.Id));
+            }
+            List<Pricing> tempPr = new List<Pricing>();
+            foreach (Pricing pricing in service.Pricing)
+            {
+                tempPr.Add(_Ctx.Pricing.Find(pricing.Id));
+            }
+            Service oldService = _Ctx.Service.Find(service.Id);
+            if (oldService != null)
+            {
+                List<Certificate> addCert = tempCert.Except(oldService.Certificates.ToList()).ToList();
+                List<Certificate> removeCert = oldService.Certificates.Except(tempCert.ToList()).ToList();
+                oldService.Certificates.AddRange(addCert);
+                oldService.Certificates.RemoveAll(x => removeCert.Contains(x));
+                List<ChargingModel> addChar = tempChar.Except(oldService.ChargingModels.ToList()).ToList();
+                List<ChargingModel> removeChar = oldService.ChargingModels.Except(tempChar.ToList()).ToList();
+                oldService.ChargingModels.AddRange(addChar);
+                oldService.ChargingModels.RemoveAll(x => removeChar.Contains(x));
+                List<DataLocation> addDLoc = tempDLoc.Except(oldService.DataLocations.ToList()).ToList();
+                List<DataLocation> removeDLoc = oldService.DataLocations.Except(tempDLoc.ToList()).ToList();
+                oldService.DataLocations.AddRange(addDLoc);
+                oldService.DataLocations.RemoveAll(x => removeDLoc.Contains(x));
+                List<Pricing> addPr = tempPr.Except(oldService.Pricing.ToList()).ToList();
+                List<Pricing> removePr = oldService.Pricing.Except(tempPr.ToList()).ToList();
+                oldService.Pricing.AddRange(addPr);
+                oldService.Pricing.RemoveAll(x => removePr.Contains(x));
+                return oldService;
+            }
+            else
+            {
+                service.Certificates = tempCert;
+                service.ChargingModels = tempChar;
+                service.DataLocations = tempDLoc;
+                service.Pricing = tempPr;
+                return service;
+            }
         }
 
         /// <summary>
@@ -40,37 +84,34 @@ namespace backend.Repositories
         /// <param name="User">current user</param>
         public void saveUserSearch(string username)
         {
-            using(BrokerContext brokerContext = new BrokerContext())
+            if (username == null)
             {
-                if (username == null)
+                _Ctx.UserSearch.Add(new UserSearch
                 {
-                    brokerContext.UserSearch.Add(new UserSearch
+                    Time = DateTime.Now
+                });
+                _Ctx.SaveChanges();
+            }
+            else
+            {
+                ApplicationUser User = _Ctx.Users.Where(x => x.UserName == username).FirstOrDefault();
+                if (User == null)
+                {
+                    _Ctx.UserSearch.Add(new UserSearch
                     {
                         Time = DateTime.Now
                     });
-                    brokerContext.SaveChanges();
+                    _Ctx.SaveChanges();
                 }
                 else
                 {
-                    ApplicationUser User = _Ctx.Users.Where(x => x.UserName == username).FirstOrDefault();
-                    if (User == null)
+                    _Ctx.UserSearch.Add(new UserSearch
                     {
-                        brokerContext.UserSearch.Add(new UserSearch
-                        {
-                            Time = DateTime.Now
-                        });
-                        brokerContext.SaveChanges();
-                    }
-                    else
-                    {
-                        brokerContext.UserSearch.Add(new UserSearch
-                        {
-                            Time = DateTime.Now,
-                            User = User,
-                            UserId = User.Id
-                        });
-                        brokerContext.SaveChanges();
-                    }
+                        Time = DateTime.Now,
+                        User = User,
+                        UserId = User.Id
+                    });
+                    _Ctx.SaveChanges();
                 }
             }
         }
@@ -81,7 +122,6 @@ namespace backend.Repositories
         /// <param name="Service">new service data</param>
         protected void overwriteService(Service OldService, Service NewService)
         {
-            OldService.CloudServiceCategoryId = NewService.CloudServiceCategoryId;
             OldService.CloudServiceModelId = NewService.CloudServiceModelId;
             OldService.DeploymentInfoId = NewService.DeploymentInfoId;
             OldService.LastModified = DateTime.Now;
@@ -92,32 +132,7 @@ namespace backend.Repositories
             OldService.ServiceName = NewService.ServiceName;
             OldService.ServiceSLA = NewService.ServiceSLA;
             OldService.ServiceTitle = NewService.ServiceTitle;
-        }
-
-        /// <summary>
-        /// the method validates all certificates for the given service
-        /// </summary>
-        /// <param name="Service">service of validation</param>
-        private Service validateCertificates(Service NewService)
-        {
-            List<Certificate> temp = new List<Certificate>();
-            foreach (Certificate certificate in NewService.Certificates)
-            {
-                temp.Add(_Ctx.Certificate.Find(certificate.Id));
-            }
-            Service Service = _Ctx.Service.Find(NewService.Id);
-            if(Service != null)
-            {
-                List<Certificate> add = temp.Except(Service.Certificates.ToList()).ToList();
-                List<Certificate> remove = Service.Certificates.Except(temp.ToList()).ToList();
-                Service.Certificates.AddRange(add);
-                Service.Certificates.RemoveAll(x => remove.Contains(x));
-                return Service;
-            } else
-            {
-                NewService.Certificates = temp;
-                return NewService;
-            }
+            OldService.Logo = NewService.Logo;
         }
 
         /// <summary>
@@ -152,6 +167,7 @@ namespace backend.Repositories
         /// <param name="Service">service of validation</param>
         private Service validateDataLocations(Service NewService)
         {
+            System.Diagnostics.Debugger.Break();
             List<DataLocation> temp = new List<DataLocation>();
             foreach (DataLocation dataLocation in NewService.DataLocations)
             {
@@ -165,11 +181,12 @@ namespace backend.Repositories
                 Service.DataLocations.AddRange(add);
                 Service.DataLocations.RemoveAll(x => remove.Contains(x));
                 return Service;
-            } else
+            }
+            else
             {
                 NewService.DataLocations = temp;
                 return NewService;
-            } 
+            }
         }
 
         /// <summary>

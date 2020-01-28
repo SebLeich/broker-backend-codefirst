@@ -13,7 +13,7 @@ namespace backend.Models
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string CertificateName { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<Service> Services { get; set; }
         [JsonIgnore]
         public virtual ICollection<Project> Projects { get; set; }

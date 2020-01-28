@@ -47,16 +47,15 @@ namespace backend.Repositories
         /// <returns>list of services</returns>
         public ResponseWrapper<OnlineDriveStorageService> PutOnlineDriveStorageService(OnlineDriveStorageService Service)
         {
-            base.validateNMRelations(Service);
             OnlineDriveStorageService OldService = _Ctx.OnlineDriveStorageService.Find(Service.Id);
-
             if (OldService == null) return new ResponseWrapper<OnlineDriveStorageService>
             {
                 state = HttpStatusCode.NotFound,
                 error = "Fehler beim Speichern: Service konnte nicht gefunden werden"
             };
 
-            base.overwriteService(OldService, Service);
+            validateNMRelations(Service);
+            overwriteService(OldService, Service);
 
             OldService.HasFileEncryption = Service.HasFileEncryption;
             OldService.HasFileVersioning = Service.HasFileVersioning;

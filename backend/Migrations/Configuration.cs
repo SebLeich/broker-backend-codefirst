@@ -136,7 +136,6 @@ namespace backend.Migrations
             context.DeploymentInfo.Add(deploymentPRV);
 
             var cert1 = new Certificate { CertificateName = "ISO 27001" };
-            var cert2 = new Certificate { CertificateName = "CSA-STAR-Zertifizierung" };
             var cert3 = new Certificate { CertificateName = "SOC 1" };
             var cert4 = new Certificate { CertificateName = "SOC 2" };
             var cert5 = new Certificate { CertificateName = "SOC 3" };
@@ -147,7 +146,6 @@ namespace backend.Migrations
             var cert10 = new Certificate { CertificateName = "ISO 27018" };
 
             context.Certificate.Add(cert1);
-            context.Certificate.Add(cert2);
             context.Certificate.Add(cert3);
             context.Certificate.Add(cert4);
             context.Certificate.Add(cert5);
@@ -270,7 +268,9 @@ namespace backend.Migrations
                 HasFileEncryption = false,
                 HasFileVersioning = false,
                 HasFilePermissions = false,
-                HasAutomatedSynchronisation = false
+                HasAutomatedSynchronisation = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.OnlineDriveStorageService.AddOrUpdate(new OnlineDriveStorageService
             {
@@ -281,7 +281,9 @@ namespace backend.Migrations
                 HasFileEncryption = false,
                 HasFileVersioning = false,
                 HasFilePermissions = false,
-                HasAutomatedSynchronisation = false
+                HasAutomatedSynchronisation = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.OnlineDriveStorageService.AddOrUpdate(new OnlineDriveStorageService
             {
@@ -296,7 +298,9 @@ namespace backend.Migrations
                 HasFileEncryption = false,
                 HasFileVersioning = false,
                 HasFilePermissions = false,
-                HasAutomatedSynchronisation = false
+                HasAutomatedSynchronisation = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
@@ -310,7 +314,9 @@ namespace backend.Migrations
                 HasFileVersioning = true,
                 HasFilePermissions = true,
                 HasReplication = true,
-                HasFileLocking = true
+                HasFileLocking = true,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
@@ -326,7 +332,9 @@ namespace backend.Migrations
                 HasFileVersioning = true,
                 HasFilePermissions = true,
                 HasReplication = false,
-                HasFileLocking = false
+                HasFileLocking = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
@@ -336,7 +344,9 @@ namespace backend.Migrations
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
                 HasFileEncryption = false,
-                HasReplication = false
+                HasReplication = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
@@ -348,7 +358,9 @@ namespace backend.Migrations
                 HasFileVersioning = false,
                 HasFilePermissions = true,
                 HasReplication = false,
-                HasFileLocking = false
+                HasFileLocking = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
@@ -361,7 +373,9 @@ namespace backend.Migrations
                 ProviderId = awsProvider.Id,
                 Provider = awsProvider,
                 HasFileEncryption = true,
-                HasReplication = true
+                HasReplication = true,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
@@ -374,7 +388,9 @@ namespace backend.Migrations
                 ProviderId = googleProvider.Id,
                 Provider = googleProvider,
                 HasFileEncryption = true,
-                HasReplication = true
+                HasReplication = true,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
@@ -387,7 +403,9 @@ namespace backend.Migrations
                 ProviderId = azureProvider.Id,
                 Provider = azureProvider,
                 HasFileEncryption = true,
-                HasReplication = true
+                HasReplication = true,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
@@ -401,7 +419,9 @@ namespace backend.Migrations
                 HasFileVersioning = false,
                 HasFilePermissions = true,
                 HasReplication = true,
-                HasFileLocking = false
+                HasFileLocking = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
@@ -417,7 +437,9 @@ namespace backend.Migrations
                 HasFileVersioning = false,
                 HasFilePermissions = true,
                 HasReplication = true,
-                HasFileLocking = false
+                HasFileLocking = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
@@ -430,7 +452,9 @@ namespace backend.Migrations
                 ProviderId = digitalOceanProvider.Id,
                 Provider = digitalOceanProvider,
                 HasFileEncryption = false,
-                HasReplication = true
+                HasReplication = true,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
@@ -442,7 +466,9 @@ namespace backend.Migrations
                 ProviderId = hetznerProvider.Id,
                 Provider = hetznerProvider,
                 HasFileEncryption = false,
-                HasReplication = true
+                HasReplication = true,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.OnlineDriveStorageService.AddOrUpdate(new OnlineDriveStorageService
             {
@@ -456,7 +482,9 @@ namespace backend.Migrations
                 HasFileEncryption = false,
                 HasFileVersioning = false,
                 HasFilePermissions = false,
-                HasAutomatedSynchronisation = false
+                HasAutomatedSynchronisation = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
@@ -470,7 +498,9 @@ namespace backend.Migrations
                 HasFileVersioning = false,
                 HasFilePermissions = true,
                 HasReplication = true,
-                HasFileLocking = false
+                HasFileLocking = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
@@ -482,7 +512,9 @@ namespace backend.Migrations
                 ProviderId = rackspaceProvider.Id,
                 Provider = rackspaceProvider,
                 HasFileEncryption = true,
-                HasReplication = true
+                HasReplication = true,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
@@ -496,7 +528,9 @@ namespace backend.Migrations
                 HasFileVersioning = false,
                 HasFilePermissions = true,
                 HasReplication = false,
-                HasFileLocking = false
+                HasFileLocking = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
@@ -512,7 +546,9 @@ namespace backend.Migrations
                 HasFileVersioning = false,
                 HasFilePermissions = true,
                 HasReplication = true,
-                HasFileLocking = false
+                HasFileLocking = false,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
@@ -525,7 +561,9 @@ namespace backend.Migrations
                 ProviderId = ibmProvider.Id,
                 Provider = ibmProvider,
                 HasFileEncryption = true,
-                HasReplication = true
+                HasReplication = true,
+                Creation = DateTime.Now,
+                LastModified = DateTime.Now
             });
 
             context.SaveChanges();

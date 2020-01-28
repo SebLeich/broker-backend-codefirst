@@ -128,7 +128,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BlockStorageServiceController.cs" />
     <Compile Include="Controllers\CertificateController.cs" />
-    <Compile Include="Controllers\CloudServiceCategoryController.cs" />
     <Compile Include="Controllers\DataLocationController.cs" />
     <Compile Include="Controllers\DataLocationTypeController.cs" />
     <Compile Include="Controllers\DeploymentInformationController.cs" />
@@ -193,7 +192,6 @@
     <Compile Include="Repositories\AuthentificationRepository.cs" />
     <Compile Include="Repositories\BlockStorageServiceRepository.cs" />
     <Compile Include="Repositories\CertificateRepository.cs" />
-    <Compile Include="Repositories\CloudServiceCategoryRepository.cs" />
     <Compile Include="Repositories\DataLocationRepository.cs" />
     <Compile Include="Repositories\DataLocationTypeRepository.cs" />
     <Compile Include="Repositories\DeploymentInformationRepository.cs" />

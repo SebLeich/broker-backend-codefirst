@@ -185,37 +185,12 @@ namespace backend.Repositories
         /// </summary>
         private void validateNMRelations(Project Project)
         {
-            validateCloudServiceCategories(Project);
             validateCertificates(Project);
             validateCloudServiceModels(Project);
             validateDataLocations(Project);
             validateDeploymentInfos(Project);
             validateProviders(Project);
             validateStorageTypes(Project);
-        }
-
-        /// <summary>
-        /// the method validates all categories for the given project
-        /// </summary>
-        /// <param name="NewProject">project of validation</param>
-        private void validateCloudServiceCategories(Project NewProject)
-        {
-            List<CloudServiceCategory> temp = new List<CloudServiceCategory>();
-            foreach (CloudServiceCategory category in NewProject.Categories)
-            {
-                temp.Add(_Ctx.CloudServiceCategory.Find(category.Id));
-            }
-            Project Project = _Ctx.Project.Find(NewProject.ProjectId);
-            if (Project != null)
-            {
-                List<CloudServiceCategory> add = temp.Except(Project.Categories.ToList()).ToList();
-                List<CloudServiceCategory> remove = Project.Categories.Except(temp.ToList()).ToList();
-                add.ForEach(x => Project.Categories.Add(x));
-                remove.ForEach(x => Project.Categories.Remove(x));
-            } else
-            {
-                NewProject.Categories = temp;
-            }
         }
 
         /// <summary>

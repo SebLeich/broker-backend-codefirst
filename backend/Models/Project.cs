@@ -45,7 +45,6 @@ namespace backend.Models
         public int AutomatedSynchronisationPriority { get; set; } = 0;
         public bool HasAutomatedSynchronisation { get; set; } = false;
 
-        public virtual ICollection<CloudServiceCategory> Categories { get; set; }
         public virtual ICollection<Certificate> Certificates { get; set; }
         public virtual ICollection<CloudServiceModel> CloudServiceModels { get; set; }
         public virtual ICollection<DataLocation> DataLocations { get; set; }
@@ -74,7 +73,6 @@ namespace backend.Models
 
         public Project()
         {
-            Categories = new List<CloudServiceCategory>();
             Certificates = new List<Certificate>();
             CloudServiceModels = new List<CloudServiceModel>();
             DataLocations = new List<DataLocation>();
