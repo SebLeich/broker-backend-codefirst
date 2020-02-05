@@ -99,6 +99,14 @@ namespace backend.Core
         /// </summary>
         public DbSet<DirectAttachedStorageService> DirectAttachedStorageService { get; set; }
         /// <summary>
+        /// the feature relation
+        /// </summary>
+        public DbSet<Feature> Feature { get; set; }
+        /// <summary>
+        /// the image relation
+        /// </summary>
+        public DbSet<Image> Image { get; set; }
+        /// <summary>
         /// the key value store service relation
         /// </summary>
         public DbSet<KeyValueStorageService> KeyValueStoreService { get; set; }

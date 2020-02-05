@@ -8,7 +8,9 @@ namespace backend.Models
     {
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string TypeName { get; set; }
+        public string TypeNameDE { get; set; }
+        public string TypeNameEN { get; set; }
+        public string TypeNameES { get; set; }
 
         public ICollection<DataLocation> DataLocations { get; set; }
 

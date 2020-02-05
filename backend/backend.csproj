@@ -132,6 +132,8 @@
     <Compile Include="Controllers\DataLocationTypeController.cs" />
     <Compile Include="Controllers\DeploymentInformationController.cs" />
     <Compile Include="Controllers\DirectAttachedStorageServiceController.cs" />
+    <Compile Include="Controllers\FeatureController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\KeyValueStoreServiceController.cs" />
     <Compile Include="Controllers\MatchingResponseController.cs" />
     <Compile Include="Controllers\MetaDataController.cs" />
@@ -162,6 +164,8 @@
     <Compile Include="Models\DataLocationType.cs" />
     <Compile Include="Models\DeploymentInfo.cs" />
     <Compile Include="Models\DirectAttachedStorageService.cs" />
+    <Compile Include="Models\Feature.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\KeyValueStorageService.cs" />
     <Compile Include="Models\MatchingResponse.cs" />
     <Compile Include="Models\MetaData.cs" />
@@ -196,7 +200,9 @@
     <Compile Include="Repositories\DataLocationTypeRepository.cs" />
     <Compile Include="Repositories\DeploymentInformationRepository.cs" />
     <Compile Include="Repositories\DirectAttachedStorageServiceRepository.cs" />
+    <Compile Include="Repositories\FeatureRepository.cs" />
     <Compile Include="Repositories\GenericServiceRepository.cs" />
+    <Compile Include="Repositories\ImageRepository.cs" />
     <Compile Include="Repositories\KeyValueStoreServiceRepository.cs" />
     <Compile Include="Repositories\MatchingResponseRepository.cs" />
     <Compile Include="Repositories\MetaDataRepository.cs" />

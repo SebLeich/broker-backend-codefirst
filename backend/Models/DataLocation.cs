@@ -13,7 +13,10 @@ namespace backend.Models
     {
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string DataLocationName { get; set; }
+        public string DataLocationNameDE { get; set; }
+        public string DataLocationNameEN { get; set; }
+        public string DataLocationNameES { get; set; }
+
         [ForeignKey("DataLocationType")]
         public Nullable<int> DataLocationTypeId { get; set; }
 

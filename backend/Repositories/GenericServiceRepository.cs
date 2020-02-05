@@ -47,6 +47,11 @@ namespace backend.Repositories
             {
                 tempPr.Add(_Ctx.Pricing.Find(pricing.Id));
             }
+            List<Feature> tempFe = new List<Feature>();
+            foreach (Feature feature in service.Features)
+            {
+                tempFe.Add(_Ctx.Feature.Find(feature.Id));
+            }
             Service oldService = _Ctx.Service.Find(service.Id);
             if (oldService != null)
             {
@@ -66,6 +71,10 @@ namespace backend.Repositories
                 List<Pricing> removePr = oldService.Pricing.Except(tempPr.ToList()).ToList();
                 oldService.Pricing.AddRange(addPr);
                 oldService.Pricing.RemoveAll(x => removePr.Contains(x));
+                List<Feature> addFe = tempFe.Except(oldService.Features.ToList()).ToList();
+                List<Feature> removeFe = oldService.Features.Except(tempFe.ToList()).ToList();
+                oldService.Features.AddRange(addFe);
+                oldService.Features.RemoveAll(x => removeFe.Contains(x));
                 return oldService;
             }
             else
@@ -128,91 +137,15 @@ namespace backend.Repositories
             OldService.ProviderId = NewService.ProviderId;
             OldService.ServiceAvailability = NewService.ServiceAvailability;
             OldService.ServiceCompliance = NewService.ServiceCompliance;
-            OldService.ServiceDescription = NewService.ServiceDescription;
+            OldService.ServiceDescriptionDE = NewService.ServiceDescriptionDE;
+            OldService.ServiceDescriptionEN = NewService.ServiceDescriptionEN;
+            OldService.ServiceDescriptionES = NewService.ServiceDescriptionES;
             OldService.ServiceName = NewService.ServiceName;
             OldService.ServiceSLA = NewService.ServiceSLA;
-            OldService.ServiceTitle = NewService.ServiceTitle;
+            OldService.ServiceTitleDE = NewService.ServiceTitleDE;
+            OldService.ServiceTitleEN = NewService.ServiceTitleEN;
+            OldService.ServiceTitleES = NewService.ServiceTitleES;
             OldService.Logo = NewService.Logo;
-        }
-
-        /// <summary>
-        /// the method validates all charging models for the given service
-        /// </summary>
-        /// <param name="Service">service of validation</param>
-        private Service validateChargingModels(Service NewService)
-        {
-            List<ChargingModel> temp = new List<ChargingModel>();
-            foreach (ChargingModel chargingModel in NewService.ChargingModels)
-            {
-                temp.Add(_Ctx.ChargingModel.Find(chargingModel.Id));
-            }
-            Service Service = _Ctx.Service.Find(NewService.Id);
-            if (Service != null)
-            {
-                List<ChargingModel> add = temp.Except(Service.ChargingModels.ToList()).ToList();
-                List<ChargingModel> remove = Service.ChargingModels.Except(temp.ToList()).ToList();
-                Service.ChargingModels.AddRange(add);
-                Service.ChargingModels.RemoveAll(x => remove.Contains(x));
-                return Service;
-            } else
-            {
-                NewService.ChargingModels = temp;
-                return NewService;
-            }
-        }
-
-        /// <summary>
-        /// the method validates all datalocations for the given service
-        /// </summary>
-        /// <param name="Service">service of validation</param>
-        private Service validateDataLocations(Service NewService)
-        {
-            System.Diagnostics.Debugger.Break();
-            List<DataLocation> temp = new List<DataLocation>();
-            foreach (DataLocation dataLocation in NewService.DataLocations)
-            {
-                temp.Add(_Ctx.DataLocation.Find(dataLocation.Id));
-            }
-            Service Service = _Ctx.Service.Find(NewService.Id);
-            if (Service != null)
-            {
-                List<DataLocation> add = temp.Except(Service.DataLocations.ToList()).ToList();
-                List<DataLocation> remove = Service.DataLocations.Except(temp.ToList()).ToList();
-                Service.DataLocations.AddRange(add);
-                Service.DataLocations.RemoveAll(x => remove.Contains(x));
-                return Service;
-            }
-            else
-            {
-                NewService.DataLocations = temp;
-                return NewService;
-            }
-        }
-
-        /// <summary>
-        /// the method validates all pricing models for the given service
-        /// </summary>
-        /// <param name="Service">service of validation</param>
-        private Service validatePricing(Service NewService)
-        {
-            List<Pricing> temp = new List<Pricing>();
-            foreach (Pricing pricing in NewService.Pricing)
-            {
-                temp.Add(_Ctx.Pricing.Find(pricing.Id));
-            }
-            Service Service = _Ctx.Service.Find(NewService.Id);
-            if (Service != null)
-            {
-                List<Pricing> add = temp.Except(Service.Pricing.ToList()).ToList();
-                List<Pricing> remove = Service.Pricing.Except(temp.ToList()).ToList();
-                Service.Pricing.AddRange(add);
-                Service.Pricing.RemoveAll(x => remove.Contains(x));
-                return Service;
-            } else
-            {
-                NewService.Pricing = temp;
-                return NewService;
-            }
         }
     }
 }

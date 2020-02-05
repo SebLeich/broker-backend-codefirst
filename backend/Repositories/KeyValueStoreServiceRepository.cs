@@ -1,5 +1,4 @@
-﻿using backend.Core;
-using backend.Models;
+﻿using backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +48,7 @@ namespace backend.Repositories
         /// <returns>list of services</returns>
         public ResponseWrapper<KeyValueStorageService> PutKeyValueStoreService(KeyValueStorageService Service)
         {
-            base.validateNMRelations(Service);
+            validateNMRelations(Service);
             KeyValueStorageService OldService = _Ctx.KeyValueStoreService.Find(Service.Id);
 
             if (OldService == null) return new ResponseWrapper<KeyValueStorageService>
@@ -58,10 +57,7 @@ namespace backend.Repositories
                 error = "Fehler beim Speichern: Service konnte nicht gefunden werden"
             };
 
-            base.overwriteService(OldService, Service);
-
-            OldService.HasDBMS = Service.HasDBMS;
-            OldService.HasReplication = Service.HasReplication;
+            overwriteService(OldService, Service);
 
             _Ctx.SaveChanges();
 

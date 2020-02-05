@@ -66,13 +66,11 @@ namespace backend.Repositories
             if (OldService == null) return new ResponseWrapper<BlockStorageService>
             {
                 state = HttpStatusCode.NotFound,
-                error = "Fehler beim Speichern: Service konnte nicht gefunden werden"
+                error = "no block storage service found with the given id for update"
             };
 
-            base.overwriteService(OldService, Service);
+            overwriteService(OldService, Service);
 
-            OldService.HasFileEncryption = Service.HasFileEncryption;
-            OldService.HasReplication = Service.HasReplication;
             OldService.StorageTypeId = Service.StorageTypeId;
 
             _Ctx.SaveChanges();

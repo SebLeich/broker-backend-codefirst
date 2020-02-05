@@ -58,7 +58,6 @@ namespace backend.Controllers
         [Authorize]
         public IHttpActionResult PostOnlineDriveStorageServices([FromBody] OnlineDriveStorageService Service)
         {
-            return Ok(Service);
             if (!ModelState.IsValid) return BadRequest();
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
             {

@@ -14,12 +14,19 @@ namespace backend.Models
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string ServiceName { get; set; }
-        public string ServiceDescription { get; set; }
+        public string ServiceDescriptionDE { get; set; }
+        public string ServiceDescriptionEN { get; set; }
+        public string ServiceDescriptionES { get; set; }
         public string ServiceCompliance { get; set; }
         public string ServiceSLA { get; set; }
-        public string ServiceTitle { get; set; }
+        public string ServiceTitleDE { get; set; }
+        public string ServiceTitleEN { get; set; }
+        public string ServiceTitleES { get; set; }
         public string ServiceAvailability { get; set; }
-        public string Logo { get; set; }
+        [ForeignKey("Logo")]
+        public Nullable<int> LogoId { get; set; }
+        [ForeignKey("Banner")]
+        public Nullable<int> BannerId { get; set; }
         public DateTime Creation { get; set; }
         public DateTime LastModified { get; set; }
         [ForeignKey("CloudServiceModel")]
@@ -34,11 +41,14 @@ namespace backend.Models
         public virtual Provider Provider { get; set; }
         [ForeignKey(nameof(DeploymentInfoId))]
         public virtual DeploymentInfo DeploymentInfo { get; set; }
+        public virtual Image Logo { get; set; }
+        public virtual Image Banner { get; set; }
 
         public virtual List<ChargingModel> ChargingModels { get; set; }
         public virtual List<Certificate> Certificates { get; set; }
         public virtual List<DataLocation> DataLocations { get; set; }
         public virtual List<Pricing> Pricing { get; set; }
+        public virtual List<Feature> Features { get; set; }
 
         public Service()
         {
@@ -46,6 +56,7 @@ namespace backend.Models
             Certificates = new List<Certificate>();
             DataLocations = new List<DataLocation>();
             Pricing = new List<Pricing>();
+            Features = new List<Feature>();
         }
 
         public MatchingResponse MatchWithSearchVector(SearchVector Search)

@@ -55,7 +55,7 @@ namespace backend.Repositories
         /// <returns>the puted direct attached storage service</returns>
         public ResponseWrapper<DirectAttachedStorageService> PutDirectAttachedStorageService(DirectAttachedStorageService Service)
         {
-            base.validateNMRelations(Service);
+            validateNMRelations(Service);
             DirectAttachedStorageService OldService = _Ctx.DirectAttachedStorageService.Find(Service.Id);
 
             if (OldService == null) return new ResponseWrapper<DirectAttachedStorageService>
@@ -64,13 +64,8 @@ namespace backend.Repositories
                 error = "Fehler beim Speichern: Service konnte nicht gefunden werden"
             };
 
-            base.overwriteService(OldService, Service);
+            overwriteService(OldService, Service);
 
-            OldService.HasFileEncryption = Service.HasFileEncryption;
-            OldService.HasReplication = Service.HasReplication;
-            OldService.HasFilePermissions = Service.HasFilePermissions;
-            OldService.HasFileLocking = Service.HasFileLocking;
-            OldService.HasFileCompression = Service.HasFileCompression;
             OldService.StorageTypeId = Service.StorageTypeId;
 
             _Ctx.SaveChanges();

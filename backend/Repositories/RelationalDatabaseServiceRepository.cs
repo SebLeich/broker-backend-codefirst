@@ -45,7 +45,7 @@ namespace backend.Repositories
         /// <returns>the puted relational database service</returns>
         public ResponseWrapper<RelationalDatabaseStorageService> PutRelationalDatabaseService(RelationalDatabaseStorageService Service)
         {
-            base.validateNMRelations(Service);
+            validateNMRelations(Service);
             RelationalDatabaseStorageService OldService = _Ctx.RelationalDatabaseService.Find(Service.Id);
 
             if (OldService == null) return new ResponseWrapper<RelationalDatabaseStorageService>
@@ -54,10 +54,7 @@ namespace backend.Repositories
                 error = "Fehler beim Speichern: Service konnte nicht gefunden werden"
             };
 
-            base.overwriteService(OldService, Service);
-
-            OldService.HasDBMS = Service.HasDBMS;
-            OldService.HasReplication = Service.HasReplication;
+            overwriteService(OldService, Service);
 
             _Ctx.SaveChanges();
 

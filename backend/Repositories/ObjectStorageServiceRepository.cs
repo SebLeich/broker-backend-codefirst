@@ -46,7 +46,7 @@ namespace backend.Repositories
         /// <returns>the puted object storage service</returns>
         public ResponseWrapper<ObjectStorageService> PutObjectStorageService(ObjectStorageService Service)
         {
-            base.validateNMRelations(Service);
+            validateNMRelations(Service);
             ObjectStorageService OldService = _Ctx.ObjectStorageService.Find(Service.Id);
 
             if (OldService == null) return new ResponseWrapper<ObjectStorageService>
@@ -55,13 +55,7 @@ namespace backend.Repositories
                 error = "Fehler beim Speichern: Service konnte nicht gefunden werden"
             };
 
-            base.overwriteService(OldService, Service);
-
-            OldService.HasFileEncryption = Service.HasFileEncryption;
-            OldService.HasFileVersioning = Service.HasFileVersioning;
-            OldService.HasFilePermissions = Service.HasFilePermissions;
-            OldService.HasReplication = Service.HasReplication;
-            OldService.HasFileLocking = Service.HasFileLocking;
+            overwriteService(OldService, Service);
 
             _Ctx.SaveChanges();
 

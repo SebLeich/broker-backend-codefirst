@@ -5,6 +5,7 @@ namespace backend.Migrations
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
 
     internal sealed class Configuration : DbMigrationsConfiguration<backend.Core.BrokerContext>
@@ -155,16 +156,40 @@ namespace backend.Migrations
             context.Certificate.Add(cert9);
             context.Certificate.Add(cert10);
 
-            var locationTypeC = new DataLocationType { TypeName = "Kontinent" };
-            var locationTypeR = new DataLocationType { TypeName = "Region" };
+            var locationTypeC = new DataLocationType {
+                TypeNameDE = "Kontinent",
+                TypeNameEN = "Continent",
+                TypeNameES = "Continente"
+            };
+            var locationTypeR = new DataLocationType {
+                TypeNameDE = "Region",
+                TypeNameEN = "Region",
+                TypeNameES = "Región"
+            };
+            var locationTypeL = new DataLocationType {
+                TypeNameDE = "Land",
+                TypeNameEN = "Country",
+                TypeNameES = "Pais"
+            };
 
             context.DataLocationType.Add(locationTypeC);
             context.DataLocationType.Add(locationTypeR);
+            context.DataLocationType.Add(locationTypeL);
 
             context.SaveChanges();
 
-            var dataLocationEU = new DataLocation { DataLocationName = "EU", DataLocationTypeId = locationTypeC.Id };
-            var dataLocationGER = new DataLocation { DataLocationName = "Deutschsprachiger Raum", DataLocationTypeId = locationTypeR.Id };
+            var dataLocationEU = new DataLocation {
+                DataLocationNameDE = "EU",
+                DataLocationNameEN = "EU",
+                DataLocationNameES = "EU",
+                DataLocationTypeId = locationTypeC.Id
+            };
+            var dataLocationGER = new DataLocation {
+                DataLocationNameDE = "Deutschsprachiger Raum",
+                DataLocationNameEN = "German speaking area",
+                DataLocationNameES = "Área de habla alemana",
+                DataLocationTypeId = locationTypeR.Id
+            };
 
             context.DataLocation.Add(dataLocationEU);
             context.DataLocation.Add(dataLocationGER);
@@ -254,99 +279,136 @@ namespace backend.Migrations
             context.Provider.AddOrUpdate(ionosProvider);
             context.Provider.AddOrUpdate(gridscaleProvider);
 
+            Feature hasFileEncryption = new Feature
+            {
+                Color = "#1a78b8",
+                DescriptionDE = "Dateiverschlüsselung",
+                DescriptionEN = "File encryption",
+                DescriptionES = "Cifrado de archivos",
+                Icon = "vpn_key"
+            };
+            Feature hasReplication = new Feature
+            {
+                Color = "#1c17bd",
+                DescriptionDE = "Redundante Datenspeicherung",
+                DescriptionEN = "File replication",
+                DescriptionES = "Replicación de archivos",
+                Icon = "file_copy"
+            };
+            Feature hasVersioning = new Feature
+            {
+                Color = "#a74ddb",
+                DescriptionDE = "Dateiversionierung",
+                DescriptionEN = "File versioning",
+                DescriptionES = "Versionado de archivos",
+                Icon = "restore"
+            };
+            Feature hasPermissions = new Feature
+            {
+                Color = "#f00e7b",
+                DescriptionDE = "Nutzerberechtigungssystem",
+                DescriptionEN = "File permissions",
+                DescriptionES = "Permisos de archivos",
+                Icon = "security"
+            };
+            Feature hasAutomatedSynchronization = new Feature
+            {
+                Color = "#3c9e49",
+                DescriptionDE = "Automatische Synchronisation",
+                DescriptionEN = "Automated synchronization",
+                DescriptionES = "sincronización automatizada",
+                Icon = "cached"
+            };
+            Feature hasLocking = new Feature
+            {
+                Color = "#e81046",
+                DescriptionDE = "Datei Sperren",
+                DescriptionEN = "File locking",
+                DescriptionES = "bloqueo de archivos",
+                Icon = "block"
+            };
+
+            context.Feature.Add(hasFileEncryption);
+            context.Feature.Add(hasReplication);
+            context.Feature.Add(hasVersioning);
+            context.Feature.Add(hasPermissions);
+            context.Feature.Add(hasAutomatedSynchronization);
+            context.Feature.Add(hasLocking);
             context.SaveChanges();
 
             context.OnlineDriveStorageService.AddOrUpdate(new OnlineDriveStorageService
             {
                 ServiceName = "Dropbox Basic",
-                ServiceDescription = "Dropbox bietet Speicherplatz für Dateien auf all Ihren verknüpften Geräte",
-                ServiceTitle = "Kostenlose Version von Dropbox",
+                ServiceDescriptionDE = "Dropbox bietet Speicherplatz für Dateien auf all Ihren verknüpften Geräte",
+                ServiceTitleDE = "Kostenlose Version von Dropbox",
                 CloudServiceModelId = saaSModel.Id,
                 CloudServiceModel = saaSModel,
                 ProviderId = dropboxProvider.Id,
                 Provider = dropboxProvider,
-                HasFileEncryption = false,
-                HasFileVersioning = false,
-                HasFilePermissions = false,
-                HasAutomatedSynchronisation = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> {  }
             });
             context.OnlineDriveStorageService.AddOrUpdate(new OnlineDriveStorageService
             {
                 ServiceName = "OneDrive",
-                ServiceDescription = "Speichern Sie Ihre Dateien und Fotos auf OneDrive, um sie von jedem Gerät und überall aus abrufen zu können",
+                ServiceDescriptionDE = "Speichern Sie Ihre Dateien und Fotos auf OneDrive, um sie von jedem Gerät und überall aus abrufen zu können",
                 CloudServiceModelId = saaSModel.Id,
                 CloudServiceModel = saaSModel,
-                HasFileEncryption = false,
-                HasFileVersioning = false,
-                HasFilePermissions = false,
-                HasAutomatedSynchronisation = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { }
             });
             context.OnlineDriveStorageService.AddOrUpdate(new OnlineDriveStorageService
             {
                 ServiceName = "HiDrive",
-                ServiceDescription = "Der Cloud-Speicher für Ihre Fotos, Videos & Dateien",
-                ServiceTitle = "HiDrive",
+                ServiceDescriptionDE = "Der Cloud-Speicher für Ihre Fotos, Videos & Dateien",
+                ServiceTitleDE = "HiDrive",
                 ServiceAvailability = "99,99",
                 CloudServiceModelId = saaSModel.Id,
                 CloudServiceModel = saaSModel,
                 ProviderId = stratoProvider.Id,
                 Provider = stratoProvider,
-                HasFileEncryption = false,
-                HasFileVersioning = false,
-                HasFilePermissions = false,
-                HasAutomatedSynchronisation = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { }
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
                 ServiceName = "Amazon S3",
-                ServiceDescription = "Filehosting-Dienst, der beliebig große Datenmengen speichern kann und nach Verbrauch abgerechnet wird",
-                ServiceTitle = "Amazon Simple Storage Service",
+                ServiceDescriptionDE = "Filehosting-Dienst, der beliebig große Datenmengen speichern kann und nach Verbrauch abgerechnet wird",
+                ServiceTitleDE = "Amazon Simple Storage Service",
                 ServiceAvailability = "99,99",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
-                HasFileEncryption = true,
-                HasFileVersioning = true,
-                HasFilePermissions = true,
-                HasReplication = true,
-                HasFileLocking = true,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasFileEncryption, hasVersioning, hasPermissions, hasReplication, hasLocking }
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
                 ServiceName = "Google Cloud Storage",
-                ServiceDescription = "Einheitlicher Objektspeicher für Entwickler und Unternehmen",
-                ServiceTitle = "Google Cloud Storage",
+                ServiceDescriptionDE = "Einheitlicher Objektspeicher für Entwickler und Unternehmen",
+                ServiceTitleDE = "Google Cloud Storage",
                 ServiceAvailability = "99,99",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
                 ProviderId = googleProvider.Id,
                 Provider = googleProvider,
-                HasFileEncryption = true,
-                HasFileVersioning = true,
-                HasFilePermissions = true,
-                HasReplication = false,
-                HasFileLocking = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasFileEncryption, hasVersioning, hasPermissions }
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
                 ServiceName = "Azure Disk Storage",
-                ServiceDescription = "Persistente und leistungsstarke Datenträger für virtuelle Azure-Computer",
+                ServiceDescriptionDE = "Persistente und leistungsstarke Datenträger für virtuelle Azure-Computer",
                 ServiceAvailability = "99,95",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
-                HasFileEncryption = false,
-                HasReplication = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { }
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
@@ -354,216 +416,186 @@ namespace backend.Migrations
                 ServiceAvailability = "99,95",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
-                HasFileEncryption = true,
-                HasFileVersioning = false,
-                HasFilePermissions = true,
-                HasReplication = false,
-                HasFileLocking = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasFileEncryption, hasPermissions }
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
                 ServiceName = "Amazon Elastic Block Store",
-                ServiceDescription = "Amazon Elastic Block Store (Amazon EBS) bietet Volumes für die Speicherung auf Blockebene, die in Verbindung mit EC2-Instances verwendet werden. EBS-Volumes verhalten sich wie unformatierte Blockgeräte",
-                ServiceTitle = "Amazon EBS",
+                ServiceDescriptionDE = "Amazon Elastic Block Store (Amazon EBS) bietet Volumes für die Speicherung auf Blockebene, die in Verbindung mit EC2-Instances verwendet werden. EBS-Volumes verhalten sich wie unformatierte Blockgeräte",
+                ServiceTitleDE = "Amazon EBS",
                 ServiceAvailability = "99,99",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
                 ProviderId = awsProvider.Id,
                 Provider = awsProvider,
-                HasFileEncryption = true,
-                HasReplication = true,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasFileEncryption, hasReplication }
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
                 ServiceName = "Blockspeicher für VM-Instanzen",
-                ServiceDescription = "Zuverlässiger, leistungsstarker Blockspeicher für VM-Instanzen",
-                ServiceTitle = "Persistent Disk",
+                ServiceDescriptionDE = "Zuverlässiger, leistungsstarker Blockspeicher für VM-Instanzen",
+                ServiceTitleDE = "Persistent Disk",
                 ServiceAvailability = "99,99",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
                 ProviderId = googleProvider.Id,
                 Provider = googleProvider,
-                HasFileEncryption = true,
-                HasReplication = true,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasFileEncryption, hasReplication }
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
                 ServiceName = "Azure Disk Storage",
-                ServiceDescription = "Persistente und leistungsstarke Datenträger für virtuelle Azure-Compute",
-                ServiceTitle = "Azure Disk Storage",
+                ServiceDescriptionDE = "Persistente und leistungsstarke Datenträger für virtuelle Azure-Compute",
+                ServiceTitleDE = "Azure Disk Storage",
                 ServiceAvailability = "99,99",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
                 ProviderId = azureProvider.Id,
                 Provider = azureProvider,
-                HasFileEncryption = true,
-                HasReplication = true,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasFileEncryption, hasReplication }
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
                 ServiceName = "Blob Storage",
-                ServiceDescription = "Hochgradig skalierbarer Objektspeicher für unstrukturierte Daten",
-                ServiceTitle = "Blob Storage",
+                ServiceDescriptionDE = "Hochgradig skalierbarer Objektspeicher für unstrukturierte Daten",
+                ServiceTitleDE = "Blob Storage",
                 ServiceAvailability = "99,99",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
-                HasFileEncryption = false,
-                HasFileVersioning = false,
-                HasFilePermissions = true,
-                HasReplication = true,
-                HasFileLocking = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasPermissions, hasReplication }
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
                 ServiceName = "Spaces",
-                ServiceDescription = "Spaces ergänzt den lokalen und Netzwerkspeicher, um Ihrem Unternehmen die Skalierung zu erleichtern",
-                ServiceTitle = "Spaces",
+                ServiceDescriptionDE = "Spaces ergänzt den lokalen und Netzwerkspeicher, um Ihrem Unternehmen die Skalierung zu erleichtern",
+                ServiceTitleDE = "Spaces",
                 ServiceAvailability = "99,95",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
                 ProviderId = digitalOceanProvider.Id,
                 Provider = digitalOceanProvider,
-                HasFileEncryption = false,
-                HasFileVersioning = false,
-                HasFilePermissions = true,
-                HasReplication = true,
-                HasFileLocking = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasPermissions, hasReplication }
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
                 ServiceName = "Volumes Block Storage",
-                ServiceDescription = "Hochverfügbaren und skalierbaren SSD-basierten Blockspeicher",
-                ServiceTitle = "Volumes Block Storage",
+                ServiceDescriptionDE = "Hochverfügbaren und skalierbaren SSD-basierten Blockspeicher",
+                ServiceTitleDE = "Volumes Block Storage",
                 ServiceAvailability = "99,95",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
                 ProviderId = digitalOceanProvider.Id,
                 Provider = digitalOceanProvider,
-                HasFileEncryption = false,
-                HasReplication = true,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasReplication }
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
                 ServiceName = "Volumes",
-                ServiceDescription = "Volumes bieten hochverfügbaren und zuverlässigen SSD-Speicherplatz für Ihre Cloud Server",
-                ServiceTitle = "Volumes",
+                ServiceDescriptionDE = "Volumes bieten hochverfügbaren und zuverlässigen SSD-Speicherplatz für Ihre Cloud Server",
+                ServiceTitleDE = "Volumes",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
                 ProviderId = hetznerProvider.Id,
                 Provider = hetznerProvider,
-                HasFileEncryption = false,
-                HasReplication = true,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasReplication }
             });
             context.OnlineDriveStorageService.AddOrUpdate(new OnlineDriveStorageService
             {
                 ServiceName = "Storage Share",
-                ServiceDescription = "Daten speichern und teilen",
-                ServiceTitle = "Storage Share",
+                ServiceDescriptionDE = "Daten speichern und teilen",
+                ServiceTitleDE = "Storage Share",
+                ServiceTitleEN = "Storage Share",
+                ServiceTitleES = "Storage Share",
                 CloudServiceModelId = saaSModel.Id,
                 CloudServiceModel = saaSModel,
                 ProviderId = hetznerProvider.Id,
                 Provider = hetznerProvider,
-                HasFileEncryption = false,
-                HasFileVersioning = false,
-                HasFilePermissions = false,
-                HasAutomatedSynchronisation = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { }
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
                 ServiceName = "Cloud Files",
-                ServiceDescription = "Cloud Files bietet Online-Objektspeicher für Dateien und Medien und stellt sie weltweit mit rasender Geschwindigkeit über ein weltweites Content-Delivery-Netzwerk (CDN) bereit",
+                ServiceDescriptionDE = "Cloud Files bietet Online-Objektspeicher für Dateien und Medien und stellt sie weltweit mit rasender Geschwindigkeit über ein weltweites Content-Delivery-Netzwerk (CDN) bereit",
                 ServiceAvailability = "99,99",
-                ServiceTitle = "Cloud Files",
+                ServiceTitleDE = "Cloud Files",
+                ServiceTitleEN = "Cloud Files",
+                ServiceTitleES = "Cloud Files",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
-                HasFileEncryption = false,
-                HasFileVersioning = false,
-                HasFilePermissions = true,
-                HasReplication = true,
-                HasFileLocking = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasPermissions, hasReplication }
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
                 ServiceName = "Cloud Block Storage",
-                ServiceDescription = "Cloud Block Storage bietet zuverlässigen, leistungsstarken On-Demand-Speicher für Anwendungen, die auf Cloud-Servern gehostet werden",
-                ServiceTitle = "Cloud Block Storage",
+                ServiceDescriptionDE = "Cloud Block Storage bietet zuverlässigen, leistungsstarken On-Demand-Speicher für Anwendungen, die auf Cloud-Servern gehostet werden",
+                ServiceTitleDE = "Cloud Block Storage",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
                 ProviderId = rackspaceProvider.Id,
                 Provider = rackspaceProvider,
-                HasFileEncryption = true,
-                HasReplication = true,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasFileEncryption, hasReplication }
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
                 ServiceName = "Cloud Object Storage",
-                ServiceDescription = "Stelle deine Daten von überall aus wieder her oder mache Backups einfach über unseren redundanten Objekt Storage mit S3-kompatibler Schnittstelle",
-                ServiceTitle = "Cloud Object Storage",
+                ServiceDescriptionDE = "Stelle deine Daten von überall aus wieder her oder mache Backups einfach über unseren redundanten Objekt Storage mit S3-kompatibler Schnittstelle",
+                ServiceTitleDE = "Cloud Object Storage",
                 ServiceAvailability = "99,95",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
-                HasFileEncryption = false,
-                HasFileVersioning = false,
-                HasFilePermissions = true,
-                HasReplication = false,
-                HasFileLocking = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasPermissions }
             });
             context.ObjectStorageService.AddOrUpdate(new ObjectStorageService
             {
                 ServiceName = "IBM Cloud Object Storage",
-                ServiceDescription = "IBM Cloud Object Storage wurde entwickelt, um ein exponentielles Datenwachstum und Cloud-native Arbeitslasten zu unterstützen",
-                ServiceTitle = "IBM Cloud Object Storage",
+                ServiceDescriptionDE = "IBM Cloud Object Storage wurde entwickelt, um ein exponentielles Datenwachstum und Cloud-native Arbeitslasten zu unterstützen",
+                ServiceTitleDE = "IBM Cloud Object Storage",
                 ServiceAvailability = "99,99",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
                 ProviderId = ibmProvider.Id,
                 Provider = ibmProvider,
-                HasFileEncryption = false,
-                HasFileVersioning = false,
-                HasFilePermissions = true,
-                HasReplication = true,
-                HasFileLocking = false,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasPermissions, hasReplication }
             });
             context.BlockStorageService.AddOrUpdate(new BlockStorageService
             {
                 ServiceName = "IBM Block Storage",
-                ServiceDescription = "Flash-basierter, leistungsstarker lokaler Plattenspeicher mit SAN-Persistenz und -Beständigkeit, anpassbaren E/A-Operationen pro Sekunde und kalkulierbaren Kosten",
-                ServiceTitle = "IBM Block Storage",
+                ServiceDescriptionDE = "Flash-basierter, leistungsstarker lokaler Plattenspeicher mit SAN-Persistenz und -Beständigkeit, anpassbaren E/A-Operationen pro Sekunde und kalkulierbaren Kosten",
+                ServiceTitleDE = "IBM Block Storage",
                 ServiceAvailability = "99,99",
                 CloudServiceModelId = iaaSModel.Id,
                 CloudServiceModel = iaaSModel,
                 ProviderId = ibmProvider.Id,
                 Provider = ibmProvider,
-                HasFileEncryption = true,
-                HasReplication = true,
                 Creation = DateTime.Now,
-                LastModified = DateTime.Now
+                LastModified = DateTime.Now,
+                Features = new List<Feature> { hasFileEncryption, hasReplication }
             });
 
             context.SaveChanges();
