@@ -22,14 +22,7 @@ namespace backend.Models
         public SearchVectorListEntry models { get; set; }
         public SearchVectorListEntry providers { get; set; }
         public SearchVectorListEntry storageType { get; set; }
-        public SearchVectorBooleanEntry hasFileEncryption { get; set; }
-        public SearchVectorBooleanEntry hasReplication { get; set; }
-        public SearchVectorBooleanEntry hasFilePermissions { get; set; }
-        public SearchVectorBooleanEntry hasFileLocking { get; set; }
-        public SearchVectorBooleanEntry hasFileCompression { get; set; }
-        public SearchVectorBooleanEntry hasDBMS { get; set; }
-        public SearchVectorBooleanEntry hasFileVersioning { get; set; }
-        public SearchVectorBooleanEntry hasAutomatedSynchronisation { get; set; }
+        public SearchVectorListEntry features { get; set; }
 
         public int total { get
             {
@@ -39,15 +32,8 @@ namespace backend.Models
                 if (deploymentinfos != null && deploymentinfos.Value != null && deploymentinfos.Value.Count > 0) output += deploymentinfos.Priority;
                 if (models != null && models.Value != null && models.Value.Count > 0) output += models.Priority;
                 if (providers != null && providers.Value != null && providers.Value.Count > 0) output += providers.Priority;
+                if (features != null && features.Value != null && features.Value.Count > 0) output += features.Priority;
                 if (storageType != null && storageType.Value != null && storageType.Value.Count > 0) output += storageType.Priority;
-                if (hasFileEncryption != null && hasFileEncryption.Value.HasValue) output += hasFileEncryption.Priority;
-                if (hasReplication != null && hasReplication.Value.HasValue) output += hasReplication.Priority;
-                if (hasFilePermissions != null && hasFilePermissions.Value.HasValue) output += hasFilePermissions.Priority;
-                if (hasFileLocking != null && hasFileLocking.Value.HasValue) output += hasFileLocking.Priority;
-                if (hasFileCompression != null && hasFileCompression.Value.HasValue) output += hasFileCompression.Priority;
-                if (hasDBMS != null && hasDBMS.Value.HasValue) output += hasDBMS.Priority;
-                if (hasFileVersioning != null && hasFileVersioning.Value.HasValue) output += hasFileVersioning.Priority;
-                if (hasAutomatedSynchronisation != null && hasAutomatedSynchronisation.Value.HasValue) output += hasAutomatedSynchronisation.Priority;
                 return output;
             }
         }

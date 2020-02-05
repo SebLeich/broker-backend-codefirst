@@ -102,8 +102,10 @@ namespace backend.Repositories
             {
                 dbUseCase.ServiceClassMapping = temp;
             }
-            dbUseCase.Title = useCase.Title;
-            dbUseCase.Description = useCase.Description;
+            dbUseCase.TitleDE = useCase.TitleDE;
+            dbUseCase.TitleEN = useCase.TitleEN;
+            dbUseCase.TitleES = useCase.TitleES;
+            dbUseCase.InternalDescription = useCase.InternalDescription;
             _Ctx.SaveChanges();
             return new ResponseWrapper<UseCase>
             {

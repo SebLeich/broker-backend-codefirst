@@ -84,6 +84,10 @@ namespace backend.Models
             {
                 if (Certificates.Select(x => x.Id).Intersect(Search.certificates.Value).Any()) Output.pointscertificates = Search.certificates.Priority;
             }
+            if (Search.features != null && Search.features.Value != null && Search.features.Value.Count > 0 && Search.features.Priority > 0)
+            {
+                if (Features.Select(x => x.Id).Intersect(Search.features.Value).Any()) Output.pointsfeatures = Search.features.Priority;
+            }
             return Output;
         }
     }

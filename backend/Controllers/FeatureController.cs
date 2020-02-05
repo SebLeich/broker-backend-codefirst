@@ -14,7 +14,7 @@ namespace backend.Controllers
             _Repo = new FeatureRepository();
         }
 
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
         [Route("")]
         public IHttpActionResult GetFeatures()

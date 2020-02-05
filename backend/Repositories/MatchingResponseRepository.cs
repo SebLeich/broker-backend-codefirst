@@ -62,16 +62,9 @@ namespace backend.Repositories
             OldResponse.pointscertificates = matchingResponse.pointscertificates;
             OldResponse.pointsdatalocations = matchingResponse.pointsdatalocations;
             OldResponse.pointsdeploymentinfos = matchingResponse.pointsdeploymentinfos;
-            OldResponse.pointsHasAutomatedSynchronisation = matchingResponse.pointsHasAutomatedSynchronisation;
-            OldResponse.pointsHasDBMS = matchingResponse.pointsHasDBMS;
-            OldResponse.pointsHasFileCompression = matchingResponse.pointsHasFileCompression;
-            OldResponse.pointsHasFileEncryption = matchingResponse.pointsHasFileEncryption;
-            OldResponse.pointsHasFileLocking = matchingResponse.pointsHasFileLocking;
-            OldResponse.pointsHasFilePermissions = matchingResponse.pointsHasFilePermissions;
-            OldResponse.pointsHasFileVersioning = matchingResponse.pointsHasFileVersioning;
-            OldResponse.pointsHasReplication = matchingResponse.pointsHasReplication;
             OldResponse.pointsmodels = matchingResponse.pointsmodels;
             OldResponse.pointsproviders = matchingResponse.pointsproviders;
+            OldResponse.pointsfeatures = matchingResponse.pointsfeatures;
             OldResponse.pointsstoragetype = matchingResponse.pointsstoragetype;
             _Ctx.SaveChanges();
             return new ResponseWrapper<MatchingResponse>

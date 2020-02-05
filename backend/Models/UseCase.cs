@@ -12,9 +12,11 @@ namespace backend.Models
         [Key, Column(Order = 0), DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public string Title { get; set; }
+        public string TitleDE { get; set; }
+        public string TitleEN { get; set; }
+        public string TitleES { get; set; }
 
-        public string Description { get; set; }
+        public string InternalDescription { get; set; }
 
         public DateTime Creation { get; set; }
 
