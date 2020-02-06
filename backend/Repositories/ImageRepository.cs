@@ -84,5 +84,13 @@ namespace backend.Repositories
                 content = result
             };
         }
+
+        public Image PostImageFromFile(byte[] file, string mediaType)
+        {
+            var image = new Image { ImageData = file, MediaType = mediaType };
+            _Ctx.Image.Add(image);
+            _Ctx.SaveChanges();
+            return image;
+        }
     }
 }

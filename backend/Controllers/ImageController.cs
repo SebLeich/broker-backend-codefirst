@@ -1,6 +1,9 @@
 ﻿using backend.Repositories;
 using System.Web.Http;
 using backend.Models;
+using System.Net.Http;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace backend.Controllers
 {
@@ -72,6 +75,25 @@ namespace backend.Controllers
                 return Content(result.state, result.content);
             }
             return Content(result.state, result.error);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("upload")]
+        public async Task<IHttpActionResult> PostImageFromFile()
+        {
+            if (!Request.Content.IsMimeMultipartContent())
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+
+            var provider = new MultipartMemoryStreamProvider();
+            await Request.Content.ReadAsMultipartAsync(provider);
+            if(provider.Contents.Count == 0)
+                return Content(HttpStatusCode.BadRequest, "no file found: post form data file");
+            var file = provider.Contents[0];
+            var fileBytes = await file.ReadAsByteArrayAsync();
+            if (fileBytes.Length > 1000000)
+                return Content(HttpStatusCode.BadRequest, "file to large: maximum 1MB");
+            return Ok(_Repo.PostImageFromFile(fileBytes, file.Headers.ContentType.MediaType));
         }
     }
 }

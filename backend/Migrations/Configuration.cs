@@ -443,7 +443,7 @@ namespace backend.Migrations
                 new OnlineDriveStorageService
             {
                 ServiceName = "Dropbox Basic",
-                ServiceDescriptionDE = "Dropbox bietet Speicherplatz für Dateien auf all Ihren verknüpften Geräte",
+                ServiceDescriptionDE = "Dropbox bietet Speicherplatz für Dateien auf all Ihren verknüpften Geräten",
                 ServiceTitleDE = "Kostenlose Version von Dropbox",
                 CloudServiceModelId = saaSModel.Id,
                 CloudServiceModel = saaSModel,

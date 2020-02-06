@@ -145,7 +145,8 @@ namespace backend.Repositories
             OldService.ServiceTitleDE = NewService.ServiceTitleDE;
             OldService.ServiceTitleEN = NewService.ServiceTitleEN;
             OldService.ServiceTitleES = NewService.ServiceTitleES;
-            OldService.Logo = NewService.Logo;
+            OldService.LogoId = NewService.LogoId;
+            OldService.BannerId = NewService.BannerId;
         }
     }
 }
