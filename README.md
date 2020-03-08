@@ -20,9 +20,6 @@ Based on the following ideas:
 1. https://bitoftech.net/2014/06/01/token-based-authentication-asp-net-web-api-2-owin-asp-net-identity/<br>
 2. https://bitoftech.net/2014/07/16/enable-oauth-refresh-tokens-angularjs-app-using-asp-net-web-api-2-owin/
 
-# Known Issues
-1. Generating a already existing account with password and user name causes a HTTP 500 response, no customized response
-
 ## 1. How to set token expiration?
 In Startup.cs set OAuthAuthorizationServerOptions AccessTokenExpireTimeSpan (e.g. TimeSpan.FromDays(1)).
 
