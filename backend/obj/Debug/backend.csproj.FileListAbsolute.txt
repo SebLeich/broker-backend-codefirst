@@ -290,3 +290,4 @@ C:\Workspace\Backend Broker\broker-backend-codefirst\backend\obj\Debug\backend.c
 C:\Workspace\Backend Broker\broker-backend-codefirst\backend\obj\Debug\backend.csproj.CopyComplete
 C:\Workspace\Backend Broker\broker-backend-codefirst\backend\obj\Debug\backend.dll
 C:\Workspace\Backend Broker\broker-backend-codefirst\backend\obj\Debug\backend.pdb
+C:\Workspace\Backend Broker\broker-backend-codefirst\backend\bin\backend.xml

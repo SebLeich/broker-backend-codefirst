@@ -15,6 +15,7 @@ namespace backend
                 c.SingleApiVersion("v1", "backend");
                 c.DocumentFilter<AuthTokenOperation>();
                 c.OperationFilter<AddAuthorizationHeaderParameterOperationFilter>();
+                c.IncludeXmlComments(string.Format(@"{0}\bin\backend.XML", System.AppDomain.CurrentDomain.BaseDirectory));
             })
             .EnableSwaggerUi(c =>
             {

@@ -1,0 +1,1541 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>backend</name>
+    </assembly>
+    <members>
+        <member name="T:backend.WebApiConfig">
+            <summary>
+            the web application configuration
+            </summary>
+        </member>
+        <member name="M:backend.WebApiConfig.Register(System.Web.Http.HttpConfiguration)">
+            <summary>
+            the method registers a configuration for the web application
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="T:backend.Controllers.AccountController">
+            <summary>
+            the controller provides endpoints for account management
+            </summary>
+        </member>
+        <member name="F:backend.Controllers.AccountController._Repo">
+            <summary>
+            the repository provides methods for account management
+            </summary>
+        </member>
+        <member name="F:backend.Controllers.AccountController._SecRepo">
+            <summary>
+            the repository provides methods for role security validation
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.AccountController.#ctor">
+            <summary>
+            the constructor creates a new instance of a controller
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.AccountController.GetUsers">
+            <summary>
+            the endpoint returns all users
+            </summary>
+            <remarks>
+            This class can add, subtract, multiply and divide.
+            </remarks>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.AccountController.RemoveUser(System.String)">
+            <summary>
+            the endpoint removes a user from the database
+            </summary>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.AccountController.GetCurrentRights">
+            <summary>
+            the endpoint returns all rights of the current user
+            </summary>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.AccountController.GetRoleRights(System.String)">
+            <summary>
+            the endpoint returns all rights of an user
+            </summary>
+            <param name="userModel"></param>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.AccountController.PostRoleRight(backend.Models.RoleRuleLink)">
+            <summary>
+            the endpoint returns all rights of an user
+            </summary>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.AccountController.GetRoles">
+            <summary>
+            the endpoint returns all registered roles
+            </summary>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.AccountController.RegisterRole(backend.Models.RoleModel)">
+            <summary>
+            the endpoint registeres a new role in the backend
+            </summary>
+            <param name="roleModel"></param>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.AccountController.DeleteRole(System.String)">
+            <summary>
+            the endpoint removes a role
+            </summary>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.AccountController.Register(backend.Models.UserModel)">
+            <summary>
+            the endpoint registeres a new user in the backend
+            </summary>
+            <param name="userModel"></param>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.AccountController.AddUserRoleConnection(backend.Models.UserRoleLink)">
+            <summary>
+            the endpoint connects a user with the given roles
+            </summary>
+            <param name="userModel"></param>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.AccountController.RemoveUserRoleConnection(backend.Models.UserRoleLink)">
+            <summary>
+            the endpoint unlinks a user with the given roles
+            </summary>
+            <param name="userModel"></param>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.AccountController.Dispose(System.Boolean)">
+            <summary>
+            the endpoint enables the controller to dispose the controller
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:backend.Controllers.AccountController.GetErrorResult(Microsoft.AspNet.Identity.IdentityResult)">
+            <summary>
+            the method returns an error result for the given response
+            </summary>
+            <param name="result"></param>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="T:backend.Controllers.BlockStorageServiceController">
+            <summary>
+            the controller provides endpoints to manipulate block storage service services
+            </summary>
+        </member>
+        <member name="F:backend.Controllers.BlockStorageServiceController._Repo">
+            <summary>
+            the repository provides methods to manipulate block storage service services
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.BlockStorageServiceController.#ctor">
+            <summary>
+            the constructor creates a new instance of the controller
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.BlockStorageServiceController.GetBlockStorageServices">
+            <summary>
+            the endpoint returns all services of the database
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Controllers.BlockStorageServiceController.GetBlockStorageServiceById(System.Int32)">
+            <summary>
+            the method returns a service with the given id from the database
+            </summary>
+            <param name="id">id of the service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.BlockStorageServiceController.PostBlockStorageServices(backend.Models.BlockStorageService)">
+            <summary>
+            the endpoint creates a new service within the database
+            </summary>
+            <param name="Service">new service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.BlockStorageServiceController.PutBlockStorageServices(backend.Models.BlockStorageService)">
+            <summary>
+            the endpoint overwrites a service in the database with the given object
+            </summary>
+            <param name="Service">new service object</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.BlockStorageServiceController.DeleteBlockStorageServices(System.Int32)">
+            <summary>
+            the endpoint deletes the block storage service with the given id
+            </summary>
+            <param name="id">service id</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:backend.Controllers.BlockStorageServiceController.Search(backend.Models.SearchVector)">
+            <summary>
+            the endpoint returns a service according to the given search
+            </summary>
+            <returns>service</returns>
+        </member>
+        <member name="T:backend.Controllers.DirectAttachedStorageServiceController">
+            <summary>
+            the controller provides endpoints to manipulate direct attached storage services
+            </summary>
+        </member>
+        <member name="F:backend.Controllers.DirectAttachedStorageServiceController._Repo">
+            <summary>
+            the repository provides methods to manipulate direct attached storage services
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.DirectAttachedStorageServiceController.#ctor">
+            <summary>
+            the constructor creates a new instance of the controller
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.DirectAttachedStorageServiceController.GetDirectAttachedStorageServices">
+            <summary>
+            the endpoint returns all services of the database
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Controllers.DirectAttachedStorageServiceController.GetDirectAttachedStorageServiceById(System.Int32)">
+            <summary>
+            the method returns a service with the given id from the database
+            </summary>
+            <param name="id">id of the service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.DirectAttachedStorageServiceController.PostDirectAttachedStorageServices(backend.Models.DirectAttachedStorageService)">
+            <summary>
+            the endpoint creates a new service within the database
+            </summary>
+            <param name="Service">new service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.DirectAttachedStorageServiceController.PutDirectAttachedStorageServices(backend.Models.DirectAttachedStorageService)">
+            <summary>
+            the endpoint overwrites a service in the database with the given object
+            </summary>
+            <param name="Service">new service object</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.DirectAttachedStorageServiceController.DeleteDirectAttachedStorageServices(System.Int32)">
+            <summary>
+            the endpoint deletes the direct attached storage with the given id
+            </summary>
+            <param name="id">service id</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:backend.Controllers.DirectAttachedStorageServiceController.Search(backend.Models.SearchVector)">
+            <summary>
+            the endpoint returns a service according to the given search
+            </summary>
+            <returns>service</returns>
+        </member>
+        <member name="T:backend.Controllers.KeyValueStoreServiceController">
+            <summary>
+            the controller provides endpoints to manipulate key value storage services
+            </summary>
+        </member>
+        <member name="F:backend.Controllers.KeyValueStoreServiceController._Repo">
+            <summary>
+            the repository provides methods to manipulate key value storage services
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.KeyValueStoreServiceController.#ctor">
+            <summary>
+            the constructor creates a new instance of the controller
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.KeyValueStoreServiceController.GetKeyValueStoreServices">
+            <summary>
+            the endpoint returns all services of the database
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Controllers.KeyValueStoreServiceController.GetKeyValueStoreServiceById(System.Int32)">
+            <summary>
+            the method returns a service with the given id from the database
+            </summary>
+            <param name="id">id of the service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.KeyValueStoreServiceController.PostKeyValueStoreServices(backend.Models.KeyValueStorageService)">
+            <summary>
+            the endpoint creates a new service within the database
+            </summary>
+            <param name="Service">new service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.KeyValueStoreServiceController.PutKeyValueStoreServices(backend.Models.KeyValueStorageService)">
+            <summary>
+            the endpoint overwrites a service in the database with the given object
+            </summary>
+            <param name="Service">new service object</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.KeyValueStoreServiceController.DeleteKeyValueStoreServices(System.Int32)">
+            <summary>
+            the endpoint deletes the key value storage with the given id
+            </summary>
+            <param name="id">service id</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:backend.Controllers.KeyValueStoreServiceController.Search(backend.Models.SearchVector)">
+            <summary>
+            the endpoint returns a service according to the given search
+            </summary>
+            <returns>service</returns>
+        </member>
+        <member name="T:backend.Controllers.MetaDataController">
+            <summary>
+            the method provides endpoints for meta data access
+            </summary>
+        </member>
+        <member name="F:backend.Controllers.MetaDataController._Repo">
+            <summary>
+            the repository provides methods for meta data access
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.MetaDataController.#ctor">
+            <summary>
+            the constructor creates a new instance of the controller
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.MetaDataController.GetMetaData">
+            <summary>
+            the method returns the servers meta data
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Controllers.ObjectStorageServiceController">
+            <summary>
+            the controller provides endpoints to manipulate object storage services
+            </summary>
+        </member>
+        <member name="F:backend.Controllers.ObjectStorageServiceController._Repo">
+            <summary>
+            the repository provides methods to manipulate object storage services
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.ObjectStorageServiceController.#ctor">
+            <summary>
+            the constructor creates a new instance of the controller
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.ObjectStorageServiceController.GetObjectStorageServices">
+            <summary>
+            the endpoint returns all services of the database
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Controllers.ObjectStorageServiceController.GetObjectStorageServiceById(System.Int32)">
+            <summary>
+            the method returns a service with the given id from the database
+            </summary>
+            <param name="id">id of the service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.ObjectStorageServiceController.PostObjectStorageServices(backend.Models.ObjectStorageService)">
+            <summary>
+            the endpoint creates a new service within the database
+            </summary>
+            <param name="Service">new service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.ObjectStorageServiceController.PutObjectStorageServices(backend.Models.ObjectStorageService)">
+            <summary>
+            the endpoint overwrites a service in the database with the given object
+            </summary>
+            <param name="Service">new service object</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.ObjectStorageServiceController.DeleteObjectStorageServices(System.Int32)">
+            <summary>
+            the endpoint deletes the object storage with the given id
+            </summary>
+            <param name="id">service id</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:backend.Controllers.ObjectStorageServiceController.Search(backend.Models.SearchVector)">
+            <summary>
+            the endpoint returns a service according to the given search
+            </summary>
+            <returns>service</returns>
+        </member>
+        <member name="T:backend.Controllers.OnlineDriveStorageServiceController">
+            <summary>
+            the controller provides endpoints to manipulate online drive storage services
+            </summary>
+        </member>
+        <member name="F:backend.Controllers.OnlineDriveStorageServiceController._Repo">
+            <summary>
+            the repository provides methods to manipulate online drive storage services
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.OnlineDriveStorageServiceController.#ctor">
+            <summary>
+            the constructor creates a new instance of the controller
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.OnlineDriveStorageServiceController.GetOnlineDriveStorageServices">
+            <summary>
+            the endpoint returns all services of the database
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Controllers.OnlineDriveStorageServiceController.GetOnlineDriveStorageServiceById(System.Int32)">
+            <summary>
+            the method returns a service with the given id from the database
+            </summary>
+            <param name="id">id of the service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.OnlineDriveStorageServiceController.PostOnlineDriveStorageServices(backend.Models.OnlineDriveStorageService)">
+            <summary>
+            the endpoint creates a new service within the database
+            </summary>
+            <param name="Service">new service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.OnlineDriveStorageServiceController.PutOnlineDriveStorageServices(backend.Models.OnlineDriveStorageService)">
+            <summary>
+            the endpoint overwrites a service in the database with the given object
+            </summary>
+            <param name="Service">new service object</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.OnlineDriveStorageServiceController.DeleteOnlineDriveStorageServices(System.Int32)">
+            <summary>
+            the endpoint deletes the online drive storage with the given id
+            </summary>
+            <param name="id">service id</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:backend.Controllers.OnlineDriveStorageServiceController.Search(backend.Models.SearchVector)">
+            <summary>
+            the endpoint returns a service according to the given search
+            </summary>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.ProjectController.GetCurrentProjects">
+            <summary>
+            the endpoint returns all projects of the current user
+            </summary>
+            <returns>list of projects</returns>
+        </member>
+        <member name="M:backend.Controllers.ProjectController.PostCurrentProject(backend.Models.Project)">
+            <summary>
+            the endpoint saves a new project to the database
+            </summary>
+            <returns>persisted project</returns>
+        </member>
+        <member name="M:backend.Controllers.ProjectController.PostMatchingResponses(System.Collections.Generic.List{backend.Models.MatchingResponse})">
+            <summary>
+            the endpoint saves a set of matching responses
+            </summary>
+            <returns>persisted project</returns>
+        </member>
+        <member name="M:backend.Controllers.ProjectController.PutProject(backend.Models.Project)">
+            <summary>
+            the endpoint overwrites an existing project
+            </summary>
+            <returns>persisted project</returns>
+        </member>
+        <member name="M:backend.Controllers.ProjectController.DeleteProject(System.Int32)">
+            <summary>
+            the endpoint removes a project with the given id
+            </summary>
+            <returns>deleted project</returns>
+        </member>
+        <member name="T:backend.Controllers.RelationalDatabaseServiceController">
+            <summary>
+            the controller provides endpoints to manipulate relational database services
+            </summary>
+        </member>
+        <member name="F:backend.Controllers.RelationalDatabaseServiceController._Repo">
+            <summary>
+            the repository provides methods to manipulate relational database services
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.RelationalDatabaseServiceController.#ctor">
+            <summary>
+            the constructor creates a new instance of the controller
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.RelationalDatabaseServiceController.GetRelationalDatabaseServices">
+            <summary>
+            the endpoint returns all services of the database
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Controllers.RelationalDatabaseServiceController.GetRelationalDatabaseServiceById(System.Int32)">
+            <summary>
+            the method returns a service with the given id from the database
+            </summary>
+            <param name="id">id of the service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.RelationalDatabaseServiceController.PostRelationalDatabaseServices(backend.Models.RelationalDatabaseStorageService)">
+            <summary>
+            the endpoint creates a new service within the database
+            </summary>
+            <param name="Service">new service</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.RelationalDatabaseServiceController.PutRelationalDatabaseServices(backend.Models.RelationalDatabaseStorageService)">
+            <summary>
+            the endpoint overwrites a service in the database with the given object
+            </summary>
+            <param name="Service">new service object</param>
+            <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.RelationalDatabaseServiceController.DeleteRelationalDatabaseServices(System.Int32)">
+            <summary>
+            the endpoint deletes the relational database with the given id
+            </summary>
+            <param name="id">service id</param>
+            <returns>boolean</returns>
+        </member>
+        <member name="M:backend.Controllers.RelationalDatabaseServiceController.Search(backend.Models.SearchVector)">
+            <summary>
+            the endpoint returns a service according to the given search
+            </summary>
+            <returns>service</returns>
+        </member>
+        <member name="F:backend.Controllers.ServiceController._Repo">
+            <summary>
+            the controller provides endpoints to manipulate services
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.ServiceController.#ctor">
+            <summary>
+            the constructor creates a new instance of the controller
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.ServiceController.GetServices">
+            <summary>
+            the endpoint returns all services of the database
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Controllers.ServiceController.GetServiceClasses">
+            <summary>
+            the method returns all service classes
+            </summary>
+            <returns>list of service classes</returns>
+        </member>
+        <member name="T:backend.Controllers.UseCaseController">
+            <summary>
+            the controller enables user's to manage usecases
+            </summary>
+        </member>
+        <member name="F:backend.Controllers.UseCaseController._Repo">
+            <summary>
+            the repository provides methods for usecase manipulation
+            </summary>
+        </member>
+        <member name="F:backend.Controllers.UseCaseController._SecRepo">
+            <summary>
+            the repository provides methods for role right authorization
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.UseCaseController.#ctor">
+            <summary>
+            the controller provides endpoints for usecase manipulation
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.UseCaseController.GetAllUseCases">
+            <summary>
+            the endpoint returns all usecases of the database
+            </summary>
+            <returns>list of usecases</returns>
+        </member>
+        <member name="M:backend.Controllers.UseCaseController.GetUseCaseById(System.Int32)">
+            <summary>
+            the method returns an usecase with the given id
+            </summary>
+            <param name="id">id of the usecase</param>
+            <returns>usecase</returns>
+        </member>
+        <member name="M:backend.Controllers.UseCaseController.PostUseCase(backend.Models.UseCase)">
+            <summary>
+            the method enables user's to post new usecases to the backend
+            </summary>
+            <param name="useCase">new usecase</param>
+            <returns>persisted usecase</returns>
+        </member>
+        <member name="M:backend.Controllers.UseCaseController.PutUseCase(backend.Models.UseCase)">
+            <summary>
+            the endpoint enables user's to update existing usecases
+            </summary>
+            <param name="useCase">usecase for update</param>
+            <returns>updated usecase</returns>
+        </member>
+        <member name="M:backend.Controllers.UseCaseController.DeleteUseCase(System.Int32)">
+            <summary>
+            the endpoint enables user's to delete use cases
+            </summary>
+            <param name="id">id of the use case</param>
+            <returns>deleted use case</returns>
+        </member>
+        <member name="T:backend.Core.ApplicationUser">
+            <summary>
+            the broker context user class
+            </summary>
+        </member>
+        <member name="P:backend.Core.ApplicationUser.UserSearchs">
+            <summary>
+            all search entries of the current user
+            </summary>
+        </member>
+        <member name="M:backend.Core.ApplicationUser.#ctor">
+            <summary>
+            the constructor creates a new instance of an application user
+            </summary>
+        </member>
+        <member name="T:backend.Core.ApplicationUserRole">
+            <summary>
+            the application user roles
+            </summary>
+        </member>
+        <member name="T:backend.Core.ApplicationUserClaim">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Core.BrokerContext">
+            <summary>
+            the context contains the database's model
+            </summary>
+        </member>
+        <member name="M:backend.Core.BrokerContext.#ctor">
+            <summary>
+            the constructor creates a new instance of a broker context
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.Clients">
+            <summary>
+            all clients registered for access
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.RefreshTokens">
+            <summary>
+            all refresh tokens stored
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.BlockStorageService">
+            <summary>
+            the block storage service relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.Certificate">
+            <summary>
+            the certificate relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.ChargingModel">
+            <summary>
+            the charging model relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.CloudServiceModel">
+            <summary>
+            the cloud service model relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.DataLocation">
+            <summary>
+            the data location relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.DataLocationType">
+            <summary>
+            the data location type relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.DeploymentInfo">
+            <summary>
+            the deployment information relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.DirectAttachedStorageService">
+            <summary>
+            the direct attached storage service relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.Feature">
+            <summary>
+            the feature relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.Image">
+            <summary>
+            the image relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.KeyValueStoreService">
+            <summary>
+            the key value store service relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.MatchingResponse">
+            <summary>
+            a set of matching responses
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.ObjectStorageService">
+            <summary>
+            the online drive storage service relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.OnlineDriveStorageService">
+            <summary>
+            the object storage service relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.Payment">
+            <summary>
+            the payment relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.Pricing">
+            <summary>
+            the service pricing relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.PricingModel">
+            <summary>
+            the pricing model relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.PricingPeriod">
+            <summary>
+            the pricing period relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.Project">
+            <summary>
+            all projects
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.Provider">
+            <summary>
+            the provider relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.ProviderPayment">
+            <summary>
+            the provider payment relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.RelationalDatabaseService">
+            <summary>
+            the relational database relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.Rule">
+            <summary>
+            the rule relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.Service">
+            <summary>
+            the service relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.ServiceClass">
+            <summary>
+            the service class relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.StorageType">
+            <summary>
+            the service storage type relation
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.UseCase">
+            <summary>
+            the use cases
+            </summary>
+        </member>
+        <member name="P:backend.Core.BrokerContext.UserSearch">
+            <summary>
+            the service storage type relation
+            </summary>
+        </member>
+        <member name="T:backend.Core.Client">
+            <summary>
+            a client application such as a web app
+            </summary>
+        </member>
+        <member name="T:backend.Core.ApplicationTypes">
+            <summary>
+            application types
+            </summary>
+        </member>
+        <member name="T:backend.Core.Helper">
+            <summary>
+            a helper class providing core functions
+            </summary>
+        </member>
+        <member name="M:backend.Core.Helper.GetHash(System.String)">
+            <summary>
+            the method returns a hash key
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Core.RefreshToken">
+            <summary>
+            a refresh token used for refreshing access tokens after expiration
+            </summary>
+        </member>
+        <member name="M:backend.Core.SimpleRefreshTokenProvider.ReceiveAsync(Microsoft.Owin.Security.Infrastructure.AuthenticationTokenReceiveContext)">
+            <summary>
+            the method returns a new access token for the refresh token
+            </summary>
+            <param name="context">the current HTTP context</param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Migrations.Configuration.#ctor">
+            <summary>
+            the constructor is creating a new instance of the configuration
+            </summary>
+        </member>
+        <member name="M:backend.Migrations.Configuration.Seed(backend.Core.BrokerContext)">
+            <summary>
+            the method can be called by execute "update-database" with the nuget-console
+            </summary>
+            <param name="context">the database context</param>
+        </member>
+        <member name="T:backend.Models.Certificate">
+            <summary>
+            the class contains the certificate model
+            </summary>
+        </member>
+        <member name="T:backend.Models.ChargingModel">
+            <summary>
+            the class contains the charging model
+            </summary>
+        </member>
+        <member name="T:backend.Models.CloudServiceModel">
+            <summary>
+            the class contains the cloud servive model
+            </summary>
+        </member>
+        <member name="T:backend.Models.DataLocation">
+            <summary>
+            the class contains the data location model
+            </summary>
+        </member>
+        <member name="T:backend.Models.KeyValueStorageService">
+            <summary>
+            the class contains a key value store service
+            </summary>
+        </member>
+        <member name="T:backend.Models.Payment">
+            <summary>
+            the class contains the payment model
+            </summary>
+        </member>
+        <member name="T:backend.Models.Provider">
+            <summary>
+            the class contains the provider model
+            </summary>
+        </member>
+        <member name="T:backend.Models.ProviderPayment">
+            <summary>
+            the class contains the n:m relation between a provider and a payment
+            </summary>
+        </member>
+        <member name="T:backend.Models.RelationalDatabaseStorageService">
+            <summary>
+            the class contains a relational database service
+            </summary>
+        </member>
+        <member name="T:backend.Models.RoleModel">
+            <summary>
+            the identity role model
+            </summary>
+        </member>
+        <member name="P:backend.Models.RoleModel.RoleName">
+            <summary>
+            the role name
+            </summary>
+        </member>
+        <member name="T:backend.Models.Service">
+            <summary>
+            the class contains the generic service model
+            </summary>
+        </member>
+        <member name="T:backend.Models.ServiceChargingModel">
+            <summary>
+            the class contains the service charging model
+            </summary>
+        </member>
+        <member name="T:backend.Models.UserModel">
+            <summary>
+            the identity user's model
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModel.UserName">
+            <summary>
+            the username
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModel.Password">
+            <summary>
+            the password
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModel.ConfirmPassword">
+            <summary>
+            the password confirmation
+            </summary>
+        </member>
+        <member name="T:backend.Repositories.AuthentificationRepository">
+            <summary>
+            the repository provides a set of methods for user control
+            </summary>
+        </member>
+        <member name="F:backend.Repositories.AuthentificationRepository._ctx">
+            <summary>
+            the data context providing database connection
+            </summary>
+        </member>
+        <member name="F:backend.Repositories.AuthentificationRepository._userManager">
+            <summary>
+            the user manager providing identity user control
+            </summary>
+        </member>
+        <member name="F:backend.Repositories.AuthentificationRepository._roleManager">
+            <summary>
+            the role manager providing identity role control
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.GetUsers">
+            <summary>
+            the method returns all users and their roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.#ctor">
+            <summary>
+            the constructor for creating new instances
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.GetCurrentRights(System.String)">
+            <summary>
+            the method returns all rights for the current user
+            </summary>
+            <param name="username">current user name</param>
+            <returns>list of rights</returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.RemoveUser(System.String)">
+            <summary>
+            the method removes a user from the database
+            </summary>
+            <param name="username">user's name</param>
+            <returns>user</returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.GetRightsForRole(System.String)">
+            <summary>
+            the method returns all rights for a given role
+            </summary>
+            <param name="roleName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.GetRights(System.Collections.Generic.List{System.Guid})">
+            <summary>
+            the method returns all rights for a list of given role ids
+            </summary>
+            <param name="roleIds"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.GetRoles">
+            <summary>
+            the method returns all registered roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.DeleteRole(System.String)">
+            <summary>
+            the method removes a role with the given role name
+            </summary>
+            <param name="roleName">the roles name</param>
+            <returns>role model</returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.RegisterUser(backend.Models.UserModel)">
+            <summary>
+            the method enables user's to register new users
+            </summary>
+            <param name="userModel">user model</param>
+            <returns>identity result</returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.RegisterRole(backend.Models.RoleModel)">
+            <summary>
+            the method enables user's to register new roles
+            </summary>
+            <param name="userModel">user model</param>
+            <returns>identity result</returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.FindUser(System.String,System.String)">
+            <summary>
+            the method enables user's to search for users by username and password
+            </summary>
+            <param name="userName">username</param>
+            <param name="password">password</param>
+            <returns>user</returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.Dispose">
+            <summary>
+            the method destroys the context if needed
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.FindClient(System.String)">
+            <summary>
+            return a client by id
+            </summary>
+            <param name="clientId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.AddRefreshToken(backend.Core.RefreshToken)">
+            <summary>
+            add a refresh token to the database
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.RemoveRefreshToken(System.String)">
+            <summary>
+            remove a refresh token from the database
+            </summary>
+            <param name="refreshTokenId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.RemoveRefreshToken(backend.Core.RefreshToken)">
+            <summary>
+            remove a refresh token
+            </summary>
+            <param name="refreshToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.FindRefreshToken(System.String)">
+            <summary>
+            find a refresh token by id
+            </summary>
+            <param name="refreshTokenId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthentificationRepository.GetAllRefreshTokens">
+            <summary>
+            return all refresh tokens
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.BlockStorageServiceRepository.#ctor">
+            <summary>
+            the constructor creates a new instance of the repository
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.BlockStorageServiceRepository.GetBlockStorageServices">
+            <summary>
+            the method returns all block storage services from the database
+            </summary>
+            <returns>list of database services</returns>
+        </member>
+        <member name="M:backend.Repositories.BlockStorageServiceRepository.GetBlockStorageService(System.Int32)">
+            <summary>
+            the method returns a block storage service from the database by id
+            </summary>
+            <returns> a specific block storage service</returns>
+        </member>
+        <member name="M:backend.Repositories.BlockStorageServiceRepository.PostBlockStorageService(backend.Models.BlockStorageService)">
+            <summary>
+            the method posts a new block storage service to the database
+            </summary>
+            <returns>the posted block storage service</returns>
+        </member>
+        <member name="M:backend.Repositories.BlockStorageServiceRepository.PutBlockStorageService(backend.Models.BlockStorageService)">
+            <summary>
+            the method puts a new block storage service from the database
+            </summary>
+            <returns>the puted block storage service</returns>
+        </member>
+        <member name="M:backend.Repositories.BlockStorageServiceRepository.DeleteBlockStorageService(System.Int32)">
+            <summary>
+            the method deletes a block storage service from the database by id
+            </summary>
+            <returns>1 = success </returns>
+        </member>
+        <member name="M:backend.Repositories.BlockStorageServiceRepository.Search(backend.Models.SearchVector,System.String)">
+            <summary>
+            the endpoint enables users to search for block level storages
+            </summary>
+            <param name="Search">search vector</param>
+            <returns>best match</returns>
+        </member>
+        <member name="M:backend.Repositories.DirectAttachedStorageServiceRepository.GetDirectAttachedStorageServices">
+            <summary>
+            the method returns all direct attached storage services from the database
+            </summary>
+            <returns>list of database services</returns>
+        </member>
+        <member name="M:backend.Repositories.DirectAttachedStorageServiceRepository.GetDirectAttachedStorageService(System.Int32)">
+            <summary>
+            the method returns a direct attached storage service from the database by id
+            </summary>
+            <returns> a specific direct attached storage service</returns>
+        </member>
+        <member name="M:backend.Repositories.DirectAttachedStorageServiceRepository.PostDirectAttachedStorageService(backend.Models.DirectAttachedStorageService)">
+            <summary>
+            the method posts a new direct attached storage service to the database
+            </summary>
+            <returns>the posted direct attached storage service</returns>
+        </member>
+        <member name="M:backend.Repositories.DirectAttachedStorageServiceRepository.PutDirectAttachedStorageService(backend.Models.DirectAttachedStorageService)">
+            <summary>
+            the method puts a new direct attached storage service from the database
+            </summary>
+            <returns>the puted direct attached storage service</returns>
+        </member>
+        <member name="M:backend.Repositories.DirectAttachedStorageServiceRepository.DeleteDirectAttachedStorageService(System.Int32)">
+            <summary>
+            the method deletes a direct attached storage service from the database by id
+            </summary>
+            <returns>1 = success </returns>
+        </member>
+        <member name="M:backend.Repositories.DirectAttachedStorageServiceRepository.Search(backend.Models.SearchVector,System.String)">
+            <summary>
+            the endpoint enables users to search for direct attached storages
+            </summary>
+            <param name="Search">search vector</param>
+            <returns>best match</returns>
+        </member>
+        <member name="M:backend.Repositories.FeatureRepository.validateNMRelations(backend.Models.Feature)">
+            <summary>
+            the method validates the n:m relations of the given entity
+            all passed connections will be added, all leaved connections will be removed (in case they are stored before)
+            </summary>
+        </member>
+        <member name="F:backend.Repositories.GenericServiceRepository._Ctx">
+            <summary>
+            the attributeprovides database access
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.GenericServiceRepository.#ctor">
+            <summary>
+            the constructor creates a new instance of the repository
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.GenericServiceRepository.validateNMRelations(backend.Models.Service)">
+            <summary>
+            the method validates the n:m relations of the given entity
+            all passed connections will be added, all leaved connections will be removed (in case they are stored before)
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.GenericServiceRepository.saveUserSearch(System.String)">
+            <summary>
+            the method persists the given user's search
+            </summary>
+            <param name="User">current user</param>
+        </member>
+        <member name="M:backend.Repositories.GenericServiceRepository.overwriteService(backend.Models.Service,backend.Models.Service)">
+            <summary>
+            the method overwrites all service attributes
+            </summary>
+            <param name="Service">new service data</param>
+        </member>
+        <member name="T:backend.Repositories.KeyValueStoreServiceRepository">
+            <summary>
+            the repository contains all methods to manipulate the key value store services of the database
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.KeyValueStoreServiceRepository.GetKeyValueStoreServices">
+            <summary>
+            the method returns all key value store services from the database
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Repositories.KeyValueStoreServiceRepository.GetKeyValueStoreService(System.Int32)">
+            <summary>
+            the method returns a key value store service from the database by id
+            </summary>
+            <returns> a specific key value store service</returns>
+        </member>
+        <member name="M:backend.Repositories.KeyValueStoreServiceRepository.PostKeyValueStoreService(backend.Models.KeyValueStorageService)">
+            <summary>
+            the method posts a new key value store service to the database
+            </summary>
+            <returns>the posted key value store service</returns>
+        </member>
+        <member name="M:backend.Repositories.KeyValueStoreServiceRepository.PutKeyValueStoreService(backend.Models.KeyValueStorageService)">
+            <summary>
+            the method puts a new key value store services from the database
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Repositories.KeyValueStoreServiceRepository.DeleteKeyValueStoreService(System.Int32)">
+            <summary>
+            the method deletes a key value store service from the database by id
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Repositories.KeyValueStoreServiceRepository.Search(backend.Models.SearchVector,System.String)">
+            <summary>
+            the endpoint enables users to search for key value storages
+            </summary>
+            <param name="Search">search vector</param>
+            <returns>best match</returns>
+        </member>
+        <member name="T:backend.Repositories.MetaDataRepository">
+            <summary>
+            the class contains methods for meta data access
+            </summary>
+        </member>
+        <member name="F:backend.Repositories.MetaDataRepository._Ctx">
+            <summary>
+            the attribute provides database access
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.MetaDataRepository.#ctor">
+            <summary>
+            the constructor creates a new instance of the repository
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.MetaDataRepository.GetMetaData">
+            <summary>
+            the method returns the servers database metadata
+            </summary>
+            <returns>meta data</returns>
+        </member>
+        <member name="M:backend.Repositories.ObjectStorageServiceRepository.GetObjectStorageServices">
+            <summary>
+            the method returns all object storage services from the database
+            </summary>
+            <returns>list of database services</returns>
+        </member>
+        <member name="M:backend.Repositories.ObjectStorageServiceRepository.GetObjectStorageService(System.Int32)">
+            <summary>
+            the method returns a object storage service from the database by id
+            </summary>
+            <returns> a specific object storage service</returns>
+        </member>
+        <member name="M:backend.Repositories.ObjectStorageServiceRepository.PostObjectStorageService(backend.Models.ObjectStorageService)">
+            <summary>
+            the method posts a new object storage service to the database
+            </summary>
+            <returns>the posted object storage service</returns>
+        </member>
+        <member name="M:backend.Repositories.ObjectStorageServiceRepository.PutObjectStorageService(backend.Models.ObjectStorageService)">
+            <summary>
+            the method puts a new object storage service from the database
+            </summary>
+            <returns>the puted object storage service</returns>
+        </member>
+        <member name="M:backend.Repositories.ObjectStorageServiceRepository.DeleteObjectStorageService(System.Int32)">
+            <summary>
+            the method deletes a object storage service from the database by id
+            </summary>
+            <returns>1 = success </returns>
+        </member>
+        <member name="M:backend.Repositories.ObjectStorageServiceRepository.Search(backend.Models.SearchVector,System.String)">
+            <summary>
+            the endpoint enables users to search for object storages
+            </summary>
+            <param name="Search">search vector</param>
+            <returns>best match</returns>
+        </member>
+        <member name="M:backend.Repositories.OnlineDriveStorageServiceRepository.GetOnlineDriveStorageServices">
+            <summary>
+            the method returns all online drive storage services from the database
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Repositories.OnlineDriveStorageServiceRepository.GetOnlineDriveStorageService(System.Int32)">
+            <summary>
+            the method returns a online drive storage service from the database by id
+            </summary>
+            <returns> a specific online drive storage service</returns>
+        </member>
+        <member name="M:backend.Repositories.OnlineDriveStorageServiceRepository.PostOnlineDriveStorageService(backend.Models.OnlineDriveStorageService)">
+            <summary>
+            the method posts a new online drive storage service to the database
+            </summary>
+            <returns>the posted online drive storage service</returns>
+        </member>
+        <member name="M:backend.Repositories.OnlineDriveStorageServiceRepository.PutOnlineDriveStorageService(backend.Models.OnlineDriveStorageService)">
+            <summary>
+            the method puts a new online drive storage services from the database
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Repositories.OnlineDriveStorageServiceRepository.DeleteOnlineDriveStorageService(System.Int32)">
+            <summary>
+            the method deletes a online drive storage service from the database by id
+            </summary>
+            <returns>list of services</returns>
+        </member>
+        <member name="M:backend.Repositories.OnlineDriveStorageServiceRepository.Search(backend.Models.SearchVector,System.String)">
+            <summary>
+            the endpoint enables users to search for online drive storages
+            </summary>
+            <param name="Search">search vector</param>
+            <returns>best match</returns>
+        </member>
+        <member name="T:backend.Repositories.ProjectRepository">
+            <summary>
+            the repository contains methods for project controlling
+            </summary>
+        </member>
+        <member name="F:backend.Repositories.ProjectRepository._Ctx">
+            <summary>
+            the attribute provides database access
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.GetCurrentProjects(System.String)">
+            <summary>
+            the method returns all projects of the current user
+            </summary>
+            <param name="username">current user's name</param>
+            <returns>list of projects</returns>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.PostCurrentProject(System.String,backend.Models.Project)">
+            <summary>
+            the method persists new project
+            </summary>
+            <param name="username">current user's name</param>
+            <param name="Project">new project</param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.PostMatchingResponses(System.Collections.Generic.List{backend.Models.MatchingResponse})">
+            <summary>
+            the method persists a set of matching responses for the project with the given id
+            </summary>
+            <param name="id">id of the project</param>
+            <param name="matchingResponses">set of matching responses</param>
+            <returns>http response</returns>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.PutProject(backend.Models.Project)">
+            <summary>
+            the method overwrites an existing project
+            </summary>
+            <param name="username">current user's name</param>
+            <param name="Project">new project</param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.DeleteProject(System.Int32)">
+            <summary>
+            the method deletes a project with the given id
+            </summary>
+            <param name="projectId">project's id</param>
+            <returns>http response</returns>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.validateNMRelations(backend.Models.Project)">
+            <summary>
+            the method validates the n:m relations of the given entity
+            all passed connections will be added, all leaved connections will be removed (in case they are stored before)
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.validateCertificates(backend.Models.Project)">
+            <summary>
+            the method validates all certificates for the given project
+            </summary>
+            <param name="NewProject">project of validation</param>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.validateCloudServiceModels(backend.Models.Project)">
+            <summary>
+            the method validates all cloud service models for the given project
+            </summary>
+            <param name="NewProject">project of validation</param>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.validateDataLocations(backend.Models.Project)">
+            <summary>
+            the method validates all datalocations for the given project
+            </summary>
+            <param name="NewProject">project of validation</param>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.validateDeploymentInfos(backend.Models.Project)">
+            <summary>
+            the method validates all deploymentinfos for the given project
+            </summary>
+            <param name="NewProject">project of validation</param>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.validateProviders(backend.Models.Project)">
+            <summary>
+            the method validates all providers for the given project
+            </summary>
+            <param name="NewProject">project of validation</param>
+        </member>
+        <member name="M:backend.Repositories.ProjectRepository.validateStorageTypes(backend.Models.Project)">
+            <summary>
+            the method validates all storage types for the given project
+            </summary>
+            <param name="NewProject">project of validation</param>
+        </member>
+        <member name="M:backend.Repositories.RelationalDatabaseServiceRepository.GetRelationalDatabaseServices">
+            <summary>
+            the method returns all relational database services from the database
+            </summary>
+            <returns>list of database services</returns>
+        </member>
+        <member name="M:backend.Repositories.RelationalDatabaseServiceRepository.GetRelationalDatabaseService(System.Int32)">
+            <summary>
+            the method returns a relational database service from the database by id
+            </summary>
+            <returns> a specific relational database service</returns>
+        </member>
+        <member name="M:backend.Repositories.RelationalDatabaseServiceRepository.PostRelationalDatabaseService(backend.Models.RelationalDatabaseStorageService)">
+            <summary>
+            the method posts a new relational database service to the database
+            </summary>
+            <returns>the posted relational database service</returns>
+        </member>
+        <member name="M:backend.Repositories.RelationalDatabaseServiceRepository.PutRelationalDatabaseService(backend.Models.RelationalDatabaseStorageService)">
+            <summary>
+            the method puts a new relational database service from the database
+            </summary>
+            <returns>the puted relational database service</returns>
+        </member>
+        <member name="M:backend.Repositories.RelationalDatabaseServiceRepository.DeleteRelationalDatabaseService(System.Int32)">
+            <summary>
+            the method deletes a relational database service from the database by id
+            </summary>
+            <returns>1 = success </returns>
+        </member>
+        <member name="M:backend.Repositories.RelationalDatabaseServiceRepository.Search(backend.Models.SearchVector,System.String)">
+            <summary>
+            the endpoint enables users to search for relational database storages
+            </summary>
+            <param name="Search">search vector</param>
+            <returns>best match</returns>
+        </member>
+        <member name="T:backend.Repositories.RoleRightRepository">
+            <summary>
+            the class provides roleright validation
+            </summary>
+        </member>
+        <member name="F:backend.Repositories.RoleRightRepository._Ctx">
+            <summary>
+            the attribute provides database access
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.RoleRightRepository.#ctor">
+            <summary>
+            the constructor creates a new instance of the repository
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.RoleRightRepository.IsAllowed(System.String,System.String)">
+            <summary>
+            the method checks whether the current user is allowed to 
+            </summary>
+            <param name="username"></param>
+            <param name="code"></param>
+        </member>
+        <member name="M:backend.Repositories.RoleRightRepository.Dispose">
+            <summary>
+            the method destroys the current instance
+            </summary>
+        </member>
+        <member name="T:backend.Repositories.ServiceRepository">
+            <summary>
+            the repository contains method for service control
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.ServiceRepository.#ctor">
+            <summary>
+            the constructor creates a new instance
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.ServiceRepository.GetServices">
+            <summary>
+            the endpoint returns all services
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.ServiceRepository.GetServiceClasses">
+            <summary>
+            the method returns a list containing all service classes
+            </summary>
+            <returns>list of service classes</returns>
+        </member>
+        <member name="F:backend.Repositories.UseCaseRepository._Ctx">
+            <summary>
+            the attribute provides database access
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.UseCaseRepository.#ctor">
+            <summary>
+            the constructor creates a new instance of the repository
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.UseCaseRepository.GetUseCases">
+            <summary>
+            the method returns all use cases from the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.UseCaseRepository.GetUseCaseById(System.Int32)">
+            <summary>
+            the method returns an use case with the given id
+            </summary>
+            <param name="id">usecase's id</param>
+            <returns>usecase</returns>
+        </member>
+        <member name="M:backend.Repositories.UseCaseRepository.PostUseCase(backend.Models.UseCase)">
+            <summary>
+            the method enables user's to add new use cases to the database
+            </summary>
+            <param name="useCase">new use case</param>
+            <returns>created use case</returns>
+        </member>
+        <member name="M:backend.Repositories.UseCaseRepository.PutUseCase(backend.Models.UseCase)">
+            <summary>
+            the method enables user's to update existing use cases
+            </summary>
+            <param name="useCase">use case for update</param>
+            <returns>updated use case</returns>
+        </member>
+        <member name="M:backend.Repositories.UseCaseRepository.DeleteUseCase(System.Int32)">
+            <summary>
+            the method deletes an use case with the given id
+            </summary>
+            <param name="id">id of the use case</param>
+            <returns>deleted use case</returns>
+        </member>
+        <member name="T:backend.Startup">
+            <summary>
+            this class controls the applications startup
+            </summary>
+        </member>
+        <member name="M:backend.Startup.Configuration(Owin.IAppBuilder)">
+            <summary>
+            this method is called when starting the web application
+            </summary>
+            <param name="app">application</param>
+        </member>
+        <member name="M:backend.Startup.ConfigureOAuth(Owin.IAppBuilder)">
+            <summary>
+            the method configures owin token authorization
+            </summary>
+            <param name="app">application</param>
+        </member>
+        <member name="M:backend.SwaggerAddition.AuthTokenOperation.Apply(Swashbuckle.Swagger.SwaggerDocument,Swashbuckle.Swagger.SchemaRegistry,System.Web.Http.Description.IApiExplorer)">
+            <summary>
+            Apply custom operation.
+            </summary>
+            <param name="swaggerDoc">The swagger document.</param>
+            <param name="schemaRegistry">The schema registry.</param>
+            <param name="apiExplorer">The api explorer.</param>
+        </member>
+        <member name="M:backend.SwaggerAddition.AddAuthorizationHeaderParameterOperationFilter.Apply(Swashbuckle.Swagger.Operation,Swashbuckle.Swagger.SchemaRegistry,System.Web.Http.Description.ApiDescription)">
+            <summary>
+            Applies the operation filter.
+            </summary>
+            <param name="operation"></param>
+            <param name="schemaRegistry"></param>
+            <param name="apiDescription"></param>
+        </member>
+    </members>
+</doc>
