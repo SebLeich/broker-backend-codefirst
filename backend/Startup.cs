@@ -24,6 +24,8 @@ namespace backend
             HttpConfiguration config = new HttpConfiguration();
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             ConfigureOAuth(app);
+            // Swagger
+            SwaggerConfig.Register(config);
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
