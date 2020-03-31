@@ -1,7 +1,9 @@
 ﻿using backend.Models;
 using backend.Repositories;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -28,12 +30,13 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// the endpoint returns all services of the database
+        /// the endpoint returns all block storage services from the database
         /// </summary>
         /// <returns>list of services</returns>
         [Route("")]
         [HttpGet]
         [AllowAnonymous]
+        [ResponseType(typeof(List<BlockStorageService>))]
         public IHttpActionResult GetBlockStorageServices()
         {
             return Ok(_Repo.GetBlockStorageServices());
@@ -47,6 +50,7 @@ namespace backend.Controllers
         [Route("{id}")]
         [HttpGet]
         [AllowAnonymous]
+        [ResponseType(typeof(ResponseWrapper<BlockStorageService>))]
         public IHttpActionResult GetBlockStorageServiceById(int id)
         {
             var result = _Repo.GetBlockStorageService(id);
@@ -67,6 +71,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPost]
         [Authorize]
+        [ResponseType(typeof(BlockStorageService))]
         public IHttpActionResult PostBlockStorageServices([FromBody] BlockStorageService Service)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services")) {
@@ -84,6 +89,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPut]
         [Authorize]
+        [ResponseType(typeof(ResponseWrapper<BlockStorageService>))]
         public IHttpActionResult PutBlockStorageServices([FromBody] BlockStorageService Service)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-services"))
@@ -117,6 +123,7 @@ namespace backend.Controllers
         [Route("search")]
         [HttpPost]
         [AllowAnonymous]
+        [ResponseType(typeof(List<MatchingResponse>))]
         public IHttpActionResult Search([FromBody] SearchVector Search)
         {
             var result = _Repo.Search(Search, User.Identity.Name);
