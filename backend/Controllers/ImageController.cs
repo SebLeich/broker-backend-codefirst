@@ -16,7 +16,9 @@ namespace backend.Controllers
         {
             _Repo = new ImageRepository();
         }
-
+        /// <summary>
+        /// the endpoint returns all images
+        /// </summary>
         [Authorize]
         [HttpGet]
         [Route("")]
@@ -25,6 +27,9 @@ namespace backend.Controllers
             return Ok(_Repo.GetImages());
         }
 
+        /// <summary>
+        /// the endpoint returns a specific image
+        /// </summary>
         [Authorize]
         [HttpGet]
         [Route("{id}")]
@@ -38,6 +43,9 @@ namespace backend.Controllers
             return Content(result.state, result.error);
         }
 
+        /// <summary>
+        /// the endpoint stores an new image to the database
+        /// </summary>
         [Authorize]
         [HttpPost]
         [Route("")]
@@ -51,6 +59,9 @@ namespace backend.Controllers
             return Content(result.state, result.error);
         }
 
+        /// <summary>
+        /// the endpoint updates an existing image in the database
+        /// </summary>
         [Authorize]
         [HttpPut]
         [Route("")]
@@ -64,6 +75,9 @@ namespace backend.Controllers
             return Content(result.state, result.error);
         }
 
+        /// <summary>
+        /// the endpoint deletes an existing image from the database
+        /// </summary>
         [Authorize]
         [HttpDelete]
         [Route("{id}")]
@@ -77,6 +91,9 @@ namespace backend.Controllers
             return Content(result.state, result.error);
         }
 
+        /// <summary>
+        /// the endpoint uploads a file up to 1 MB to the data base 
+        /// </summary>
         [Authorize]
         [HttpPost]
         [Route("upload")]

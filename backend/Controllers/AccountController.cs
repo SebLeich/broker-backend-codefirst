@@ -1,9 +1,12 @@
 ﻿using backend.Models;
 using backend.Repositories;
 using Microsoft.AspNet.Identity;
+using Microsoft.Build.Tasks.Deployment.Bootstrapper;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -38,6 +41,7 @@ namespace backend.Controllers
         [Authorize]
         [Route("")]
         [HttpGet]
+        [ResponseType(typeof(List<AccountModel>))]
         public IHttpActionResult GetUsers()
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
@@ -51,10 +55,12 @@ namespace backend.Controllers
         /// <summary>
         /// the endpoint removes a user from the database
         /// </summary>
+        /// <param name="username"> The username of the user to be deleted from the data base</param>
         /// <returns>HTTP Status Code</returns>
         [Authorize]
         [Route("{username}")]
         [HttpDelete]
+        [ResponseType(typeof(AccountModel))]
         public IHttpActionResult RemoveUser(string username)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
@@ -68,23 +74,27 @@ namespace backend.Controllers
         /// <summary>
         /// the endpoint returns all rights of the current user
         /// </summary>
+        /// <params>The user is identified by the current session token</params>
         /// <returns>HTTP Status Code</returns>
         [Authorize]
         [Route("current-rights")]
         [HttpGet]
+        [ResponseType(typeof(List<RoleRuleLink>))]
         public IHttpActionResult GetCurrentRights()
         {
             return Ok(_Repo.GetCurrentRights(User.Identity.Name));
         }
 
         /// <summary>
-        /// the endpoint returns all rights of an user
+        /// the endpoint returns all rights for a given role
         /// </summary>
-        /// <param name="userModel"></param>
+        /// <param name="roleName"></param>
         /// <returns>HTTP Status Code</returns>
+        /// <returns>RoleModel</returns>
         [Authorize]
         [Route("role-right/{roleName}")]
         [HttpGet]
+        [ResponseType(typeof(List<RoleRuleLink>))]
         public IHttpActionResult GetRoleRights(string roleName)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
@@ -96,12 +106,13 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// the endpoint returns all rights of an user
+        /// the endpoint adds a new rule to role
         /// </summary>
         /// <returns>HTTP Status Code</returns>
         [Authorize]
         [Route("role-right")]
         [HttpPost]
+        [ResponseType(typeof(RoleRuleLink))]
         public IHttpActionResult PostRoleRight([FromBody] RoleRuleLink roleRuleLink)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
@@ -123,6 +134,7 @@ namespace backend.Controllers
         [Authorize]
         [Route("role")]
         [HttpGet]
+        [ResponseType(typeof(List<RoleModel>))]
         public IHttpActionResult GetRoles()
         {
 
@@ -173,6 +185,7 @@ namespace backend.Controllers
         [Authorize]
         [Route("role/{roleName}")]
         [HttpDelete]
+        [ResponseType(typeof(RoleModel))]
         public IHttpActionResult DeleteRole(string roleName)
         {
 
@@ -221,11 +234,12 @@ namespace backend.Controllers
         /// <summary>
         /// the endpoint connects a user with the given roles
         /// </summary>
-        /// <param name="userModel"></param>
+        /// <param name="link"></param>
         /// <returns>HTTP Status Code</returns>
         [Authorize]
         [Route("role-connection/add")]
         [HttpPost]
+        [ResponseType(typeof(AccountModel))]
         public IHttpActionResult AddUserRoleConnection(UserRoleLink link)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
@@ -239,19 +253,22 @@ namespace backend.Controllers
         /// <summary>
         /// the endpoint unlinks a user with the given roles
         /// </summary>
-        /// <param name="userModel"></param>
+        /// <param name="UserRolelink">
+        /// An object of the type UserRoleLink
+        /// </param>
         /// <returns>HTTP Status Code</returns>
         [Authorize]
         [Route("role-connection/remove")]
         [HttpPost]
-        public IHttpActionResult RemoveUserRoleConnection(UserRoleLink link)
+        [ResponseType(typeof(AccountModel))]
+        public IHttpActionResult RemoveUserRoleConnection(UserRoleLink UserRolelink)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-security-guidelines"))
             {
                 return StatusCode(HttpStatusCode.Forbidden);
             }
 
-            return Ok(_Repo.RemoveUserRoleConnection(link));
+            return Ok(_Repo.RemoveUserRoleConnection(UserRolelink));
         }
 
         /// <summary>

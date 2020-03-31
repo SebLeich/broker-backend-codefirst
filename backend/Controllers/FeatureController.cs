@@ -13,7 +13,9 @@ namespace backend.Controllers
         {
             _Repo = new FeatureRepository();
         }
-
+        /// <summary>
+        /// the endpoint returns als the features
+        /// </summary>
         [AllowAnonymous]
         [HttpGet]
         [Route("")]
@@ -22,6 +24,9 @@ namespace backend.Controllers
             return Ok(_Repo.GetFeatures());
         }
 
+        /// <summary>
+        /// the endpoint returns a specific feature
+        /// </summary>
         [Authorize]
         [HttpGet]
         [Route("{id}")]
@@ -34,7 +39,9 @@ namespace backend.Controllers
             }
             return Content(result.state, result.error);
         }
-
+        /// <summary>
+        /// the endpoint posts a new feature to the data base
+        /// </summary>
         [Authorize]
         [HttpPost]
         [Route("")]
@@ -48,6 +55,9 @@ namespace backend.Controllers
             return Content(result.state, result.error);
         }
 
+        /// <summary>
+        /// the endpoint updates an existing feature in the data base
+        /// </summary>
         [Authorize]
         [HttpPut]
         [Route("")]
@@ -61,6 +71,9 @@ namespace backend.Controllers
             return Content(result.state, result.error);
         }
 
+        /// <summary>
+        /// the endpoint deletes a feature
+        /// </summary>
         [Authorize]
         [HttpDelete]
         [Route("{id}")]

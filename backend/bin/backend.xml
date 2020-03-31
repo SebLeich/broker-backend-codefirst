@@ -39,33 +39,33 @@
             <summary>
             the endpoint returns all users
             </summary>
-            <remarks>
-            This class can add, subtract, multiply and divide.
-            </remarks>
             <returns>HTTP Status Code</returns>
         </member>
         <member name="M:backend.Controllers.AccountController.RemoveUser(System.String)">
             <summary>
             the endpoint removes a user from the database
             </summary>
+            <param name="username"> The username of the user to be deleted from the data base</param>
             <returns>HTTP Status Code</returns>
         </member>
         <member name="M:backend.Controllers.AccountController.GetCurrentRights">
             <summary>
             the endpoint returns all rights of the current user
             </summary>
+            <params>The user is identified by the current session token</params>
             <returns>HTTP Status Code</returns>
         </member>
         <member name="M:backend.Controllers.AccountController.GetRoleRights(System.String)">
             <summary>
-            the endpoint returns all rights of an user
+            the endpoint returns all rights for a given role
             </summary>
-            <param name="userModel"></param>
+            <param name="roleName"></param>
             <returns>HTTP Status Code</returns>
+            <returns>RoleModel</returns>
         </member>
         <member name="M:backend.Controllers.AccountController.PostRoleRight(backend.Models.RoleRuleLink)">
             <summary>
-            the endpoint returns all rights of an user
+            the endpoint adds a new rule to role
             </summary>
             <returns>HTTP Status Code</returns>
         </member>
@@ -99,14 +99,16 @@
             <summary>
             the endpoint connects a user with the given roles
             </summary>
-            <param name="userModel"></param>
+            <param name="link"></param>
             <returns>HTTP Status Code</returns>
         </member>
         <member name="M:backend.Controllers.AccountController.RemoveUserRoleConnection(backend.Models.UserRoleLink)">
             <summary>
             the endpoint unlinks a user with the given roles
             </summary>
-            <param name="userModel"></param>
+            <param name="UserRolelink">
+            An object of the type UserRoleLink
+            </param>
             <returns>HTTP Status Code</returns>
         </member>
         <member name="M:backend.Controllers.AccountController.Dispose(System.Boolean)">
@@ -231,6 +233,61 @@
             the endpoint returns a service according to the given search
             </summary>
             <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.FeatureController.GetFeatures">
+            <summary>
+            the endpoint returns als the features
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.FeatureController.GetFeatureById(System.Int32)">
+            <summary>
+            the endpoint returns a specific feature
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.FeatureController.PostFeature(backend.Models.Feature)">
+            <summary>
+            the endpoint posts a new feature to the data base
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.FeatureController.PutFeature(backend.Models.Feature)">
+            <summary>
+            the endpoint updates an existing feature in the data base
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.FeatureController.DeleteFeature(System.Int32)">
+            <summary>
+            the endpoint deletes a feature
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.ImageController.GetImages">
+            <summary>
+            the endpoint returns all images
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.ImageController.GetImageById(System.Int32)">
+            <summary>
+            the endpoint returns a specific image
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.ImageController.PostImage(backend.Models.Image)">
+            <summary>
+            the endpoint stores an new image to the database
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.ImageController.PutImage(backend.Models.Image)">
+            <summary>
+            the endpoint updates an existing image in the database
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.ImageController.DeleteImage(System.Int32)">
+            <summary>
+            the endpoint deletes an existing image from the database
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.ImageController.PostImageFromFile">
+            <summary>
+            the endpoint uploads a file up to 1 MB to the data base 
+            </summary>
         </member>
         <member name="T:backend.Controllers.KeyValueStoreServiceController">
             <summary>
