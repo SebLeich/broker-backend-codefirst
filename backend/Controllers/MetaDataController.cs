@@ -1,5 +1,7 @@
-﻿using backend.Repositories;
+﻿using backend.Models;
+using backend.Repositories;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -29,6 +31,7 @@ namespace backend.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("")]
+        [ResponseType(typeof(MetaData))]
         public IHttpActionResult GetMetaData()
         {
             return Ok(_Repo.GetMetaData());

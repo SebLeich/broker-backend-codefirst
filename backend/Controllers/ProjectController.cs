@@ -2,6 +2,7 @@
 using backend.Repositories;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -21,6 +22,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpGet]
         [Route("current")]
+        [ResponseType(typeof(List<Project>))]
         public IHttpActionResult GetCurrentProjects()
         {
             ResponseWrapper<List<Project>> response = _Repo.GetCurrentProjects(User.Identity.Name);
@@ -35,6 +37,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpPost]
         [Route("current")]
+        [ResponseType(typeof(Project))]
         public IHttpActionResult PostCurrentProject([FromBody] Project Project)
         {
             if (Project == null) return Content(System.Net.HttpStatusCode.BadRequest, "Projekt soll angelegt werden: übergebenes Objekt ist null");
@@ -50,6 +53,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpPost]
         [Route("matchingresponses")]
+        [ResponseType(typeof(Project))]
         public IHttpActionResult PostMatchingResponses([FromBody] List<MatchingResponse> matchingResponses)
         {
             if (matchingResponses == null) return Content(System.Net.HttpStatusCode.BadRequest, "Matching soll angelegt werden: übergebenes Objekt ist null");
@@ -65,6 +69,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpPut]
         [Route("")]
+        [ResponseType(typeof(Project))]
         public IHttpActionResult PutProject([FromBody] Project Project)
         {
             if (Project == null) return Content(System.Net.HttpStatusCode.BadRequest, "Projekt soll überschrieben werden: übergebenes Objekt ist null");
@@ -80,6 +85,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpDelete]
         [Route("{id}")]
+        [ResponseType(typeof(Project))]
         public IHttpActionResult DeleteProject(int id)
         {
             ResponseWrapper<Project> response = _Repo.DeleteProject(id);

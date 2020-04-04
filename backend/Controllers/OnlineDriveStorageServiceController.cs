@@ -1,7 +1,9 @@
 ﻿using backend.Models;
 using backend.Repositories;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -32,6 +34,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpGet]
         [AllowAnonymous]
+        [ResponseType(typeof(List<OnlineDriveStorageService>))]
         public IHttpActionResult GetOnlineDriveStorageServices()
         {
             return Ok(_Repo.GetOnlineDriveStorageServices());
@@ -44,6 +47,7 @@ namespace backend.Controllers
         [Route("{id}")]
         [HttpGet]
         [AllowAnonymous]
+        [ResponseType(typeof(OnlineDriveStorageService))]
         public IHttpActionResult GetOnlineDriveStorageServiceById(int id)
         {
             return Ok(_Repo.GetOnlineDriveStorageService(id));
@@ -56,6 +60,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPost]
         [Authorize]
+        [ResponseType(typeof(OnlineDriveStorageService))]
         public IHttpActionResult PostOnlineDriveStorageServices([FromBody] OnlineDriveStorageService Service)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -75,6 +80,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPut]
         [Authorize]
+        [ResponseType(typeof(OnlineDriveStorageService))]
         public IHttpActionResult PutOnlineDriveStorageServices([FromBody] OnlineDriveStorageService Service)
         {
             if (!ModelState.IsValid) return BadRequest();
@@ -99,6 +105,7 @@ namespace backend.Controllers
         [Route("{id}")]
         [HttpDelete]
         [Authorize]
+        [ResponseType(typeof(bool))]
         public IHttpActionResult DeleteOnlineDriveStorageServices(int id)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "delete-services"))
@@ -114,6 +121,7 @@ namespace backend.Controllers
         [Route("search")]
         [HttpPost]
         [AllowAnonymous]
+        [ResponseType(typeof(List<MatchingResponse>))]
         public IHttpActionResult Search([FromBody] SearchVector Search)
         {
             var result = _Repo.Search(Search, User.Identity.Name);

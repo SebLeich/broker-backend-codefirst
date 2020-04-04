@@ -1,7 +1,9 @@
 ﻿using backend.Models;
 using backend.Repositories;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -32,6 +34,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpGet]
         [AllowAnonymous]
+        [ResponseType(typeof(List<ObjectStorageService>))]
         public IHttpActionResult GetObjectStorageServices()
         {
             return Ok(_Repo.GetObjectStorageServices());
@@ -44,6 +47,7 @@ namespace backend.Controllers
         [Route("{id}")]
         [HttpGet]
         [AllowAnonymous]
+        [ResponseType(typeof(ObjectStorageService))]
         public IHttpActionResult GetObjectStorageServiceById(int id)
         {
             return Ok(_Repo.GetObjectStorageService(id));
@@ -56,6 +60,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPost]
         [Authorize]
+        [ResponseType(typeof(ObjectStorageService))]
         public IHttpActionResult PostObjectStorageServices([FromBody] ObjectStorageService Service)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
@@ -72,6 +77,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPut]
         [Authorize]
+        [ResponseType(typeof(ObjectStorageService))]
         public IHttpActionResult PutObjectStorageServices([FromBody] ObjectStorageService Service)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-services"))
@@ -88,6 +94,7 @@ namespace backend.Controllers
         [Route("{id}")]
         [HttpDelete]
         [Authorize]
+        [ResponseType(typeof(bool))]
         public IHttpActionResult DeleteObjectStorageServices(int id)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "delete-services"))
@@ -103,6 +110,7 @@ namespace backend.Controllers
         [Route("search")]
         [HttpPost]
         [AllowAnonymous]
+        [ResponseType(typeof(List<MatchingResponse>))]
         public IHttpActionResult Search([FromBody] SearchVector Search)
         {
             var result = _Repo.Search(Search, User.Identity.Name);
