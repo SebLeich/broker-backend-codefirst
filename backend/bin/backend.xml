@@ -141,7 +141,7 @@
         </member>
         <member name="M:backend.Controllers.BlockStorageServiceController.GetBlockStorageServices">
             <summary>
-            the endpoint returns all services of the database
+            the endpoint returns all block storage services from the database
             </summary>
             <returns>list of services</returns>
         </member>
@@ -178,6 +178,31 @@
             the endpoint returns a service according to the given search
             </summary>
             <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.CertificateController.GetDeploymentInfo">
+            <summary> 
+            the endpoint return all certificates
+            </summary>
+             <returns>
+             
+             </returns>
+        </member>
+        <member name="M:backend.Controllers.CertificateController.PostDeploymentInfo(backend.Models.Certificate)">
+            <summary> 
+            the endpoint posts a new certificate to the database
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.DataLocationController.GetDataLocation">
+            <summary>
+            this endpoint returns all data locations from the data base
+            </summary>
+            <returns>HTTP Status Code</returns>
+        </member>
+        <member name="M:backend.Controllers.DataLocationController.PostDataLocation(backend.Models.DataLocation)">
+            <summary>
+            this endpoint posts a new data location to the data base
+            </summary>
+            <returns>HTTP Status Code</returns>
         </member>
         <member name="T:backend.Controllers.DirectAttachedStorageServiceController">
             <summary>
