@@ -1,7 +1,9 @@
 ﻿using backend.Models;
 using backend.Repositories;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -31,6 +33,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpGet]
         [AllowAnonymous]
+        [ResponseType(typeof(List<DirectAttachedStorageService>))]
         public IHttpActionResult GetDirectAttachedStorageServices()
         {
             return Ok(_Repo.GetDirectAttachedStorageServices());
@@ -43,6 +46,7 @@ namespace backend.Controllers
         [Route("{id}")]
         [HttpGet]
         [AllowAnonymous]
+        [ResponseType(typeof(DirectAttachedStorageService))]
         public IHttpActionResult GetDirectAttachedStorageServiceById(int id)
         {
             var result = _Repo.GetDirectAttachedStorageService(id);
@@ -62,6 +66,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPost]
         [Authorize]
+        [ResponseType(typeof(DirectAttachedStorageService))]
         public IHttpActionResult PostDirectAttachedStorageServices([FromBody] DirectAttachedStorageService Service)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
@@ -78,6 +83,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPut]
         [Authorize]
+        [ResponseType(typeof(DirectAttachedStorageService))]
         public IHttpActionResult PutDirectAttachedStorageServices([FromBody] DirectAttachedStorageService Service)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-services"))
@@ -94,6 +100,7 @@ namespace backend.Controllers
         [Route("{id}")]
         [HttpDelete]
         [Authorize]
+        [ResponseType(typeof(bool))]
         public IHttpActionResult DeleteDirectAttachedStorageServices(int id)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "delete-services"))
@@ -103,12 +110,13 @@ namespace backend.Controllers
             return Ok(_Repo.DeleteDirectAttachedStorageService(id));
         }
         /// <summary>
-        /// the endpoint returns a service according to the given search
+        /// the endpoint returns services according to the given search
         /// </summary>
         /// <returns>service</returns>
         [Route("search")]
         [HttpPost]
         [AllowAnonymous]
+        [ResponseType(typeof(List<MatchingResponse>))]
         public IHttpActionResult Search([FromBody] SearchVector Search)
         {
             var result = _Repo.Search(Search, User.Identity.Name);

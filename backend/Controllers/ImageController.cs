@@ -4,6 +4,8 @@ using backend.Models;
 using System.Net.Http;
 using System.Net;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -22,6 +24,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpGet]
         [Route("")]
+        [ResponseType(typeof(List<Image>))]
         public IHttpActionResult GetImages()
         {
             return Ok(_Repo.GetImages());
@@ -33,6 +36,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpGet]
         [Route("{id}")]
+        [ResponseType(typeof(Image))]
         public IHttpActionResult GetImageById(int id)
         {
             var result = _Repo.GetImageById(id);
@@ -49,6 +53,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpPost]
         [Route("")]
+        [ResponseType(typeof(Image))]
         public IHttpActionResult PostImage([FromBody] Image image)
         {
             var result = _Repo.PostImage(image);
@@ -65,6 +70,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpPut]
         [Route("")]
+        [ResponseType(typeof(Image))]
         public IHttpActionResult PutImage([FromBody] Image image)
         {
             var result = _Repo.PutImage(image);
@@ -81,6 +87,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpDelete]
         [Route("{id}")]
+        [ResponseType(typeof(Image))]
         public IHttpActionResult DeleteImage(int id)
         {
             var result = _Repo.DeleteImage(id);
@@ -97,6 +104,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpPost]
         [Route("upload")]
+        [ResponseType(typeof(Image))]
         public async Task<IHttpActionResult> PostImageFromFile()
         {
             if (!Request.Content.IsMimeMultipartContent())

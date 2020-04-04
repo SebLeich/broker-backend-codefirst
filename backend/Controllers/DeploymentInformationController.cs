@@ -1,7 +1,9 @@
 ﻿using backend.Models;
 using backend.Repositories;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -16,15 +18,23 @@ namespace backend.Controllers
             _Repo = new DeploymentInformationRepository();
             _SecRepo = new RoleRightRepository();
         }
-
+        /// <summary>
+        /// this endpoint returns all deployment information
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
         [Route("")]
+        [ResponseType(typeof(List<DeploymentInfo>))]
         public IHttpActionResult GetDeploymentInfo()
         {
             return Ok(_Repo.GetDeploymentInfo());
         }
-
+        /// <summary>
+        /// this endpoint adds a new deployment information to the data base
+        /// </summary>
+        /// <param name="DeploymentInfo"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         [Route("")]

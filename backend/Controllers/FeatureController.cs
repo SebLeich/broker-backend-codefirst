@@ -1,6 +1,8 @@
 ﻿using backend.Models;
 using backend.Repositories;
+using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -19,6 +21,7 @@ namespace backend.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("")]
+        [ResponseType(typeof(List<Feature>))]
         public IHttpActionResult GetFeatures()
         {
             return Ok(_Repo.GetFeatures());
@@ -30,6 +33,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpGet]
         [Route("{id}")]
+        [ResponseType(typeof(Feature))]
         public IHttpActionResult GetFeatureById(int id)
         {
             var result = _Repo.GetFeatureById(id);
@@ -45,6 +49,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpPost]
         [Route("")]
+        [ResponseType(typeof(Feature))]
         public IHttpActionResult PostFeature([FromBody] Feature feature)
         {
             var result = _Repo.PostFeature(feature);
@@ -61,6 +66,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpPut]
         [Route("")]
+        [ResponseType(typeof(Feature))]
         public IHttpActionResult PutFeature([FromBody] Feature feature)
         {
             var result = _Repo.PutFeature(feature);
@@ -77,6 +83,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpDelete]
         [Route("{id}")]
+        [ResponseType(typeof(Feature))]
         public IHttpActionResult DeleteFeature(int id)
         {
             var result = _Repo.DeleteFeature(id);

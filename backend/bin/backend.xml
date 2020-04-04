@@ -204,6 +204,32 @@
             </summary>
             <returns>HTTP Status Code</returns>
         </member>
+        <member name="M:backend.Controllers.DataLocationTypeController.GetDataLocationypes">
+            <summary>
+            this endpoint returns all data locations types
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.DataLocationTypeController.PostDataLocationType(backend.Models.DataLocationType)">
+            <summary>
+            this endpoint adds a new data locations type to the data base
+            </summary>
+            <param name="DataLocationType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.DeploymentInformationController.GetDeploymentInfo">
+            <summary>
+            this endpoint returns all deployment information
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.DeploymentInformationController.PostDeploymentInfo(backend.Models.DeploymentInfo)">
+            <summary>
+            this endpoint adds a new deployment information to the data base
+            </summary>
+            <param name="DeploymentInfo"></param>
+            <returns></returns>
+        </member>
         <member name="T:backend.Controllers.DirectAttachedStorageServiceController">
             <summary>
             the controller provides endpoints to manipulate direct attached storage services
