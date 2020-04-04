@@ -1,7 +1,9 @@
 ﻿using backend.Models;
 using backend.Repositories;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -36,6 +38,7 @@ namespace backend.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("")]
+        [ResponseType(typeof(List<UseCase>))]
         public IHttpActionResult GetAllUseCases()
         {
             return Ok(_Repo.GetUseCases());
@@ -49,6 +52,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpGet]
         [Route("{id}")]
+        [ResponseType(typeof(UseCase))]
         public IHttpActionResult GetUseCaseById([FromUri] int id)
         {
             var result = _Repo.GetUseCaseById(id);
@@ -69,6 +73,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpPost]
         [Route("")]
+        [ResponseType(typeof(UseCase))]
         public IHttpActionResult PostUseCase([FromBody] UseCase useCase)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "manage-use-cases"))
@@ -91,6 +96,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpPut]
         [Route("")]
+        [ResponseType(typeof(UseCase))]
         public IHttpActionResult PutUseCase([FromBody] UseCase useCase)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "manage-use-cases"))
@@ -113,6 +119,7 @@ namespace backend.Controllers
         [Authorize]
         [HttpDelete]
         [Route("{id}")]
+        [ResponseType(typeof(UseCase))]
         public IHttpActionResult DeleteUseCase([FromUri] int id)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "manage-use-cases"))

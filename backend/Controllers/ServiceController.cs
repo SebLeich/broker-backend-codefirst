@@ -1,6 +1,9 @@
-﻿using backend.Repositories;
+﻿using backend.Models;
+using backend.Repositories;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -29,6 +32,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpGet]
         [Authorize]
+        [ResponseType(typeof(List<ServiceWrapper>))]
         public IHttpActionResult GetServices()
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
@@ -45,6 +49,7 @@ namespace backend.Controllers
         [Route("classes")]
         [HttpGet]
         [Authorize]
+        [ResponseType(typeof(List<ServiceClass>))]
         public IHttpActionResult GetServiceClasses()
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "manage-use-cases"))

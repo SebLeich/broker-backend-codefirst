@@ -1,7 +1,9 @@
 ﻿using backend.Models;
 using backend.Repositories;
+using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace backend.Controllers
 {
@@ -16,18 +18,27 @@ namespace backend.Controllers
             _Repo = new StorageTypeRepository();
             _SecRepo = new RoleRightRepository();
         }
-
+        /// <summary>
+        /// the endpoint returns all storage types
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
         [Route("")]
+        [ResponseType(typeof(List<StorageType>))]
         public IHttpActionResult GetStorageTypes()
         {
             return Ok(_Repo.GetStorageTypes());
         }
-
+        /// <summary>
+        /// the endpoint saves a new storage type to the database
+        /// </summary>
+        /// <param name="StorageType"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         [Route("")]
+        [ResponseType(typeof(StorageType))]
         public IHttpActionResult PostStorageType([FromBody] StorageType StorageType)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "create-services"))
