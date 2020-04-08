@@ -281,7 +281,7 @@
         </member>
         <member name="M:backend.Controllers.DirectAttachedStorageServiceController.Search(backend.Models.SearchVector)">
             <summary>
-            the endpoint returns a service according to the given search
+            the endpoint returns services according to the given search
             </summary>
             <returns>service</returns>
         </member>
@@ -394,6 +394,40 @@
             the endpoint returns a service according to the given search
             </summary>
             <returns>service</returns>
+        </member>
+        <member name="M:backend.Controllers.MatchingResponseController.GetMatchingResponses">
+            <summary>
+            this endpoint returns all matching resonses
+            </summary>
+            <returns>HTTP Response</returns>
+        </member>
+        <member name="M:backend.Controllers.MatchingResponseController.GetMatchingResponseById(System.Int32)">
+            <summary>
+            this endpoint returns a specfic matching response
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.MatchingResponseController.PostMatchingResponse(backend.Models.MatchingResponse)">
+            <summary>
+            this endpoint posts a new matching response to the data base
+            </summary>
+            <param name="response"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.MatchingResponseController.PutMatchingResponse(backend.Models.MatchingResponse)">
+            <summary>
+            this endpoint updates matching response in the data base
+            </summary>
+            <param name="response"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.MatchingResponseController.DeleteMatchingResponse(System.Int32)">
+            <summary>
+            this endpoint deletes a matching response from the data base
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
         </member>
         <member name="T:backend.Controllers.MetaDataController">
             <summary>
@@ -556,6 +590,19 @@
             </summary>
             <returns>deleted project</returns>
         </member>
+        <member name="M:backend.Controllers.ProviderController.GetProviders">
+            <summary>
+            this endpoint returns all provider
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.ProviderController.PostProvider(backend.Models.Provider)">
+            <summary>
+            this endpoint adds a new provider to the data base
+            </summary>
+            <param name="Provider"></param>
+            <returns></returns>
+        </member>
         <member name="T:backend.Controllers.RelationalDatabaseServiceController">
             <summary>
             the controller provides endpoints to manipulate relational database services
@@ -632,6 +679,32 @@
             the method returns all service classes
             </summary>
             <returns>list of service classes</returns>
+        </member>
+        <member name="M:backend.Controllers.ServiceModelController.GetServiceModels">
+            <summary>
+            the endpoint returns all service models
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.ServiceModelController.PostServiceModel(backend.Models.CloudServiceModel)">
+            <summary>
+            the endpoint saves a new cloud service model to the database
+            </summary>
+            <param name="ServiceModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.StorageTypeController.GetStorageTypes">
+            <summary>
+            the endpoint returns all storage types
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.StorageTypeController.PostStorageType(backend.Models.StorageType)">
+            <summary>
+            the endpoint saves a new storage type to the database
+            </summary>
+            <param name="StorageType"></param>
+            <returns></returns>
         </member>
         <member name="T:backend.Controllers.UseCaseController">
             <summary>

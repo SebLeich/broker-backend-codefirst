@@ -50,7 +50,7 @@ namespace backend.Controllers
         [Route("{id}")]
         [HttpGet]
         [AllowAnonymous]
-        [ResponseType(typeof(ResponseWrapper<BlockStorageService>))]
+        [ResponseType(typeof(BlockStorageService))]
         public IHttpActionResult GetBlockStorageServiceById(int id)
         {
             var result = _Repo.GetBlockStorageService(id);
@@ -89,7 +89,7 @@ namespace backend.Controllers
         [Route("")]
         [HttpPut]
         [Authorize]
-        [ResponseType(typeof(ResponseWrapper<BlockStorageService>))]
+        [ResponseType(typeof(BlockStorageService))]
         public IHttpActionResult PutBlockStorageServices([FromBody] BlockStorageService Service)
         {
             if (!_SecRepo.IsAllowed(User.Identity.Name, "edit-services"))
